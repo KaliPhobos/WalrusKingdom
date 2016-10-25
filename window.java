@@ -15,11 +15,11 @@ public class window {
 		TileArea tileArea = Screen.createTileArea(window);	
 		Player.setXPos(20);
 		Player.setYPos(10);
-		Screen.update();
-		Screen.render();
 		Map.createRandom(0, 96);
 		Map.loadCity1();
-
+		for(int _x = 0;_x<100;_x++) {
+			System.out.println(TileSource.getXPos(_x)+" - "+TileSource.getYPos(_x));
+		}
 	    while (true) {				// MAIN GAME LOOP
 			
 	    	for(int _x=0;_x<100;_x++) {
@@ -28,7 +28,7 @@ public class window {
 	    		Screen.update();
 	    		Screen.render();
 	    		window.repaint();
-	    		General.sleep(10);
+	    		General.sleep(1000);
 	    	}
 		}
 	}

@@ -26,14 +26,14 @@ public class TileSource extends Component {
 	}
 	public static int getXPos(int _id) {
 		int _pos = (_id%10);		// *m_tilesize
-		System.out.println("XPos in tile:"+_pos);
+		//System.out.println("XPos in tile:"+_pos);
 		return _pos;
 	}
 	public static int getYPos(int _id) {
 		//int _pos = (int) _id/10;
 		//_pos = _pos*10;
 		int _pos = (_id-(_id%10))/10;
-		System.out.println("YPos in tile:"+_pos);
+		//System.out.println("YPos in tile:"+_pos);
 		return _pos;
 	}
 	public int getTileSize() {
