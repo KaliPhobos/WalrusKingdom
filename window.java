@@ -20,13 +20,18 @@ public class window {
 		for(int _x = 0;_x<100;_x++) {
 			System.out.println(TileSource.getXPos(_x)+" - "+TileSource.getYPos(_x));
 		}
+		Player.setXPos(12);
+		Player.setYPos(35);
+		Screen.update();
+		Screen.render(true);
 	    while (true) {				// MAIN GAME LOOP
 			
-	    	for(int _x=0;_x<100;_x++) {
+	    	for(int _x=1;_x<100;_x++) {
 	    		Player.setXPos(_x);
 	    		Player.setYPos(30);
 	    		Screen.update();
-	    		Screen.render();
+	    		Screen.render(true);
+	    		Screen.DumpOldData();
 	    		window.repaint();
 	    		General.sleep(1000);
 	    	}

@@ -13,11 +13,13 @@ public class Screen {
 		createScreen(_width, _height);
 	}
 	public static double[][] ScreenMatrix;
+	public static double[][] ScreenMatrixOld;
 	public static int ScreenWidth;
 	public static int ScreenHeight;
 	public static Screen Screen = createScreen(ScreenWidth, ScreenHeight);
 	public Screen(int _width, int _height) {
 		ScreenMatrix = new double[_width][_height];
+		ScreenMatrixOld = new double[_width][_height];
 	}
 	public static JFrame createWindow() {
 		JFrame frame = new JFrame("CodeW");
@@ -49,6 +51,7 @@ public class Screen {
 	public static Screen createScreen(int _width, int _height) {
 		Screen screen = new Screen(_width, _height);
 		ScreenMatrix = new double[_width][_height];
+		ScreenMatrixOld = new double[_width][_height];
 		return screen;
 	}
 	public static void update() {
@@ -59,28 +62,37 @@ public class Screen {
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				Screen.setField(_x, _y, Map.get(left+_x, top+_y));
-				
+				if(left+_x == Player.getXPos() && top+_y == Player.getYPos()) {
+					Screen.setField(_x, _y, 901*108+14);
+				}
+			
 			}
 		}
 	}
-	public static void render() {
+	public static void render(boolean ForceUpdate) {
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				double data = ScreenMatrix[_x][_y];				// load raw data
-				int _background = Map.getBackgroundID(data);	// extract background data
-				int _foreground = Map.getForegroundID(data);	// extrace foreground data
-				System.out.println("Zeichne neuen Block: "+_x+":"+_y);
-				System.out.println("Original Data="+data);
-				System.out.println("Foreground (901)="+_foreground);
-				System.out.println("Background (1)="+_background);
-				System.out.println("background tile xPos="+TileSource.getXPos(_background));
-				System.out.println("background tile yPos="+TileSource.getYPos(_background));
-				System.out.println("foreground tile xPos="+TileSource.getXPos(_foreground));
-				System.out.println("foreground tile yPos="+TileSource.getYPos(_foreground));
-				TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), 24*_x, 24*_y);						// render background layer
-				if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), 24*_x, 24*_y);}	// add foreground layer
+				double dataOld = ScreenMatrixOld[_x][_y];
+				if (data!=dataOld | ForceUpdate == true) {
+					int _background = Map.getBackgroundID(data);	// extract background data
+					int _foreground = Map.getForegroundID(data);	// extrace foreground data
+					System.out.println("Zeichne neuen Block: "+_x+":"+_y);
+					System.out.println("Original Data="+data);
+					System.out.println("Foreground (901)="+_foreground);
+					System.out.println("Background (1)="+_background);
+					System.out.println("background tile xPos="+TileSource.getXPos(_background));
+					System.out.println("background tile yPos="+TileSource.getYPos(_background));
+					System.out.println("foreground tile xPos="+TileSource.getXPos(_foreground));
+					System.out.println("foreground tile yPos="+TileSource.getYPos(_foreground));
+					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), 24*_x, 24*_y);						// render background layer
+					if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), 24*_x, 24*_y);}	// add foreground layer
+				}
 			}
 		}
+	}
+	public static void DumpOldData() {
+		ScreenMatrixOld = ScreenMatrix;
 	}
 	public static void setField(int _x, int _y, double i) {
 		ScreenMatrix[_x][_y] = i;		
