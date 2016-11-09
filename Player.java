@@ -22,4 +22,14 @@ public class Player {
 	public static void setYPos(int _y) {
 		yPos = _y;
 	}
+	public static void move(String _dir) {
+		switch(_dir) {
+			case "left":
+				setXPos(getXPos()-1);
+			case "right":
+				setXPos(getXPos()+1);
+			case "up":
+				setYPos(getYPos()-1);
+		}
+	}
 }

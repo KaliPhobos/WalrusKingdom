@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class Screen {
-	public static TileSource tiles = new TileSource("resources\\tiles.png", 24);
+	public static TileSource tiles = new TileSource("resources\\tiles.png", window.blocksize);
 
 	public static void setSize(int _width, int _height) {
 		ScreenWidth = _width;
@@ -24,15 +24,12 @@ public class Screen {
 	public static JFrame createWindow() {
 		JFrame frame = new JFrame("CodeW");
         frame.setIgnoreRepaint(true);
-		frame.setSize(24*ScreenWidth, 24*ScreenHeight);		// set window size
-	    frame.setVisible(true);
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    frame.pack();
-	    frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(window.blocksize*ScreenWidth, window.blocksize*ScreenHeight);		// set window size
 	    return frame;
 	}
 	public static TileArea createTileArea(JFrame frame) {
-		TileArea tileArea = new TileArea(24*ScreenWidth, 24*ScreenHeight);
+		TileArea tileArea = new TileArea(window.blocksize*ScreenWidth, window.blocksize*ScreenHeight);
 		frame.add("Center", tileArea);
 		frame.pack();
 	    frame.setVisible(true);
@@ -43,10 +40,17 @@ public class Screen {
 		frame.add(lbl);
 		return lbl;
 	}
-	public static BufferStrategy createBuffer(Canvas canvas) {
-		canvas.createBufferStrategy(2);
-        BufferStrategy buffer = canvas.getBufferStrategy();
-        return buffer;
+	public static void prepareCanvas(Canvas _canvas) {
+		_canvas.setIgnoreRepaint(true);
+        _canvas.setSize(window.width, window.height);
+	}
+	public static BufferStrategy createBuffer(JFrame _window, Canvas _canvas) {
+        _window.add(_canvas);
+        _window.pack();
+        _window.setVisible(true);
+		_canvas.createBufferStrategy(2);
+		BufferStrategy _buffer = _canvas.getBufferStrategy();
+        return _buffer;
 	}
 	public static Screen createScreen(int _width, int _height) {
 		Screen screen = new Screen(_width, _height);
@@ -63,7 +67,7 @@ public class Screen {
 			for(int _x=0;_x<getWidth();_x++) {
 				Screen.setField(_x, _y, Map.get(left+_x, top+_y));
 				if(left+_x == Player.getXPos() && top+_y == Player.getYPos()) {
-					Screen.setField(_x, _y, 901*108+14);
+					Screen.setField(_x, _y, 901*6+0);
 				}
 			
 			}
@@ -77,21 +81,21 @@ public class Screen {
 				if (data!=dataOld | ForceUpdate == true) {
 					int _background = Map.getBackgroundID(data);	// extract background data
 					int _foreground = Map.getForegroundID(data);	// extrace foreground data
-					System.out.println("Zeichne neuen Block: "+_x+":"+_y);
+					/*System.out.println("Zeichne neuen Block: "+_x+":"+_y);
 					System.out.println("Original Data="+data);
 					System.out.println("Foreground (901)="+_foreground);
 					System.out.println("Background (1)="+_background);
 					System.out.println("background tile xPos="+TileSource.getXPos(_background));
 					System.out.println("background tile yPos="+TileSource.getYPos(_background));
 					System.out.println("foreground tile xPos="+TileSource.getXPos(_foreground));
-					System.out.println("foreground tile yPos="+TileSource.getYPos(_foreground));
-					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), 24*_x, 24*_y);						// render background layer
-					if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), 24*_x, 24*_y);}	// add foreground layer
+					System.out.println("foreground tile yPos="+TileSource.getYPos(_foreground));*/
+					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
+					if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
 				}
 			}
 		}
 	}
-	public static void DumpOldData() {
+	public static void UpdateOldData() {
 		ScreenMatrixOld = ScreenMatrix;
 	}
 	public static void setField(int _x, int _y, double i) {

@@ -44,6 +44,12 @@ public class TileSource extends Component {
 		if (m_tiles == null) {
 			return null;
 		}
-		return m_tiles.getSubimage(tilex*(m_tileSize+1)+1, tiley*(m_tileSize+1)+1, m_tileSize, m_tileSize);
+		try {
+			return m_tiles.getSubimage(tilex*(m_tileSize+1)+1, tiley*(m_tileSize+1)+1, m_tileSize, m_tileSize);
+		}
+		catch(Exception e){
+			System.out.println("Couldnt load tile subimage. Better check the BLOCKSIZE parameter and the sourcefile.");
+			return new BufferedImage(0, 0, 0);
+		}
 	}
 }

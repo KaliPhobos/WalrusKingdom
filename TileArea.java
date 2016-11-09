@@ -25,6 +25,8 @@ public class TileArea extends Component {
 	}
 	
 	public static void drawTile(TileSource tileSource, int tilex, int tiley, int x, int y) {
+		//Graphics graphics = _buffer.getDrawGraphics();
+		//graphics.drawImage(tileSource.getTile(tilex, tiley), x, y, null);
 		Graphics2D g = m_image.createGraphics();
 	    g.drawImage(tileSource.getTile(tilex, tiley), x, y, null);
 	}
