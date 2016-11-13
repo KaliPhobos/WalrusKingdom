@@ -13,7 +13,7 @@ import java.awt.Canvas;
 
 public class window {
 	public static int width = 1000;
-	public static int height = 528;
+	public static int height = 600;
 	public static int blocksize = 24;
 	public static BufferStrategy buffer;
 	public static void main(String[] args) {
@@ -33,7 +33,7 @@ public class window {
 		//Player Walrii = Player.createPlayer(0, 10, 10);		// Define Player
 		TileArea tileArea = Screen.createTileArea(window);	
 		Player.setXPos(0);
-		Player.setYPos(20);
+		Player.setYPos(22);
 		Map.createRandom(0, 96);
 		Map.loadCity1();
 		Screen.update();
