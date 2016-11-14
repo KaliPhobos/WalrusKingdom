@@ -66,34 +66,43 @@ public class Screen {
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				Screen.setField(_x, _y, Map.get(left+_x, top+_y));
-				if(left+_x == Player.getXPos() && top+_y == Player.getYPos()) {
-					Screen.setField(_x, _y, 901*6+0);
-				}
-			
 			}
 		}
 	}
-	public static void render(boolean ForceUpdate) {
+	public static void renderBackground(boolean ForceUpdate) {
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				double data = ScreenMatrix[_x][_y];				// load raw data
 				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld | ForceUpdate == true) {
 					int _background = Map.getBackgroundID(data);	// extract background data
-					int _foreground = Map.getForegroundID(data);	// extrace foreground data
-					/*System.out.println("Zeichne neuen Block: "+_x+":"+_y);
-					System.out.println("Original Data="+data);
-					System.out.println("Foreground (901)="+_foreground);
-					System.out.println("Background (1)="+_background);
-					System.out.println("background tile xPos="+TileSource.getXPos(_background));
-					System.out.println("background tile yPos="+TileSource.getYPos(_background));
-					System.out.println("foreground tile xPos="+TileSource.getXPos(_foreground));
-					System.out.println("foreground tile yPos="+TileSource.getYPos(_foreground));*/
 					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
+				}
+			}
+		}
+	}
+	public static void renderForeground(boolean ForceUpdate) {
+		for(int _y=0;_y<getHeight();_y++) {
+			for(int _x=0;_x<getWidth();_x++) {
+				double data = ScreenMatrix[_x][_y];				// load raw data
+				double dataOld = ScreenMatrixOld[_x][_y];
+				if (data!=dataOld | ForceUpdate == true) {
+					int _foreground = Map.getForegroundID(data);	// extrace foreground data
 					if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
 				}
 			}
 		}
+	}
+	public static void render(boolean ForceUpdate) {
+		renderBackground(ForceUpdate);
+		for(int _y=0;_y<getHeight();_y++) {
+			for(int _x=0;_x<getWidth();_x++) {
+				if(General.getMin(Map.getWidth()-getWidth(), General.getMax(0, Player.getXPos()-Math.round(getWidth()/2)))+_x == Player.getXPos() && General.getMin(Map.getHeight()-getHeight(), General.getMax(0, Player.getYPos()-Math.round(getHeight()/2)))+_y == Player.getYPos()) {
+					TileArea.drawTile(tiles, TileSource.getXPos(6), TileSource.getYPos(6), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));						// render background layer
+				}
+			}
+		}
+		renderForeground(ForceUpdate);
 	}
 	public static void UpdateOldData() {
 		ScreenMatrixOld = ScreenMatrix;

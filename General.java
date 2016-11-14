@@ -1,5 +1,7 @@
 package CodeW;
 
+import java.sql.Time;
+
 // This class is for whatever stuff I need to put somewhere but don't know where exactly ^^
 public class General {
 	public static int getMax(int _a, int _b) {
@@ -37,6 +39,7 @@ public class General {
 	public static void sleep(int _i) {
 		try { // wait 10ms to avoid any flicker
 		    Thread.sleep(_i);
+		    //System.currentTimeMillis()
 		} catch(InterruptedException ex) {
 		    Thread.currentThread().interrupt();
 		}

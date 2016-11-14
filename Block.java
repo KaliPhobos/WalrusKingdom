@@ -4,7 +4,7 @@ public class Block {
 	// Each Block only provides ONE picture-id since Foreground and Background will be two separated Layers of Blocks
 	// That way Triggers can get attached  to / affect background and foreground separately
 	public static boolean isUnknownBlockSolid = true;
-	int id;
+	long id;
 	String name;
 	boolean isSolid;
 	int PictureID;
@@ -19,7 +19,7 @@ public class Block {
 										// So I can check for these IDs instead of having to check for hard-coded coordinates
 										// Only for events that are always triggered by such a block, live Saving-points.
 	}
-	public static int getPictureIDfromID(int _id) {
+	public static int getPictureIDfromID(long _id) {
 		int _pos = getPosFromID(_id);
 		int _PictureID = 0;
 		try {
@@ -51,7 +51,7 @@ public class Block {
 	public int getPictureID() {
 		return this.PictureID;
 	}
-	public static int getTriggerIDFromID(int _id) {
+	public static int getTriggerIDFromID(long _id) {
 		int _pos = getPosFromID(_id);
 		int _TriggerID = 0;
 		try {
@@ -83,7 +83,7 @@ public class Block {
 	public int getTriggerID() {
 		return this.TriggerID;
 	}
-	public static int getPosFromID(int _id) {
+	public static int getPosFromID(long _id) {
 		int _pos = -1;
 		Exitloop:
 		for(int i_FindBlock=0; i_FindBlock<Blocks.length; i_FindBlock++) {
@@ -95,7 +95,7 @@ public class Block {
 		}
 		return _pos;
 	}
-	public static int getIDFromPos(int _pos) {
+	public static long getIDFromPos(int _pos) {
 		Block _block = Blocks[_pos];
 		if(_block!=null) {
 			return _block.id;
@@ -121,7 +121,7 @@ public class Block {
             }
         }
     }
-	public static boolean getSolidFromID(int _id) {
+	public static boolean getSolidFromID(long _id) {
 		int _pos = getPosFromID(_id);
 		return getSolidFromPos(_pos);
 	}
@@ -137,7 +137,7 @@ public class Block {
 	public boolean getSolid() {
 		return this.isSolid;
 	}
-    public static String getNameFromID(int _id) {
+    public static String getNameFromID(long _id) {
         int _pos = getPosFromID(_id);
         if(_pos==-1) {
             return "";
