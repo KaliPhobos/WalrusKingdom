@@ -12,8 +12,8 @@ import java.awt.Canvas;
 
 
 public class window {
-	public static int width = 1000;
-	public static int height = 600;
+	public static int width = 576;
+	public static int height = 400;
 	public static int blocksize = 24;
 	public static BufferStrategy buffer;
 	public static void main(String[] args) {
@@ -37,12 +37,12 @@ public class window {
 		Screen.render(true);
 		while (true) {				// MAIN GAME LOOP
 	    	Screen.update();
-	    	Screen.render(true);
+	    	Screen.render(false);
 	    	Screen.UpdateOldData();
-	    	window.repaint();
 	    	Keys.checkInput();
+	    	window.repaint();
 	    	General.sleep(5);
-	    	General.sleep(25);
+	    	General.sleep(55);
 		}
 	}
 	public static void LoadBlocks() {

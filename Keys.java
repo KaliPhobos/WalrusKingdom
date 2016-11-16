@@ -28,6 +28,7 @@ public class Keys implements KeyListener
 
 	public static void checkInput()
 	{
+		Player.TileChangeWhileWalking = 0;
 		if(keyDown[37]==true) {
     		Player.go("left");
 		}

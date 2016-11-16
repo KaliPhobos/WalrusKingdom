@@ -12,6 +12,7 @@ public class Screen {
 		ScreenHeight = _height;
 		createScreen(_width, _height);
 	}
+	public static int PlayerTile = 6;
 	public static double[][] ScreenMatrix;
 	public static double[][] ScreenMatrixOld;
 	public static int ScreenWidth;
@@ -74,7 +75,7 @@ public class Screen {
 			for(int _x=0;_x<getWidth();_x++) {
 				double data = ScreenMatrix[_x][_y];				// load raw data
 				double dataOld = ScreenMatrixOld[_x][_y];
-				if (data!=dataOld | ForceUpdate == true) {
+				if (data!=dataOld | ForceUpdate == true | Player.isLastPosition(_x, _y) | Player.isLastPosition(_x, _y+1)) {
 					int _background = Map.getBackgroundID(data);	// extract background data
 					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
 				}
@@ -86,9 +87,14 @@ public class Screen {
 			for(int _x=0;_x<getWidth();_x++) {
 				double data = ScreenMatrix[_x][_y];				// load raw data
 				double dataOld = ScreenMatrixOld[_x][_y];
-				if (data!=dataOld | ForceUpdate == true) {
+				if (data!=dataOld | ForceUpdate == true | Player.isLastPosition(_x, _y) | Player.isLastPosition(_x, _y+1)) {
 					int _foreground = Map.getForegroundID(data);	// extrace foreground data
 					if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
+				}
+				if (Player.isLastPosition(_x, _y) | Player.isLastPosition(_x, _y+1)) {
+					if(Map.getForegroundID(data)>0) {
+						TileArea.drawTile(tiles, TileSource.getXPos(Map.getForegroundID(data)), TileSource.getYPos(Map.getForegroundID(data)), window.blocksize*_x, window.blocksize*_y);
+					}
 				}
 			}
 		}
@@ -98,14 +104,25 @@ public class Screen {
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				if(General.getMin(Map.getWidth()-getWidth(), General.getMax(0, Player.getXPos()-Math.round(getWidth()/2)))+_x == Player.getXPos() && General.getMin(Map.getHeight()-getHeight(), General.getMax(0, Player.getYPos()-Math.round(getHeight()/2)))+_y == Player.getYPos()) {
-					TileArea.drawTile(tiles, TileSource.getXPos(6), TileSource.getYPos(6), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));						// render background layer
+					PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
+					TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));					// render background layer
+					Player.newLastXPos = _x;
+					Player.newLastYPos = _y;
+					int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
+					if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
 				}
 			}
 		}
 		renderForeground(ForceUpdate);
+		Player.lastXPos = Player.newLastXPos;
+		Player.lastYPos = Player.newLastYPos;
 	}
 	public static void UpdateOldData() {
-		ScreenMatrixOld = ScreenMatrix;
+		for(int _x=0;_x<(int)window.width/24;_x++) {
+			for(int _y=0;_y<(int)window.height/24;_y++) {
+				ScreenMatrixOld[_x][_y] = ScreenMatrix[_x][_y];
+			}
+		}
 	}
 	public static void setField(int _x, int _y, double i) {
 		ScreenMatrix[_x][_y] = i;		
