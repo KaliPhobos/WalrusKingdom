@@ -5,6 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class Screen {
+	public static boolean scrollLocked = false;
+	public static int screenLeft;
+	public static int screenTop;
 	public static TileSource tiles = new TileSource("resources\\tiles.png", window.blocksize);
 
 	public static void setSize(int _width, int _height) {
@@ -60,13 +63,22 @@ public class Screen {
 		return screen;
 	}
 	public static void update() {
-		int left = Player.getXPos()-Math.round(getWidth()/2);	// Might be out of border
-		int top = Player.getYPos()-Math.round(getHeight()/2);	// Might be out of border
-		top = General.getMin(Map.getHeight()-getHeight(), General.getMax(0, top));		// Inside Borders!
-		left = General.getMin(Map.getWidth()-getWidth(), General.getMax(0, left));		// Inside Borders!
+		screenLeft = Player.getXPos()-Math.round(getWidth()/2);	// Might be out of border
+		screenTop = Player.getYPos()-Math.round(getHeight()/2);	// Might be out of border
+		screenTop = General.getMin(Map.getHeight()-getHeight(), General.getMax(0, screenTop));		// Inside Borders!
+		screenLeft = General.getMin(Map.getWidth()-getWidth(), General.getMax(0, screenLeft));		// Inside Borders!
+		switch(Map.currentMapName) {
+			case "City1":
+				if (Player.getXPos()>24 && Player.getXPos()<49 && Player.getYPos()<25) {	// Inside the big garden --> only Y-axis scrolling enabled
+					screenLeft = 25;
+					scrollLocked = true;
+				} else {
+					scrollLocked = false;
+				}
+		}
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
-				Screen.setField(_x, _y, Map.get(left+_x, top+_y));
+				Screen.setField(_x, _y, Map.get(screenLeft+_x, screenTop+_y));
 			}
 		}
 	}
@@ -103,13 +115,24 @@ public class Screen {
 		renderBackground(ForceUpdate);
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
-				if(General.getMin(Map.getWidth()-getWidth(), General.getMax(0, Player.getXPos()-Math.round(getWidth()/2)))+_x == Player.getXPos() && General.getMin(Map.getHeight()-getHeight(), General.getMax(0, Player.getYPos()-Math.round(getHeight()/2)))+_y == Player.getYPos()) {
-					PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
-					TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));					// render background layer
-					Player.newLastXPos = _x;
-					Player.newLastYPos = _y;
-					int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
-					if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
+				if (scrollLocked==false) {
+					if(General.getBetween(0, Player.getXPos()-Math.round(getWidth()/2), Map.getWidth()-getWidth())+_x == Player.getXPos() && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
+						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
+						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));					// render background layer
+						Player.newLastXPos = _x;
+						Player.newLastYPos = _y;
+						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
+						if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
+					}
+				} else {	//This disables the automated screenscrolling for special areas on the map (like in huge gardens) so only the y-axis scrolls. Similar behaviour like close to edges
+					if(Player.getXPos()-screenLeft==_x && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
+						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
+						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));
+						Player.newLastXPos = _x;
+						Player.newLastYPos = _y;
+						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
+						if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
+					}
 				}
 			}
 		}

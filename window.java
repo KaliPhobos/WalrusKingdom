@@ -42,7 +42,7 @@ public class window {
 	    	Keys.checkInput();
 	    	window.repaint();
 	    	General.sleep(5);
-	    	General.sleep(55);
+	    	General.sleep(65);
 		}
 	}
 	public static void LoadBlocks() {
@@ -146,7 +146,7 @@ public class window {
 		Block.AddNew(97, "house", true, 97, 7);
 		Block.AddNew(98, "house", true, 98, 7);
 		Block.AddNew(99, "house", true, 99, 8);		// DOOR
-		Block.AddNew(100, "house", true, 100, 7);	// DOOR
+		Block.AddNew(100, "house", true, 100, 8);	// DOOR
 		Block.AddNew(101, "house", true, 101, 7);
 		Block.AddNew(102, "house", true, 102, 7);
 		Block.AddNew(103, "house", true, 103, 7);
@@ -156,66 +156,66 @@ public class window {
 		Block.AddNew(107, "tree", true, 107, 11);	// TREE
 		Block.AddNew(108, "tree", false, 108, 12);	// BEHIND TREE
 		Block.AddNew(109, "tree", true, 109, 11);	// TREE					// #######################
-		Block.AddNew(110, "walrus", false, 110, 2);
-		Block.AddNew(111, "walrus", false, 111, 2);
-		Block.AddNew(112, "walrus", false, 112, 2);
-		Block.AddNew(113, "walrus", false, 113, 2);
-		Block.AddNew(114, "walrus", false, 114, 2);
-		Block.AddNew(115, "walrus", false, 115, 2);
-		Block.AddNew(116, "walrus", false, 116, 2);
-		Block.AddNew(117, "walrus", false, 117, 2);
-		Block.AddNew(118, "walrus", false, 118, 2);
-		Block.AddNew(119, "walrus", false, 119, 2);
-		Block.AddNew(120, "walrus", false, 120, 2);
-		Block.AddNew(121, "walrus", false, 121, 2);
-		Block.AddNew(122, "walrus", false, 122, 2);
-		Block.AddNew(123, "walrus", false, 123, 2);
-		Block.AddNew(124, "walrus", false, 124, 2);
-		Block.AddNew(125, "walrus", false, 125, 2);
-		Block.AddNew(126, "walrus", false, 126, 2);
-		Block.AddNew(127, "walrus", false, 127, 2);
-		Block.AddNew(128, "walrus", false, 128, 2);
-		Block.AddNew(129, "walrus", false, 129, 2);
-		Block.AddNew(130, "walrus", false, 130, 2);
-		Block.AddNew(131, "walrus", false, 131, 2);
-		Block.AddNew(132, "walrus", false, 132, 2);
-		Block.AddNew(133, "walrus", false, 133, 2);
-		Block.AddNew(134, "walrus", false, 134, 2);
-		Block.AddNew(135, "walrus", false, 135, 2);
-		Block.AddNew(136, "walrus", false, 136, 2);
-		Block.AddNew(137, "walrus", false, 137, 2);
-		Block.AddNew(138, "walrus", false, 138, 2);
-		Block.AddNew(139, "walrus", false, 139, 2);
-		Block.AddNew(140, "walrus", false, 140, 2);
-		Block.AddNew(141, "walrus", false, 141, 2);
-		Block.AddNew(142, "walrus", false, 142, 2);
-		Block.AddNew(143, "walrus", false, 143, 2);
-		Block.AddNew(144, "walrus", false, 144, 2);
-		Block.AddNew(145, "walrus", false, 145, 2);
-		Block.AddNew(146, "walrus", false, 146, 2);
-		Block.AddNew(147, "walrus", false, 147, 2);
-		Block.AddNew(148, "walrus", false, 148, 2);
-		Block.AddNew(149, "walrus", false, 149, 2);
-		Block.AddNew(150, "walrus", false, 150, 2);
-		Block.AddNew(151, "walrus", false, 151, 2);
-		Block.AddNew(152, "walrus", false, 152, 2);
-		Block.AddNew(153, "walrus", false, 153, 2);
-		Block.AddNew(154, "walrus", false, 154, 2);
-		Block.AddNew(155, "walrus", false, 155, 2);
-		Block.AddNew(156, "walrus", false, 156, 2);
-		Block.AddNew(157, "walrus", false, 157, 2);
-		Block.AddNew(158, "walrus", false, 158, 2);
-		Block.AddNew(159, "walrus", false, 159, 2);
-		Block.AddNew(160, "walrus", false, 160, 2);
-		Block.AddNew(161, "walrus", false, 161, 2);
-		Block.AddNew(162, "walrus", false, 162, 2);
-		Block.AddNew(163, "walrus", false, 163, 2);
-		Block.AddNew(164, "walrus", false, 164, 2);
-		Block.AddNew(165, "walrus", false, 165, 2);
-		Block.AddNew(166, "walrus", false, 166, 2);
-		Block.AddNew(167, "walrus", false, 167, 2);
-		Block.AddNew(168, "walrus", false, 168, 2);
-		Block.AddNew(169, "walrus", false, 169, 2);
+		Block.AddNew(110, "street", false, 110, 6);
+		Block.AddNew(111, "street", false, 111, 6);
+		Block.AddNew(112, "street", false, 112, 6);
+		Block.AddNew(113, "street", false, 113, 6);
+		Block.AddNew(114, "NotInUse", false, 114, 0);
+		Block.AddNew(115, "NotInUse", false, 115, 0);
+		Block.AddNew(116, "NotInUse", false, 116, 0);
+		Block.AddNew(117, "NotInUse", false, 117, 0);
+		Block.AddNew(118, "NotInUse", false, 118, 0);
+		Block.AddNew(119, "NotInUse", false, 119, 0);
+		Block.AddNew(120, "NotInUse", false, 120, 0);
+		Block.AddNew(121, "NotInUse", false, 121, 0);
+		Block.AddNew(122, "NotInUse", false, 122, 0);
+		Block.AddNew(123, "NotInUse", false, 123, 0);
+		Block.AddNew(124, "NotInUse", false, 124, 0);
+		Block.AddNew(125, "NotInUse", false, 125, 0);
+		Block.AddNew(126, "NotInUse", false, 126, 0);
+		Block.AddNew(127, "NotInUse", false, 127, 0);
+		Block.AddNew(128, "NotInUse", false, 128, 0);
+		Block.AddNew(129, "NotInUse", false, 129, 0);
+		Block.AddNew(130, "street", false, 130, 6);
+		Block.AddNew(131, "street", false, 131, 6);
+		Block.AddNew(132, "street", false, 132, 6);
+		Block.AddNew(133, "street", false, 133, 6);
+		Block.AddNew(134, "house", true, 134, 7);
+		Block.AddNew(135, "house", true, 135, 7);
+		Block.AddNew(136, "house", true, 136, 8);	// A DOOR
+		Block.AddNew(137, "house", true, 137, 8);	// A DOOR
+		Block.AddNew(138, "house", true, 138, 7);
+		Block.AddNew(139, "house", true, 139, 7);
+		Block.AddNew(140, "house", true, 140, 7);
+		Block.AddNew(141, "house", true, 141, 7);
+		Block.AddNew(142, "street", false, 142, 6);	// A sign should stand on this
+		Block.AddNew(143, "house", true, 143, 7);
+		Block.AddNew(144, "house", true, 144, 7);
+		Block.AddNew(145, "house", true, 145, 7);
+		Block.AddNew(146, "house", true, 146, 7);
+		Block.AddNew(147, "house", true, 147, 7);
+		Block.AddNew(148, "house", true, 148, 7);
+		Block.AddNew(149, "house", true, 149, 7);
+		Block.AddNew(150, "NotInUse", false, 150, 0);
+		Block.AddNew(151, "NotInUse", false, 151, 0);
+		Block.AddNew(152, "NotInUse", false, 152, 0);
+		Block.AddNew(153, "house", true, 153, 7);
+		Block.AddNew(154, "house", true, 154, 7);
+		Block.AddNew(155, "house", true, 155, 7);
+		Block.AddNew(156, "house", true, 156, 7);
+		Block.AddNew(157, "house", true, 157, 7);
+		Block.AddNew(158, "house", true, 158, 7);
+		Block.AddNew(159, "house", true, 159, 7);
+		Block.AddNew(160, "NotInUse", false, 160, 0);
+		Block.AddNew(161, "NotInUse", false, 161, 0);
+		Block.AddNew(162, "NotInUse", false, 162, 0);
+		Block.AddNew(163, "house", true, 163, 7);
+		Block.AddNew(164, "house", false, 164, 7);
+		Block.AddNew(165, "house", false, 165, 7);
+		Block.AddNew(166, "house", false, 166, 7);
+		Block.AddNew(167, "house", false, 167, 7);
+		Block.AddNew(168, "house", false, 168, 7);
+		Block.AddNew(169, "house", false, 169, 7);	// ############################# end
 		Block.AddNew(170, "walrus", false, 170, 2);
 		Block.AddNew(171, "walrus", false, 171, 2);
 		Block.AddNew(172, "walrus", false, 172, 2);
