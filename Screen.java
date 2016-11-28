@@ -78,7 +78,7 @@ public class Screen {
 		}
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
-				Screen.setField(_x, _y, Map.get(screenLeft+_x, screenTop+_y));
+				setField(_x, _y, Map.get(screenLeft+_x, screenTop+_y));
 			}
 		}
 	}
@@ -117,15 +117,20 @@ public class Screen {
 			for(int _x=0;_x<getWidth();_x++) {
 				if (scrollLocked==false) {
 					if(General.getBetween(0, Player.getXPos()-Math.round(getWidth()/2), Map.getWidth()-getWidth())+_x == Player.getXPos() && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
+						int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data
+						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);
 						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
 						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));					// render background layer
 						Player.newLastXPos = _x;
 						Player.newLastYPos = _y;
 						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
 						if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
+						
 					}
 				} else {	//This disables the automated screenscrolling for special areas on the map (like in huge gardens) so only the y-axis scrolls. Similar behaviour like close to edges
 					if(Player.getXPos()-screenLeft==_x && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
+						int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data
+						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);
 						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
 						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));
 						Player.newLastXPos = _x;

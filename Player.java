@@ -10,6 +10,7 @@ public class Player {
 	public static int newLastYPos = 0;
 	public static int TileChangeWhileWalking = 0;
 	public static int StepDuration = 200;			//time for one animated step in MS
+	public static long nextStep = 0;
 	public static Player createPlayer(int _PictureID, int _xPos, int _yPos) {
 		Player player = new Player();
 		player.PictureID = _PictureID;	// Current Frame used for the animated Walrii. Depends on @MSEC and at walking/standing
@@ -26,10 +27,9 @@ public class Player {
 		return xPos;
 	}
 	public static void setTileChangeWhileWalking() {
-		if ((System.currentTimeMillis()%StepDuration)>(StepDuration/2)) {
-			Player.TileChangeWhileWalking = 1;
-		} else {
-			Player.TileChangeWhileWalking = 0;
+		if (System.currentTimeMillis()>nextStep) {
+			Player.TileChangeWhileWalking = Math.abs(Player.TileChangeWhileWalking-1);
+			nextStep = System.currentTimeMillis()+StepDuration;
 		}
 	}
 	public static int getCurrentTile() {
@@ -93,6 +93,7 @@ public class Player {
 		return solid;
 	}
 	public static void go(String _dir) {
+		long nextStep = System.currentTimeMillis()+StepDuration;
 		Player.setTileChangeWhileWalking();
 		turn(_dir);
 		if (!checkPath(_dir)) {
