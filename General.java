@@ -6,6 +6,7 @@ import java.sql.Time;
 public class General {
 	public static long secondOld = 0;
 	public static int fps = 0;
+	public static boolean ShowFPS = false;
 	public static int getMax(int _a, int _b) {
 		if(_a>_b) {
 			return _a;
@@ -50,7 +51,9 @@ public class General {
 		    if (millis - millis%1000 == secondOld) {
 		    	fps++;
 		    } else {
-		    	System.out.println(fps);				// Will give me the current FPS
+		    	if(ShowFPS==true) {
+		    		System.out.println(fps);			// Will give me the current FPS
+		    	}
 		    	fps = 0;								// 115 heavy load (running around)	(5000 max with no sleep)
 		    }											// 185 idle							(9500 max with no sleep)
 		    secondOld = millis - millis%1000;

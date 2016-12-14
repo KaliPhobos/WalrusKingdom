@@ -2,8 +2,7 @@ package CodeW;
 
 import java.awt.Component;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
@@ -14,9 +13,10 @@ public class TileSource extends Component {
 	public TileSource(String filename, int tileSize) {
 		m_tileSize = tileSize;
 		try {
-			m_tiles = ImageIO.read(new File(filename));
+			m_tiles = ImageIO.read(TileSource.class.getResourceAsStream(filename));
 		}
-		catch (IOException e) { // no need to do anything here
+		catch (Exception e) { // no need to do anything here
+			e.printStackTrace();
 		}						// m_tiles will be null anyway
 		
 		if (m_tiles == null) {
@@ -46,6 +46,18 @@ public class TileSource extends Component {
 		}
 		try {
 			return m_tiles.getSubimage(tilex*(m_tileSize+1)+1, tiley*(m_tileSize+1)+1, m_tileSize, m_tileSize);
+		}
+		catch(Exception e){
+			System.out.println("Couldnt load tile subimage. Better check the BLOCKSIZE parameter and the sourcefile.");
+			return new BufferedImage(0, 0, 0);
+		}
+	}
+	public BufferedImage getTile(int tileXmin, int tileYmin, int tileXdim, int tileYdim) {
+		if (m_tiles == null) {
+			return null;
+		}
+		try {
+			return m_tiles.getSubimage(tileXmin, tileYmin, tileXdim-tileXmin, tileYdim-tileYmin);
 		}
 		catch(Exception e){
 			System.out.println("Couldnt load tile subimage. Better check the BLOCKSIZE parameter and the sourcefile.");

@@ -8,16 +8,17 @@ public class Screen {
 	public static boolean scrollLocked = false;
 	public static int screenLeft;
 	public static int screenTop;
-	public static TileSource tiles = new TileSource("resources\\tiles.png", window.blocksize);
+	public static TileSource tiles = new TileSource("/CodeW/assets/tiles.png", window.blocksize);
 
 	public static void setSize(int _width, int _height) {
+		// set size of screen in px (called by WINDOW)
 		ScreenWidth = _width;
 		ScreenHeight = _height;
 		createScreen(_width, _height);
 	}
-	public static int PlayerTile = 6;
-	public static double[][] ScreenMatrix;
-	public static double[][] ScreenMatrixOld;
+	public static int PlayerTile = 6;	// the current tile (cuz it's animated)
+	public static double[][] ScreenMatrix;		// visible part of map data is copied there
+	public static double[][] ScreenMatrixOld;	// same as above, last frame (necessary for modified rendering)
 	public static int ScreenWidth;
 	public static int ScreenHeight;
 	public static Screen Screen = createScreen(ScreenWidth, ScreenHeight);
@@ -26,6 +27,7 @@ public class Screen {
 		ScreenMatrixOld = new double[_width][_height];
 	}
 	public static JFrame createWindow() {
+		// Pretty obvious, it *creates window*
 		JFrame frame = new JFrame("CodeW");
         frame.setIgnoreRepaint(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,43 +35,29 @@ public class Screen {
 	    return frame;
 	}
 	public static TileArea createTileArea(JFrame frame) {
+		// Create Tile area to draw in
 		TileArea tileArea = new TileArea(window.blocksize*ScreenWidth, window.blocksize*ScreenHeight);
 		frame.add("Center", tileArea);
 		frame.pack();
 	    frame.setVisible(true);
 		return tileArea;
 	}
-	public static JLabel createLabel(JFrame frame) {	
-		JLabel lbl = new JLabel();
-		frame.add(lbl);
-		return lbl;
-	}
-	public static void prepareCanvas(Canvas _canvas) {
-		_canvas.setIgnoreRepaint(true);
-        _canvas.setSize(window.width, window.height);
-	}
-	public static BufferStrategy createBuffer(JFrame _window, Canvas _canvas) {
-        _window.add(_canvas);
-        _window.pack();
-        _window.setVisible(true);
-		_canvas.createBufferStrategy(2);
-		BufferStrategy _buffer = _canvas.getBufferStrategy();
-        return _buffer;
-	}
 	public static Screen createScreen(int _width, int _height) {
+		// Create the screen itself
 		Screen screen = new Screen(_width, _height);
 		ScreenMatrix = new double[_width][_height];
 		ScreenMatrixOld = new double[_width][_height];
 		return screen;
 	}
 	public static void update() {
+		// This updates the screen position (what part of the map is shown, is something outside the border, ...)
 		screenLeft = Player.getXPos()-Math.round(getWidth()/2);	// Might be out of border
 		screenTop = Player.getYPos()-Math.round(getHeight()/2);	// Might be out of border
 		screenTop = General.getMin(Map.getHeight()-getHeight(), General.getMax(0, screenTop));		// Inside Borders!
 		screenLeft = General.getMin(Map.getWidth()-getWidth(), General.getMax(0, screenLeft));		// Inside Borders!
 		switch(Map.currentMapName) {
 			case "City1":
-				if (Player.getXPos()>24 && Player.getXPos()<49 && Player.getYPos()<25) {	// Inside the big garden --> only Y-axis scrolling enabled
+				if (Player.getXPos()>24 && Player.getXPos()<49 && Player.getYPos()<31 && Player.getYPos()>12) {	// Inside the big garden --> only Y-axis scrolling enabled
 					screenLeft = 25;
 					scrollLocked = true;
 				} else {
@@ -83,6 +71,7 @@ public class Screen {
 		}
 	}
 	public static void renderBackground(boolean ForceUpdate) {
+		// Renders background layer *obviously*
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				double data = ScreenMatrix[_x][_y];				// load raw data
@@ -95,6 +84,7 @@ public class Screen {
 		}
 	}
 	public static void renderForeground(boolean ForceUpdate) {
+		// Renders foreground layer *obviously*
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				double data = ScreenMatrix[_x][_y];				// load raw data
@@ -112,6 +102,7 @@ public class Screen {
 		}
 	}
 	public static void render(boolean ForceUpdate) {
+		// main class that does all the rendering
 		renderBackground(ForceUpdate);
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
@@ -146,6 +137,7 @@ public class Screen {
 		Player.lastYPos = Player.newLastYPos;
 	}
 	public static void UpdateOldData() {
+		// Update the background data necessary for modified rendering algorithm
 		for(int _x=0;_x<(int)window.width/24;_x++) {
 			for(int _y=0;_y<(int)window.height/24;_y++) {
 				ScreenMatrixOld[_x][_y] = ScreenMatrix[_x][_y];
@@ -153,12 +145,15 @@ public class Screen {
 		}
 	}
 	public static void setField(int _x, int _y, double i) {
+		// To directly alter the screen's content without changing the map (making tiles flicker between different ones and stuff like that)
 		ScreenMatrix[_x][_y] = i;		
 	}
 	public static int getWidth() {
+		// Return screen width in PX
 		return ScreenWidth;
 	}
 	public static int getHeight() {
+		// Return screen height in PX
 		return ScreenHeight;
 	}
 }

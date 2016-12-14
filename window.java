@@ -12,41 +12,51 @@ import java.awt.Canvas;
 
 
 public class window {
+	public static String GameStat = "Menu";					// Tells where in the program we are (Game, Menu, Paused, ...) Used for different key inputs
 	public static int width = 576;
 	public static int height = 400;
-	public static int blocksize = 24;
+	public static int blocksize = 24;						// size of tiles used in the game (24px)
+	public static JFrame window;
 	public static BufferStrategy buffer;
 	public static void main(String[] args) {
-		LoadBlocks();										// Loading background block data
-		Screen.setSize(width/blocksize, height/blocksize);	// Setup Screen (results in 0-11 x 0-17)
-		JFrame window = Screen.createWindow();				// Create window object (JFrame)
-
-		System.out.println("hello");
+		LoadBlocks();																// Loading background block data
+		Screen.setSize(Math.round(width/blocksize), Math.round(height/blocksize));	// Setup Screen (results in 0-11 x 0-17)
+		window = Screen.createWindow();												// Create window object (JFrame)
 		Keys keys = new Keys(window);
 		window.pack();
 		window.setVisible(true);
-		
-		Map.setSize(100, 100);								// Create map with given size
-		//Player Walrii = Player.createPlayer(0, 10, 10);		// Define Player ONLY FOR LOCAL MULTIPLAYER
 		TileArea tileArea = Screen.createTileArea(window);	
-		Player.setXPos(5);
-		Player.setYPos(5);
-		Map.createRandom(0, 96);
-		Map.loadCity1();
+		Menu.Menu();			// Call Start Menu
+	}
+	
+	public static void Start() {
+		Player.direction = "right";
+		GameStat = "Game";
+		System.out.println("window.start");
+		//Player Walrii = Player.createPlayer(0, 10, 10);	// Define Player ONLY FOR LOCAL MULTIPLAYER
+		Map.loadIntro1();
 		Screen.update();
 		Screen.render(true);
-		while (true) {				// MAIN GAME LOOP
-	    	Screen.update();
-	    	Screen.render(false);
-	    	Screen.UpdateOldData();
-	    	Keys.checkInput();
-	    	window.repaint();
-	    	General.sleep(5);
-	    	General.sleep(65);
+		Intro.Intro();
+		Resume();
+	}
+	
+	
+	public static void Resume() {
+		GameStat = "Game";
+		System.out.println("window.resume");
+		while (true) {										// MAIN GAME LOOP
+		   	Screen.update();
+		   	Screen.render(false);
+		   	Screen.UpdateOldData();
+		   	Keys.checkInput();
+		   	window.repaint();
+		   	General.sleep(5);
+		   	General.sleep(65);
 		}
 	}
 	public static void LoadBlocks() {
-		Block.AddNew(0, "void", false, 0, 1);		// nothing there
+		Block.AddNew(0, "void", false, 0, 1);		// no walrus shall ever go there
 		Block.AddNew(1, "walrus", false, 1, 2);		// a walrus
 		Block.AddNew(2, "walrus", true, 2, 2);
 		Block.AddNew(3, "walrus", false, 3, 2);
@@ -160,20 +170,20 @@ public class window {
 		Block.AddNew(111, "street", false, 111, 6);
 		Block.AddNew(112, "street", false, 112, 6);
 		Block.AddNew(113, "street", false, 113, 6);
-		Block.AddNew(114, "NotInUse", false, 114, 0);
-		Block.AddNew(115, "NotInUse", false, 115, 0);
-		Block.AddNew(116, "NotInUse", false, 116, 0);
-		Block.AddNew(117, "NotInUse", false, 117, 0);
-		Block.AddNew(118, "NotInUse", false, 118, 0);
-		Block.AddNew(119, "NotInUse", false, 119, 0);
+		Block.AddNew(114, "statue", true, 114, 9);	// statue
+		Block.AddNew(115, "statue", true, 115, 0);	// statue
+		Block.AddNew(116, "tree", true, 116, 11);	// TREE
+		Block.AddNew(117, "tree", true, 117, 11);	// TREE
+		Block.AddNew(118, "tree", false, 118, 12);	// BEHIND TREE
+		Block.AddNew(119, "tree", true, 119, 11);	// TREE
 		Block.AddNew(120, "NotInUse", false, 120, 0);
 		Block.AddNew(121, "NotInUse", false, 121, 0);
 		Block.AddNew(122, "NotInUse", false, 122, 0);
 		Block.AddNew(123, "NotInUse", false, 123, 0);
 		Block.AddNew(124, "NotInUse", false, 124, 0);
 		Block.AddNew(125, "NotInUse", false, 125, 0);
-		Block.AddNew(126, "NotInUse", false, 126, 0);
-		Block.AddNew(127, "NotInUse", false, 127, 0);
+		Block.AddNew(126, "tree", true, 126, 11);	// TREE
+		Block.AddNew(127, "tree", true, 127, 11);	// TREE
 		Block.AddNew(128, "NotInUse", false, 128, 0);
 		Block.AddNew(129, "NotInUse", false, 129, 0);
 		Block.AddNew(130, "street", false, 130, 6);
