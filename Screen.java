@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class Screen {
+	public static long ScreenSizeIndicator = 0;
 	public static boolean scrollLocked = false;
 	public static int screenLeft;
 	public static int screenTop;
@@ -21,6 +22,7 @@ public class Screen {
 	public static double[][] ScreenMatrixOld;	// same as above, last frame (necessary for modified rendering)
 	public static int ScreenWidth;
 	public static int ScreenHeight;
+	public static TileArea tileArea;
 	public static Screen Screen = createScreen(ScreenWidth, ScreenHeight);
 	public Screen(int _width, int _height) {
 		ScreenMatrix = new double[_width][_height];
@@ -109,21 +111,21 @@ public class Screen {
 				if (scrollLocked==false) {
 					if(General.getBetween(0, Player.getXPos()-Math.round(getWidth()/2), Map.getWidth()-getWidth())+_x == Player.getXPos() && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
 						int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data
-						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);
+						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
 						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
-						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));					// render background layer
+						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-Math.round(getZoom()/4), 0));					// render char
 						Player.newLastXPos = _x;
 						Player.newLastYPos = _y;
 						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
 						if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
 						
 					}
-				} else {	//This disables the automated screenscrolling for special areas on the map (like in huge gardens) so only the y-axis scrolls. Similar behaviour like close to edges
+				} else {	//This disables the automated screenscrolling for special areas on the map (like in huge gardens) so only the y-axis scrolls. Similar to behavior close to map's edges
 					if(Player.getXPos()-screenLeft==_x && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
 						int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data
 						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);
 						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
-						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-6, 0));
+						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-Math.round(getZoom()/4), 0));		// render char
 						Player.newLastXPos = _x;
 						Player.newLastYPos = _y;
 						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
@@ -155,5 +157,10 @@ public class Screen {
 	public static int getHeight() {
 		// Return screen height in PX
 		return ScreenHeight;
+	}
+	public static int getZoom() {
+		int zoomX = (window.window.getWidth()/Screen.getWidth());
+		int zoomY = (window.window.getHeight()/Screen.getHeight());
+		return General.getMin(zoomX,  zoomY);
 	}
 }

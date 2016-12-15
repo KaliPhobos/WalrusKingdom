@@ -28,7 +28,18 @@ public class Keys implements KeyListener
 
 	public static void checkInput()
 	{
-		System.out.println(window.GameStat);
+		if (window.window.getWidth()* window.window.getHeight()!=Screen.ScreenSizeIndicator) {		// triggered if you resize the window
+			
+			if (Screen.ScreenSizeIndicator==0) {
+				Screen.tileArea = new TileArea(window.window.getWidth(), window.window.getHeight());	// thx p4nix for tellign me to do this xD
+				Screen.ScreenSizeIndicator = window.window.getWidth()* window.window.getHeight();
+			} else {
+				Screen.tileArea = new TileArea(window.window.getWidth(), window.window.getHeight());	// thx p4nix for tellign me to do this xD
+				Screen.ScreenSizeIndicator = window.window.getWidth()* window.window.getHeight();
+				Screen.render(true);		//causing troubls if Map.MAP[] isn't already defined (first run)
+			}
+		}
+		//System.out.println(window.GameStat);
 		if (System.currentTimeMillis() > Menu.KeyPause) {
 			if (window.GameStat.equals("Game")) {											// IN THE GAME
 				Player.TileChangeWhileWalking = 0;

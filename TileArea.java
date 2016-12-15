@@ -30,8 +30,11 @@ public class TileArea extends Component {
 	
 	public static void drawTile(TileSource tileSource, int tilex, int tiley, int x, int y) {
 		//This draws a regular tile used inside the game (map)
+		// Zoom factor should be the same as tileSize (24) when 1:1 zoom
 		Graphics2D g = m_image.createGraphics();
-	    g.drawImage(tileSource.getTile(tilex, tiley), x, y, null);
+		x = (x*Screen.getZoom())/24;
+		y = (y*Screen.getZoom())/24;
+	    g.drawImage(tileSource.getTile(tilex, tiley), x, y, Screen.getZoom(), Screen.getZoom(), null);
 	}
 	public static void drawTile(TileSource tileSource, int screenx, int screeny, int tilex, int tiley, int tilexdim, int tileydim) {
 		//this draws tiles of different sizes (Menu, Inv)

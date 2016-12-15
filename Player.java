@@ -103,16 +103,16 @@ public class Player {
 	public static void move(String _dir) {
 		switch(_dir) {
 			case "left":
-				setXPos(General.getMin(General.getMax(getXPos()-1, 0), Map.getWidth()));
+				setXPos(General.getBetween(0, getXPos()-1, Map.getWidth()-1));
 				break;
 			case "right":
-				setXPos(General.getMin(General.getMax(getXPos()+1, 0), Map.getWidth()));
+				setXPos(General.getBetween(0, getXPos()+1, Map.getWidth()-1));
 				break;
 			case "up":
-				setYPos(General.getMin(General.getMax(getYPos()-1, 0), Map.getHeight()));
+				setYPos(General.getBetween(0, getYPos()-1, Map.getHeight()-1));
 				break;
 			case "down":
-				setYPos(General.getMin(General.getMax(getYPos()+1, 0), Map.getHeight()));
+				setYPos(General.getBetween(0, getYPos()+1, Map.getHeight()-1));
 				break;
 		}
 	}

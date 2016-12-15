@@ -19,12 +19,16 @@ public class window {
 	public static JFrame window;
 	public static BufferStrategy buffer;
 	public static void main(String[] args) {
+		Map.loadIntro1();
+		GameStat = "Menu";		// just to prevent the bug
+		
 		LoadBlocks();																// Loading background block data
 		Screen.setSize(Math.round(width/blocksize), Math.round(height/blocksize));	// Setup Screen (results in 0-11 x 0-17)
 		window = Screen.createWindow();												// Create window object (JFrame)
 		Keys keys = new Keys(window);
 		window.pack();
 		window.setVisible(true);
+		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
 		TileArea tileArea = Screen.createTileArea(window);	
 		Menu.Menu();			// Call Start Menu
 	}
