@@ -9,6 +9,9 @@ public class Screen {
 	public static boolean scrollLocked = false;
 	public static int screenLeft;
 	public static int screenTop;
+	public static int scrollX = 0;	// pixels still left to scroll on X-axis (from this int to 0, so -12 will be 12px to the right)
+	public static int scrollY = 0;	// pixels still left to scroll on Y-axis (from this int to 0, so -12 will be 12px down)
+	
 	public static TileSource tiles = new TileSource("/CodeW/assets/tiles.png", window.blocksize);
 
 	public static void setSize(int _width, int _height) {
@@ -160,7 +163,13 @@ public class Screen {
 	}
 	public static int getZoom() {
 		int zoomX = (window.window.getWidth()/Screen.getWidth());
-		int zoomY = (window.window.getHeight()/Screen.getHeight());
+		int zoomY = ((window.window.getHeight()-38)/Screen.getHeight());	// the window.getHeight get the height of the rendered window PLUS the window's bar. Add -38(px) to fix it
 		return General.getMin(zoomX,  zoomY);
+	}
+	public static void scrollX() {
+		
+	}
+	public static void scrollY() {
+		
 	}
 }

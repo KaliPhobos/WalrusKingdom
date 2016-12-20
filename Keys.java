@@ -129,7 +129,7 @@ public class Keys implements KeyListener
 				if(keyDown[27]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+1000;
 					System.out.println("intro -> load main");
-					Intro.loadMainGame();
+					Intro.IntroEnd();
 				}
 				if(keyDown[32]==true) {
 					System.out.println("intro -> continue Intro");

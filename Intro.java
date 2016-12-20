@@ -29,8 +29,11 @@ public class Intro {
 		continueIntro();
 	}
 	
-	public static void loadMainGame(){
+	public static void IntroEnd() {
 		WalriiWalkX(15, 29);
+		loadMainGame();
+	}
+	public static void loadMainGame(){
 		window.GameStat = "Game";
 		System.out.println("intro.loadMainGame");
 		Map.loadCity1();
@@ -64,7 +67,7 @@ public class Intro {
 		window.GameStat = "SilentIntro";
 		while(Keys.isPressed(32)==false) { Keys.checkInput(); }
 		Screen.render(true);
-		loadMainGame();
+		IntroEnd();
 
 	}
 	

@@ -30,7 +30,8 @@ public class window {
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
 		TileArea tileArea = Screen.createTileArea(window);	
-		Menu.Menu();			// Call Start Menu
+		//Menu.Menu();			// Call Start Menu
+		Intro.loadMainGame();
 	}
 	
 	public static void Start() {
