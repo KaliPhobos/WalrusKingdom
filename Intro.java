@@ -23,6 +23,7 @@ public class Intro {
 		g.setColor(Color.decode("#861618"));
 		g.drawString("Press [SPACE] to continue or [ESC] to skip the intro", 30, 350);
 		window.window.repaint();
+		Menu.KeyPause = System.currentTimeMillis()+1000;
 		while(Keys.isPressed(32)==false && Keys.isPressed(27)==false) {
 		   	Keys.checkInput();
 		}
