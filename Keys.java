@@ -56,74 +56,55 @@ public class Keys implements KeyListener
 		    		Player.go("down");
 				}
 				if(keyDown[27]==true) {
+					Map.MapToResume = Map.currentMapName;
+					Player.xPosToResume = Player.xPos;
+					Player.yPosToResume = Player.yPos;
 					Menu.Menu();
 				}
 				if(keyDown[73]==true) {
 					TileArea.drawInfo();
 				}
 			} else if (window.GameStat.equals("Menu")) {									// IN THE MAIN MENU
-				if(keyDown[10]==true) {
-		    		if (Menu.SelectedID==0) {		// New Game
-		    			window.Start();
-		    		}
-		    		if (Menu.SelectedID==1) {		// Continue
-		    			// NOt possible here
-		    		}
-		    		if (Menu.SelectedID==2) {		// Save
-		    			
-		    		}
-		    		if (Menu.SelectedID==3) {		// Settings
-		    			
-		    		}
-		    		if (Menu.SelectedID==4) {		// Credits
-		    			
-		    		}
-		    		if (Menu.SelectedID==5) {		// Exit
-		    			System.exit(0);
-		    		}
+				Player.TileChangeWhileWalking = 0;
+				if(keyDown[37]==true) {
+					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
+		    		Player.go("left");
 				}
 				if(keyDown[38]==true) {
-		    		Menu.SelectedID = General.getBetween(0,  Menu.SelectedID-1, 5);
-		    		Menu.KeyPause = System.currentTimeMillis()+150;
+					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
+		    		Player.go("up");
+				}
+				if(keyDown[39]==true) {
+					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
+		    		Player.go("right");
 				}
 				if(keyDown[40]==true) {
-		    		Menu.SelectedID = General.getBetween(0,  Menu.SelectedID+1, 5);
-		    		Menu.KeyPause = System.currentTimeMillis()+150;
+					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
+		    		Player.go("down");
+				}
+				if(keyDown[73]==true) {
+					TileArea.drawInfo();
 				}
 			} else if (window.GameStat.equals("Paused")) {									// GAME IS PAUSED
-				if(keyDown[27]==true) {
-					Menu.KeyPause = System.currentTimeMillis()+150;
-					Screen.render(true);
-					window.Resume();
-				}
-				if(keyDown[10]==true) {
-		    		if (Menu.SelectedID==0) {		// New Game
-		    			window.Start();
-		    		}
-		    		if (Menu.SelectedID==1) {		// Continue
-		    			Screen.render(true);
-		    			window.Resume();
-		    		}
-		    		if (Menu.SelectedID==2) {		// Save
-		    			
-		    		}
-		    		if (Menu.SelectedID==3) {		// Settings
-		    			
-		    		}
-		    		if (Menu.SelectedID==4) {		// Credits
-		    			
-		    		}
-		    		if (Menu.SelectedID==5) {		// Exit
-		    			System.exit(0);
-		    		}
+				Player.TileChangeWhileWalking = 0;
+				if(keyDown[37]==true) {
+					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
+		    		Player.go("left");
 				}
 				if(keyDown[38]==true) {
-		    		Menu.SelectedID = General.getBetween(0,  Menu.SelectedID-1, 5);
-		    		Menu.KeyPause = System.currentTimeMillis()+150;
+					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
+		    		Player.go("up");
+				}
+				if(keyDown[39]==true) {
+					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
+		    		Player.go("right");
 				}
 				if(keyDown[40]==true) {
-		    		Menu.SelectedID = General.getBetween(0,  Menu.SelectedID+1, 5);
-		    		Menu.KeyPause = System.currentTimeMillis()+150;
+					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
+		    		Player.go("down");
+				}
+				if(keyDown[73]==true) {
+					TileArea.drawInfo();
 				}
 			} else if (window.GameStat.equals("Intro")) {									// ASKING TO START THE GAME INTRO (DIALOGUES)
 				if(keyDown[27]==true) {

@@ -3,6 +3,8 @@ public class Player {
 	public static int PictureID;
 	public static int xPos = 5;
 	public static int yPos = 5;
+	public static int xPosToResume = 5;
+	public static int yPosToResume = 5;
 	public static String direction = "right";
 	public static int lastXPos = 0;
 	public static int lastYPos = 0;
@@ -57,15 +59,11 @@ public class Player {
 		}
 		return dirINT;
 	}
-	public static int getYPos() {
-		return yPos;
-	}
-	public static void setXPos(int _x) {
-		xPos = _x;
-	}
-	public static void setYPos(int _y) {
-		yPos = _y;
-	}
+	public static int getYPos() {return yPos;}
+	public static void setXPos(int _x) {xPos = _x;}
+	public static void setXPosToResume(int _x) {xPosToResume = _x;}
+	public static void setYPos(int _y) {yPos = _y;}
+	public static void setYPosToResume(int _y) {yPosToResume = _y;}
 	public static void turn(String _dir) {
 		direction = _dir;
 	}
@@ -87,9 +85,8 @@ public class Player {
 				_y = getYPos()+1;
 				break;
 		}
-		//System.out.println("     new position ("+_x+" | "+_y+")");
-		//System.out.println("     block at pos ("+Map.getForegroundID(_x, _y)+" | "+Map.getBackgroundID(_x, _y)+")");
-		boolean solid = Block.getSolidFromID(Map.getBackgroundID(_x, _y)) || Block.getSolidFromID(Map.getForegroundID(_x, _y));
+		// add the -1 to prevent the walrus from triggering the out of border bug
+		boolean solid = Block.getSolidFromID(Map.getBackgroundID(General.getBetween(0, _x, Map.getWidth()-1), General.getBetween(0, _y, Map.getHeight()-1))) || Block.getSolidFromID(Map.getForegroundID(General.getBetween(0, _x, Map.getWidth()-1), General.getBetween(0, _y, Map.getHeight()-1)));
 		return solid;
 	}
 	public static void go(String _dir) {

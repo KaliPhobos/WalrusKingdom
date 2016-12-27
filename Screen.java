@@ -162,8 +162,8 @@ public class Screen {
 		return ScreenHeight;
 	}
 	public static int getZoom() {
-		int zoomX = (window.window.getWidth()/Screen.getWidth());
-		int zoomY = ((window.window.getHeight()-38)/Screen.getHeight());	// the window.getHeight get the height of the rendered window PLUS the window's bar. Add -38(px) to fix it
+		int zoomX = (window.getWidth()/Screen.getWidth());
+		int zoomY = ((window.getHeight())/Screen.getHeight());
 		return General.getMin(zoomX,  zoomY);
 	}
 	public static void scrollX() {

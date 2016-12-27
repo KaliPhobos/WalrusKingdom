@@ -14,7 +14,7 @@ import java.awt.Canvas;
 public class window {
 	public static String GameStat = "Menu";					// Tells where in the program we are (Game, Menu, Paused, ...) Used for different key inputs
 	public static int width = 576;
-	public static int height = 400;
+	public static int height = 384;
 	public static int blocksize = 24;						// size of tiles used in the game (24px)
 	public static JFrame window;
 	public static BufferStrategy buffer;
@@ -29,9 +29,9 @@ public class window {
 		window.pack();
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
-		TileArea tileArea = Screen.createTileArea(window);	
-		//Menu.Menu();			// Call Start Menu
-		Intro.loadMainGame();
+		TileArea tileArea = Screen.createTileArea(window);
+		Menu.Menu();			// Call Start Menu
+		//Intro.loadMainGame();
 	}
 	
 	public static void Start() {
@@ -50,15 +50,25 @@ public class window {
 	public static void Resume() {
 		GameStat = "Game";
 		System.out.println("window.resume");
+		if (Map.MapToResume=="City1") {Map.loadCity1();}
+		Player.xPos = Player.xPosToResume;			// resume with old position on the map
+		Player.yPos = Player.yPosToResume;
+		Screen.update();
+	   	Screen.render(true);
 		while (true) {										// MAIN GAME LOOP
 		   	Screen.update();
 		   	Screen.render(false);
 		   	Screen.UpdateOldData();
 		   	Keys.checkInput();
 		   	window.repaint();
-		   	General.sleep(5);
-		   	General.sleep(65);
+		   	General.sleep(70);
 		}
+	}
+	public static int getWidth() {
+		return window.getWidth();
+	}
+	public static int getHeight() {
+		return window.getHeight()-38;		// the window.getHeight get the height of the rendered window PLUS the window's bar. Add -38(px) to fix it
 	}
 	public static void LoadBlocks() {
 		Block.AddNew(0, "void", false, 0, 1);		// no walrus shall ever go there
@@ -70,7 +80,7 @@ public class window {
 		Block.AddNew(6, "walrus", false, 6, 2);
 		Block.AddNew(7, "walrus", false, 7, 2);
 		Block.AddNew(8, "walrus", false, 8, 2);
-		Block.AddNew(9, "coin", false, 9, 3);		// you found a coin
+		Block.AddNew(9, "void SOLID", true, 9, 3);		// used for menu
 		Block.AddNew(10, "grass", false, 10, 4);	// nice grass
 		Block.AddNew(11, "flower", false, 11, 5);	// nice flower
 		Block.AddNew(12, "flower", false, 12, 5);

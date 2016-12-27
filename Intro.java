@@ -37,6 +37,8 @@ public class Intro {
 		window.GameStat = "Game";
 		System.out.println("intro.loadMainGame");
 		Map.loadCity1();
+		Player.setXPosToResume(0);		// WIll be restored instead of xPos and yPos (overwritten in Menu)
+		Player.setYPosToResume(37);
 		Screen.update();
 		Screen.render(true);
 	   	window.window.repaint();

@@ -39,7 +39,15 @@ public class TileArea extends Component {
 	public static void drawTile(TileSource tileSource, int screenx, int screeny, int tilex, int tiley, int tilexdim, int tileydim) {
 		//this draws tiles of different sizes (Menu, Inv)
 		Graphics2D g = m_image.createGraphics();
-	    g.drawImage(tileSource.getTile(tilex, tiley, tilexdim, tileydim), screenx, screeny, null);
+		//float zoom = General.getMin((screenx+tilexdim)/window.getWidth(), (screeny+tileydim)/window.getHeight());
+		//float x = (screenx+tilexdim)/window.getWidth();
+		//float y =(screeny+tileydim)/window.getHeight();
+		//System.out.println("x-zoom="+x+"		y-zoom="+y);
+	    screenx = (screenx*Screen.getZoom())/24;
+	    screeny = (screeny*Screen.getZoom())/24;
+	    int tilexdimZoomed = (tilexdim*Screen.getZoom())/24;
+	    int tileydimZoomed = (tileydim*Screen.getZoom())/24;
+		g.drawImage(tileSource.getTile(tilex, tiley, tilexdim, tileydim), screenx, screeny, tilexdimZoomed, tileydimZoomed, null);
 	}
 	public static void drawInfo() {
 		// Just some debug panel, called when pressing "I"
