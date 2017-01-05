@@ -16,12 +16,12 @@ public class Intro {
 		TileSource textbox = new TileSource("/CodeW/assets/textbox.png", window.blocksize);
 		TileArea.drawTile(textbox, 9, 219, 0, 0, 558, 150);	// add foreground layer (screenPos, SourcePos, SourceDim)
 		Graphics2D g = TileArea.m_image.createGraphics();
-		g.setFont(new Font("DPComic", Font.PLAIN, 26)); 
+		g.setFont(new Font("DPComic", Font.PLAIN, General.adaptZoom(26))); 
 		g.setColor(Color.decode("#161618"));
-		g.drawString("This is a recorded personal message sent to you by", 30, 260);
-		g.drawString("Prof. Dr. Elric, head of the royal science center.", 30, 290);
+		g.drawString("This is a recorded personal message sent to you by", General.adaptZoom(30), General.adaptZoom(260));
+		g.drawString("Prof. Dr. Elric, head of the royal science center.", General.adaptZoom(30), General.adaptZoom(290));
 		g.setColor(Color.decode("#861618"));
-		g.drawString("Press [SPACE] to continue or [ESC] to skip the intro", 30, 350);
+		g.drawString("Press [SPACE] to continue or [ESC] to skip the intro", General.adaptZoom(30), General.adaptZoom(350));
 		window.window.repaint();
 		Menu.KeyPause = System.currentTimeMillis()+1000;
 		while(Keys.isPressed(32)==false && Keys.isPressed(27)==false) {
@@ -76,7 +76,7 @@ public class Intro {
 	
 	public static Graphics2D prepareGraphics() {
 		Graphics2D g = TileArea.m_image.createGraphics();
-		g.setFont(new Font("DPComic", Font.PLAIN, 26)); 
+		g.setFont(new Font("DPComic", Font.PLAIN, General.adaptZoom(26))); 
 		g.setColor(Color.decode("#161618"));
 		return g;
 	}
@@ -86,11 +86,11 @@ public class Intro {
 		Screen.render(true);
 		TileArea.drawTile(textbox, 9, 9, 0, 0, 558, 150);	// add foreground layer (screenPos, SourcePos, SourceDim)
 		Graphics2D g = prepareGraphics();
-		g.drawString(Str1, 30, 50);
-		g.drawString(Str2, 30, 80);
-		g.drawString(Str3, 30, 110);
+		g.drawString(Str1, General.adaptZoom(30), General.adaptZoom(50));
+		g.drawString(Str2, General.adaptZoom(30), General.adaptZoom(80));
+		g.drawString(Str3, General.adaptZoom(30), General.adaptZoom(110));
 		g.setColor(Color.decode("#861618"));
-		g.drawString("Press [SPACE] to continue or [ESC] to skip the intro", 30, 140);
+		g.drawString("Press [SPACE] to continue or [ESC] to skip the intro", General.adaptZoom(30), General.adaptZoom(140));
 		window.window.repaint();
 		General.sleep(1000);
 		while(Keys.isPressed(32)==false) { Keys.checkInput(); }

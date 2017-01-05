@@ -72,4 +72,8 @@ public class General {
 		    Thread.currentThread().interrupt();
 		}
 	}
+	
+	public static int adaptZoom(int input) {
+		return (input*Screen.getZoom())/24;
+	}
 }

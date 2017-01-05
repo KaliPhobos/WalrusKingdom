@@ -32,8 +32,8 @@ public class TileArea extends Component {
 		//This draws a regular tile used inside the game (map)
 		// Zoom factor should be the same as tileSize (24) when 1:1 zoom
 		Graphics2D g = m_image.createGraphics();
-		x = (x*Screen.getZoom())/24;
-		y = (y*Screen.getZoom())/24;
+		x = General.adaptZoom(x);
+	    y = General.adaptZoom(y);
 	    g.drawImage(tileSource.getTile(tilex, tiley), x, y, Screen.getZoom(), Screen.getZoom(), null);
 	}
 	public static void drawTile(TileSource tileSource, int screenx, int screeny, int tilex, int tiley, int tilexdim, int tileydim) {
@@ -43,10 +43,10 @@ public class TileArea extends Component {
 		//float x = (screenx+tilexdim)/window.getWidth();
 		//float y =(screeny+tileydim)/window.getHeight();
 		//System.out.println("x-zoom="+x+"		y-zoom="+y);
-	    screenx = (screenx*Screen.getZoom())/24;
-	    screeny = (screeny*Screen.getZoom())/24;
-	    int tilexdimZoomed = (tilexdim*Screen.getZoom())/24;
-	    int tileydimZoomed = (tileydim*Screen.getZoom())/24;
+		screenx = General.adaptZoom(screenx);
+	    screeny = General.adaptZoom(screeny);
+	    int tilexdimZoomed = General.adaptZoom(tilexdim);
+	    int tileydimZoomed = General.adaptZoom(tileydim);
 		g.drawImage(tileSource.getTile(tilex, tiley, tilexdim, tileydim), screenx, screeny, tilexdimZoomed, tileydimZoomed, null);
 	}
 	public static void drawTile(TileSource tileSource, int screenx, int screeny, int tilex, int tiley, int tilexdim, int tileydim, String comment) {
@@ -54,14 +54,10 @@ public class TileArea extends Component {
 		// for whatever reason it gets stretched in X direction the more it shifts...
 		// dunno why, dont ask me... ??	^	
 		Graphics2D g = m_image.createGraphics();
-		screenx = (screenx*Screen.getZoom())/24;
-	    screeny = (screeny*Screen.getZoom())/24;
-	    //int tilexdimZoomed = (int) 1.0*(tilexdim*Screen.getZoom())/24;
-	    //int tileydimZoomed = (int) 1.0*(tileydim*Screen.getZoom())/24;
-	    //int tilexdimZoomed = tilexdim;
-	    //int tileydimZoomed = tileydim;
-	    int tilexdimZoomed = (tilexdim*Screen.getZoom())/24;
-	    int tileydimZoomed = (tileydim*Screen.getZoom())/24;
+		screenx = General.adaptZoom(screenx);
+	    screeny = General.adaptZoom(screeny);
+	    int tilexdimZoomed = General.adaptZoom(tilexdim);
+	    int tileydimZoomed = General.adaptZoom(tileydim);
 	    
 	    System.out.println("Tilesource X="+tilex+" Y="+tiley+" Breite="+tilexdim+" Höhe="+tileydim+" Wird gezeichnet auf X="+screenx+" Y="+screeny+" Breite="+tilexdimZoomed+" Höhe="+tileydimZoomed);
 		g.drawImage(tileSource.getTile(tilex, tiley, tilexdim+tilex, tileydim), screenx, screeny, tilexdimZoomed, tileydimZoomed, null);
