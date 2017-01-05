@@ -166,6 +166,9 @@ public class Screen {
 		int zoomY = ((window.getHeight())/Screen.getHeight());
 		return General.getMin(zoomX,  zoomY);
 	}
+	public static int getZoomX() {
+		return (window.getWidth()/Screen.getWidth());
+	}
 	public static void scrollX() {
 		
 	}

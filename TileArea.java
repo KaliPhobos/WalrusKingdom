@@ -49,6 +49,23 @@ public class TileArea extends Component {
 	    int tileydimZoomed = (tileydim*Screen.getZoom())/24;
 		g.drawImage(tileSource.getTile(tilex, tiley, tilexdim, tileydim), screenx, screeny, tilexdimZoomed, tileydimZoomed, null);
 	}
+	public static void drawTile(TileSource tileSource, int screenx, int screeny, int tilex, int tiley, int tilexdim, int tileydim, String comment) {
+		// to handle the special menu background
+		// for whatever reason it gets stretched in X direction the more it shifts...
+		// dunno why, dont ask me... ??	^	
+		Graphics2D g = m_image.createGraphics();
+		screenx = (screenx*Screen.getZoom())/24;
+	    screeny = (screeny*Screen.getZoom())/24;
+	    //int tilexdimZoomed = (int) 1.0*(tilexdim*Screen.getZoom())/24;
+	    //int tileydimZoomed = (int) 1.0*(tileydim*Screen.getZoom())/24;
+	    //int tilexdimZoomed = tilexdim;
+	    //int tileydimZoomed = tileydim;
+	    int tilexdimZoomed = (tilexdim*Screen.getZoom())/24;
+	    int tileydimZoomed = (tileydim*Screen.getZoom())/24;
+	    
+	    System.out.println("Tilesource X="+tilex+" Y="+tiley+" Breite="+tilexdim+" Höhe="+tileydim+" Wird gezeichnet auf X="+screenx+" Y="+screeny+" Breite="+tilexdimZoomed+" Höhe="+tileydimZoomed);
+		g.drawImage(tileSource.getTile(tilex, tiley, tilexdim+tilex, tileydim), screenx, screeny, tilexdimZoomed, tileydimZoomed, null);
+	}
 	public static void drawInfo() {
 		// Just some debug panel, called when pressing "I"
 		Graphics2D g = m_image.createGraphics();

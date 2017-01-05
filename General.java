@@ -30,6 +30,13 @@ public class General {
 			return _b;
 		}
 	}
+	public static int getMin(long _a, long _b) {
+		if(_a<_b) {
+			return (int) _a;
+		} else {
+			return (int) _b;
+		}
+	}
 	public static int getMin(int[] _a) {
 		int _max = 999999;
 		for(int i=0;i<_a.length;i++) {
@@ -41,6 +48,10 @@ public class General {
 	}
 	public static int getBetween(int _min, int _x, int _max) {
 		int _ans = getMax(_min, getMin(_max, _x));
+		return _ans;
+	}
+	public static int getBetween(int _min, long _x, int _max) {
+		int _ans = getMax(_min, (int) getMin((long) _max, _x));
 		return _ans;
 	}
 	public static void sleep(int _i) {

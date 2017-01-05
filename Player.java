@@ -91,6 +91,7 @@ public class Player {
 	}
 	public static void go(String _dir) {
 		long nextStep = System.currentTimeMillis()+StepDuration;
+		Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration/2;
 		Player.setTileChangeWhileWalking();
 		turn(_dir);
 		if (!checkPath(_dir)) {

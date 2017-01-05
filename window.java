@@ -147,8 +147,8 @@ public class window {
 		Block.AddNew(73, "house", true, 73, 7);
 		Block.AddNew(74, "house", true, 74, 7);
 		Block.AddNew(75, "house", true, 75, 7);
-		Block.AddNew(76, "sign", true, 76, 10);
-		Block.AddNew(77, "sign", true, 77, 10);
+		Block.AddNew(76, "sign", false, 76, 10);	// arrow signs NOT solid. Only text-signs are
+		Block.AddNew(77, "sign", false, 77, 10);
 		Block.AddNew(78, "sign", true, 78, 10);
 		Block.AddNew(79, "sign", true, 79, 10);
 		Block.AddNew(80, "house", false, 80, 7);
