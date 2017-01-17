@@ -25,7 +25,7 @@ public class Menu {
 			Graphics2D g = TileArea.m_image.createGraphics();
 			g.setFont(new Font("Arial", Font.BOLD, 12)); 
 			g.setColor(Color.white);
-			int _shiftX = 0;	// so it actualy does a perfect loop no matter what zoom option. else it adds a break after finishing each round
+			int _shiftX = 0;	// so it actually does a perfect loop no matter what zoom option. else it adds a break after finishing each round
 			for(int _shiftXcounter=0;_shiftX<1200;_shiftXcounter++) {
 				_shiftX = General.getBetween(1,  (long) _shiftXcounter*(1200*(Screen.getZoomX()/24))/1200, 1200);
 				TileArea.drawTile(menuTileBack, 0, 0, _shiftX, 0, 576, 384, "abc");	// add foreground layer (screenPos, SourcePos, SourceDim)
@@ -39,7 +39,6 @@ public class Menu {
 			   	
 				
 			   	NextUpdate = System.currentTimeMillis()+10;
-				System.out.println(_shiftX);
 			   	while (System.currentTimeMillis()<NextUpdate) {
 				   	General.sleep(1);
 			   		if(System.currentTimeMillis()>KeyPause) {

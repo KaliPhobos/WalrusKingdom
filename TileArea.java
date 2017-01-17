@@ -59,7 +59,7 @@ public class TileArea extends Component {
 	    int tilexdimZoomed = General.adaptZoom(tilexdim);
 	    int tileydimZoomed = General.adaptZoom(tileydim);
 	    
-	    System.out.println("Tilesource X="+tilex+" Y="+tiley+" Breite="+tilexdim+" Höhe="+tileydim+" Wird gezeichnet auf X="+screenx+" Y="+screeny+" Breite="+tilexdimZoomed+" Höhe="+tileydimZoomed);
+	    //System.out.println("Tilesource X="+tilex+" Y="+tiley+" Breite="+tilexdim+" Höhe="+tileydim+" Wird gezeichnet auf X="+screenx+" Y="+screeny+" Breite="+tilexdimZoomed+" Höhe="+tileydimZoomed);
 		g.drawImage(tileSource.getTile(tilex, tiley, tilexdim+tilex, tileydim), screenx, screeny, tilexdimZoomed, tileydimZoomed, null);
 	}
 	public static void drawInfo() {

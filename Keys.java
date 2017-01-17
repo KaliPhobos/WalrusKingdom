@@ -110,15 +110,16 @@ public class Keys implements KeyListener
 				if(keyDown[27]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+1000;
 					System.out.println("intro -> load main");
-					Intro.IntroEnd();
+					// goes to Intro.IntroEnd();	(walk out of forest)
 				}
 				if(keyDown[32]==true) {
 					System.out.println("intro -> continue Intro");
+					window.GameStat = "ContinueIntro";
 					Intro.continueIntro();
 				}
-			} else if (window.GameStat.equals("SilentIntro")) {									// INSIDE THE GAME INTRO (DIALOGUES)
+			} else if (window.GameStat.equals("ContinueIntro")) {									// INSIDE THE GAME INTRO (DIALOGUES)
 				if(keyDown[27]==true) {
-					System.out.println("silent intro -> load main");
+					System.out.println("continue intro -> load main");
 					Menu.KeyPause = System.currentTimeMillis()+150;
 					Intro.loadMainGame();
 				}

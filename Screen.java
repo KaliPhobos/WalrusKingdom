@@ -12,7 +12,7 @@ public class Screen {
 	public static int screenTop;
 	public static int scrollX = 0;	// pixels still left to scroll on X-axis (from this int to 0, so -12 will be 12px to the right)
 	public static int scrollY = 0;	// pixels still left to scroll on Y-axis (from this int to 0, so -12 will be 12px down)
-	
+	public static boolean forceUpdateNextTime = false; // ment to be set to TRUE after Popup messages (so no fragments are left)
 	public static TileSource tiles = new TileSource("/CodeW/assets/tiles.png", window.blocksize);
 
 	public static void setSize(int _width, int _height) {
@@ -139,6 +139,11 @@ public class Screen {
 			}
 		}
 		renderForeground(ForceUpdate);
+		Trigger.trigger(Player.getXPos(), Player.getYPos());
+		if(Trigger.get(Player.getXPos(), Player.getYPos())==0.0 && forceUpdateNextTime==true) {	// To prevent left over fragments from popups
+			forceUpdateNextTime = false;
+			render(true);
+		}
 		Player.lastXPos = Player.newLastXPos;
 		Player.lastYPos = Player.newLastYPos;
 	}
@@ -171,9 +176,9 @@ public class Screen {
 		return (window.getWidth()/Screen.getWidth());
 	}
 	public static void scrollX() {
-		
+		// not implemented yet
 	}
 	public static void scrollY() {
-		
+		// not implemented yet
 	}
 }

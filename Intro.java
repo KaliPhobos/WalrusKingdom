@@ -37,7 +37,11 @@ public class Intro {
 			window.window.repaint();
 			General.sleep(100);
 		}
-		continueIntro();
+		if(window.GameStat.equals("ContinueIntro")) {
+			continueIntro();
+		} else {
+			IntroEnd();
+		}
 	}
 	
 	public static void IntroEnd() {
@@ -59,7 +63,7 @@ public class Intro {
 	
 	
 	public static void continueIntro() {		
-		window.GameStat = "SilentIntro";
+		window.GameStat = "ContinueIntro";
 		Menu.KeyPause = System.currentTimeMillis()+150;
 		DisplayMessage("Hey there, Walrii.", "As you maybe already know, I'm Dr. Elric and also", "a close friend of our King since many many years.");
 		DisplayMessage("I do not know if he has ever told you this, but your", "grandfather used to be a good friend of mine, too,", "when we were younger.");
@@ -77,7 +81,7 @@ public class Intro {
 		DisplayMessage("Where is the fun in being a walrus if you can not", "eat fish every day? There simply is none!!", "I would rather die than never eat fish again!");
 		DisplayMessage("I admit this might sound stupid coming from a man", "who is already dead, but you get the point, right?", "We have to stop him for the sake of all walruses.");
 		General.sleep(1000);
-		window.GameStat = "SilentIntro";
+		window.GameStat = "ContinueIntro";
 		while(Keys.isPressed(32)==false) { Keys.checkInput(); }
 		Screen.render(true);
 		IntroEnd();

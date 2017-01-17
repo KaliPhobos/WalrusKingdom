@@ -104,21 +104,25 @@ public class Player {
 				setXPos(General.getBetween(0, getXPos()-1, Map.getWidth()-1));
 				Screen.scrollX = -1*window.blocksize;							// will be multiplied with ZoomFactor later. Internally working with pixels in 1:1 zoom
 				Screen.scrollX();	// do the smooth scrolling animation
+				//Trigger.trigger(getXPos(), getYPos());
 				break;
 			case "right":
 				setXPos(General.getBetween(0, getXPos()+1, Map.getWidth()-1));
 				Screen.scrollX = window.blocksize;
 				Screen.scrollX();	// do the smooth scrolling animation
+				//Trigger.trigger(getXPos(), getYPos());
 				break;
 			case "up":
 				setYPos(General.getBetween(0, getYPos()-1, Map.getHeight()-1));
 				Screen.scrollY = -1*window.blocksize;
 				Screen.scrollY();	// do the smooth scrolling animation
+				//Trigger.trigger(getXPos(), getYPos());
 				break;
 			case "down":
 				setYPos(General.getBetween(0, getYPos()+1, Map.getHeight()-1));
 				Screen.scrollY = window.blocksize;
 				Screen.scrollY();	// do the smooth scrolling animation
+				//Trigger.trigger(getXPos(), getYPos());
 				break;
 		}
 	}
