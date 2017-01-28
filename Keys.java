@@ -62,6 +62,7 @@ public class Keys implements KeyListener
 					Menu.Menu();
 				}
 				if(keyDown[73]==true) {
+					System.out.println("x="+Player.getXPos()+" y="+Player.getYPos());
 					TileArea.drawInfo();
 				}
 			} else if (window.GameStat.equals("Menu")) {									// IN THE MAIN MENU

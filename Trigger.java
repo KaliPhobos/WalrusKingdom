@@ -28,10 +28,43 @@ public class Trigger {
 		if(BackgroundID!=0) {
 			Screen.forceUpdateNextTime = true;
 			System.out.println("trigger: "+BackgroundID);
+			int x = Player.getXPos();
+			int y = Player.getYPos();
 			switch(Map.currentMapName) {
-			case "City1":
-				Graphics2D g = prepareGraphics();
-				g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(215), General.adaptZoom(254));
+				case "City1":
+					if(BackgroundID>0) {
+						Graphics2D g = prepareGraphics();		// Show trigger text
+						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(215), General.adaptZoom(254));
+					} else {
+						if((x==43)&&(y>45)&&(y<49)) {
+							Graphics2D g = prepareGraphics();		// Show trigger text
+							g.drawString("Enter the forest?", General.adaptZoom(215), General.adaptZoom(254));
+						}
+						if((x==44)&&(y>45)&&(y<49)) {
+							Map.loadForestHouse();
+							Player.setXPos(Player.getXPos()-30);
+							Player.setYPos(Player.getYPos()-38);
+							System.out.println("Teleport INTO FOREST");
+						}
+					}
+				
+				case "ForestHouse":
+					if(BackgroundID>0) {
+						Graphics2D g = prepareGraphics();		// Show trigger text
+						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(215), General.adaptZoom(254));
+					} else {
+						if((x==13)&&(y>7)&&(y<11)) {
+							Graphics2D g = prepareGraphics();		// Show trigger text
+							g.drawString("Leave the forest?", General.adaptZoom(215), General.adaptZoom(254));
+						}
+						if((x==12)&&(y>7)&&(y<11)) {
+							Map.loadCity1();
+							Player.setXPos(Player.getXPos()+30);
+							Player.setYPos(Player.getYPos()+38);
+							System.out.println("teleport BACK");
+						}
+					}
+					
 			}
 		}
 	}

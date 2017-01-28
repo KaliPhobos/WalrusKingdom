@@ -19,6 +19,7 @@ public class window {
 	public static JFrame window;
 	public static BufferStrategy buffer;
 	public static void main(String[] args) {
+		Screen.loadFont();
 		Map.loadIntro1();
 		GameStat = "Menu";		// just to prevent the bug
 		
@@ -30,8 +31,8 @@ public class window {
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
 		TileArea tileArea = Screen.createTileArea(window);
-		Menu.Menu();			// Call Start Menu
-		//Intro.loadMainGame();
+		//Menu.Menu();			// Call Start Menu
+		Intro.loadMainGame();
 	}
 	
 	public static void Start() {

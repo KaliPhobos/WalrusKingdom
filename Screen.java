@@ -1,7 +1,11 @@
 package CodeW;
 import java.awt.Canvas;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -142,6 +146,7 @@ public class Screen {
 		Trigger.trigger(Player.getXPos(), Player.getYPos());
 		if(Trigger.get(Player.getXPos(), Player.getYPos())==0.0 && forceUpdateNextTime==true) {	// To prevent left over fragments from popups
 			forceUpdateNextTime = false;
+
 			render(true);
 		}
 		Player.lastXPos = Player.newLastXPos;
@@ -158,6 +163,15 @@ public class Screen {
 	public static void setField(int _x, int _y, double i) {
 		// To directly alter the screen's content without changing the map (making tiles flicker between different ones and stuff like that)
 		ScreenMatrix[_x][_y] = i;		
+	}
+	public static void loadFont() {
+		try {
+		     GraphicsEnvironment ge = 
+		         GraphicsEnvironment.getLocalGraphicsEnvironment();
+		     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/CodeW/assets/font.ttf")));
+		} catch (Exception e) {
+		     //Handle exception
+		}
 	}
 	public static int getWidth() {
 		// Return screen width in PX

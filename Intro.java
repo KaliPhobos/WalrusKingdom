@@ -52,6 +52,8 @@ public class Intro {
 		window.GameStat = "Game";
 		System.out.println("intro.loadMainGame");
 		Map.loadCity1();
+		Player.setXPos(0);
+		Player.setYPos(37);
 		Player.setXPosToResume(0);		// WIll be restored instead of xPos and yPos (overwritten in Menu)
 		Player.setYPosToResume(37);
 		Screen.update();
@@ -66,6 +68,7 @@ public class Intro {
 		window.GameStat = "ContinueIntro";
 		Menu.KeyPause = System.currentTimeMillis()+150;
 		DisplayMessage("Hey there, Walrii.", "As you maybe already know, I'm Dr. Elric and also", "a close friend of our King since many many years.");
+		System.exit(0);
 		DisplayMessage("I do not know if he has ever told you this, but your", "grandfather used to be a good friend of mine, too,", "when we were younger.");
 		DisplayMessage("I am sending you this message as I have no-one else", "I can trust any longer.", "Someone has poisoned me and I'm probably already");
 		DisplayMessage("dead when you receive this message. But I need you", "to do something for me,  I need your help, Walrii!", "");
