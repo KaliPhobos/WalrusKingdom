@@ -232,8 +232,8 @@ public class window {
 		Block.AddNew(157, "house", true, 157, 7);
 		Block.AddNew(158, "house", true, 158, 7);
 		Block.AddNew(159, "house", true, 159, 7);
-		Block.AddNew(160, "NotInUse", false, 160, 0);
-		Block.AddNew(161, "NotInUse", false, 161, 0);
+		Block.AddNew(160, "house", false, 160, 0);
+		Block.AddNew(161, "house", false, 161, 0);
 		Block.AddNew(162, "NotInUse", false, 162, 0);
 		Block.AddNew(163, "house", true, 163, 7);
 		Block.AddNew(164, "house", false, 164, 7);
