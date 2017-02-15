@@ -12,7 +12,7 @@ public class Menu {
 	public static long KeyPause = System.currentTimeMillis()-1;
 	public static int SelectedID = 0;
 	public static String LastMap = Map.currentMapName;		// used to go back to the right map after opening the menu
-	public static void Menu() {
+	public static void RunMenu() {
 		Map.loadMenu();
 		if (!window.GameStat.equals("Menu")) {
 			// If the game didnt just start but you came from inside the game

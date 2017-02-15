@@ -1,13 +1,9 @@
 package CodeW;
-import java.awt.Canvas;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.awt.image.BufferStrategy;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 public class Screen {
 	public static long ScreenSizeIndicator = 0;
@@ -61,10 +57,8 @@ public class Screen {
 	}
 	public static void update() {
 		// This updates the screen position (what part of the map is shown, is something outside the border, ...)
-		screenLeft = Player.getXPos()-Math.round(getWidth()/2);	// Might be out of border
-		screenTop = Player.getYPos()-Math.round(getHeight()/2);	// Might be out of border
-		screenTop = General.getMin(Map.getHeight()-getHeight(), General.getMax(0, screenTop));		// Inside Borders!
-		screenLeft = General.getMin(Map.getWidth()-getWidth(), General.getMax(0, screenLeft));		// Inside Borders!
+		screenTop = General.getBetween(0, Map.getHeight()-getHeight(), Player.getYPos()-Math.round(getHeight()/2));
+		screenLeft = General.getBetween(0, Map.getWidth()-getWidth(), Player.getXPos()-Math.round(getWidth()/2));
 		switch(Map.currentMapName) {
 			case "City1":
 				if (Player.getXPos()>24 && Player.getXPos()<49 && Player.getYPos()<31 && Player.getYPos()>12) {	// Inside the big garden --> only Y-axis scrolling enabled
@@ -86,7 +80,11 @@ public class Screen {
 			for(int _x=0;_x<getWidth();_x++) {
 				double data = ScreenMatrix[_x][_y];				// load raw data
 				double dataOld = ScreenMatrixOld[_x][_y];
-				if (data!=dataOld | ForceUpdate == true | Player.isLastPosition(_x, _y) | Player.isLastPosition(_x, _y+1)) {
+				if (data!=dataOld | ForceUpdate == true) {	// Player moved
+					int _background = Map.getBackgroundID(data);	// extract background data
+					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
+				}
+				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-2 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
 					int _background = Map.getBackgroundID(data);	// extract background data
 					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
 				}
@@ -99,12 +97,13 @@ public class Screen {
 			for(int _x=0;_x<getWidth();_x++) {
 				double data = ScreenMatrix[_x][_y];				// load raw data
 				double dataOld = ScreenMatrixOld[_x][_y];
-				if (data!=dataOld | ForceUpdate == true | Player.isLastPosition(_x, _y) | Player.isLastPosition(_x, _y+1)) {
+				if (data!=dataOld | ForceUpdate == true) {		// Update to map data or player moved
 					int _foreground = Map.getForegroundID(data);	// extrace foreground data
-					if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
+					if(_foreground>0 && (_y==Player.getYPos()-1)==false) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
 				}
-				if (Player.isLastPosition(_x, _y) | Player.isLastPosition(_x, _y+1)) {
-					if(Map.getForegroundID(data)>0) {
+				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-2 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
+					int _foreground = Map.getForegroundID(data);	// extrace foreground data
+					if(_foreground>0) {
 						TileArea.drawTile(tiles, TileSource.getXPos(Map.getForegroundID(data)), TileSource.getYPos(Map.getForegroundID(data)), window.blocksize*_x, window.blocksize*_y);
 					}
 				}
@@ -182,12 +181,12 @@ public class Screen {
 		return ScreenHeight;
 	}
 	public static int getZoom() {
-		int zoomX = (window.getWidth()/Screen.getWidth());
-		int zoomY = ((window.getHeight())/Screen.getHeight());
+		int zoomX = (window.getWidth()/getWidth());
+		int zoomY = ((window.getHeight())/getHeight());
 		return General.getMin(zoomX,  zoomY);
 	}
 	public static int getZoomX() {
-		return (window.getWidth()/Screen.getWidth());
+		return (window.getWidth()/getWidth());
 	}
 	public static void scrollX() {
 		// not implemented yet

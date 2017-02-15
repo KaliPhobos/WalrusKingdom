@@ -1,7 +1,5 @@
 package CodeW;
 
-import java.sql.Time;
-
 // This class is for whatever stuff I need to put somewhere but don't know where exactly ^^
 public class General {
 	public static long secondOld = 0;

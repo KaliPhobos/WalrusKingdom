@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.JOptionPane;
 
+@SuppressWarnings("serial")
 public class TileSource extends Component {
 	private BufferedImage m_tiles;
 	public static int m_tileSize;

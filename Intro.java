@@ -2,12 +2,10 @@ package CodeW;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics2D;
-import java.io.IOException;
 
 public class Intro {
-	public static void Intro() {
+	public static void RunIntro() {
 		window.GameStat = "Intro";
 		Menu.KeyPause = System.currentTimeMillis()+900001;	// To prevent skiping the intro before the first dialogue appears
 	   	Keys.checkInput();

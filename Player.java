@@ -90,7 +90,7 @@ public class Player {
 		return solid;
 	}
 	public static void go(String _dir) {
-		long nextStep = System.currentTimeMillis()+StepDuration;
+		//long nextStep = System.currentTimeMillis()+StepDuration;				// Not in use
 		Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration/2;
 		Player.setTileChangeWhileWalking();
 		turn(_dir);

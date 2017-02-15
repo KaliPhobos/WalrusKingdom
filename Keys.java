@@ -59,7 +59,7 @@ public class Keys implements KeyListener
 					Map.MapToResume = Map.currentMapName;
 					Player.xPosToResume = Player.xPos;
 					Player.yPosToResume = Player.yPos;
-					Menu.Menu();
+					Menu.RunMenu();
 				}
 				if(keyDown[73]==true) {
 					System.out.println("x="+Player.getXPos()+" y="+Player.getYPos());

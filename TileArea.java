@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+@SuppressWarnings("serial")
 public class TileArea extends Component {
 	public static BufferedImage m_image;
 	private int m_width, m_height;

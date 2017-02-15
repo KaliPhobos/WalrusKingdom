@@ -1,14 +1,7 @@
 package CodeW;
-import java.awt.Canvas;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
-
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import CodeW.TileArea;
-import CodeW.TileSource;
-import java.awt.Canvas;
 
 
 public class window {
@@ -43,7 +36,7 @@ public class window {
 		Map.loadIntro1();
 		Screen.update();
 		Screen.render(true);
-		Intro.Intro();
+		Intro.RunIntro();
 		Resume();
 	}
 	
