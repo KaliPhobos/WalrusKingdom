@@ -14,7 +14,7 @@ public class Screen {
 	public static int scrollY = 0;	// pixels still left to scroll on Y-axis (from this int to 0, so -12 will be 12px down)
 	public static boolean forceUpdateNextTime = false; // ment to be set to TRUE after Popup messages (so no fragments are left)
 	public static TileSource tiles = new TileSource("/CodeW/assets/tiles.png", window.blocksize);
-
+	public static int TilesDrawn = 0;	// Just for testing purposes
 	public static void setSize(int _width, int _height) {
 		// set size of screen in px (called by WINDOW)
 		ScreenWidth = _width;
@@ -82,10 +82,12 @@ public class Screen {
 				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld | ForceUpdate == true) {	// Player moved
 					int _background = Map.getBackgroundID(data);	// extract background data
+					TilesDrawn++;
 					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
 				}
-				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-2 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
+				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
 					int _background = Map.getBackgroundID(data);	// extract background data
+					TilesDrawn++;
 					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
 				}
 			}
@@ -99,11 +101,15 @@ public class Screen {
 				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld | ForceUpdate == true) {		// Update to map data or player moved
 					int _foreground = Map.getForegroundID(data);	// extrace foreground data
-					if(_foreground>0 && (_y==Player.getYPos()-1)==false) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
+					if(_foreground>0) {
+						TilesDrawn++;
+						TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
+					}
 				}
-				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-2 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
+				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
 					int _foreground = Map.getForegroundID(data);	// extrace foreground data
 					if(_foreground>0) {
+						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(Map.getForegroundID(data)), TileSource.getYPos(Map.getForegroundID(data)), window.blocksize*_x, window.blocksize*_y);
 					}
 				}
@@ -118,8 +124,10 @@ public class Screen {
 				if (scrollLocked==false) {
 					if(General.getBetween(0, Player.getXPos()-Math.round(getWidth()/2), Map.getWidth()-getWidth())+_x == Player.getXPos() && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
 						int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data
+						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
 						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
+						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-Math.round(getZoom()/4), 0));					// render char
 						Player.newLastXPos = _x;
 						Player.newLastYPos = _y;
@@ -130,8 +138,10 @@ public class Screen {
 				} else {	//This disables the automated screenscrolling for special areas on the map (like in huge gardens) so only the y-axis scrolls. Similar to behavior close to map's edges
 					if(Player.getXPos()-screenLeft==_x && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
 						int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data
+						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);
 						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
+						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-Math.round(getZoom()/4), 0));		// render char
 						Player.newLastXPos = _x;
 						Player.newLastYPos = _y;
@@ -145,11 +155,12 @@ public class Screen {
 		Trigger.trigger(Player.getXPos(), Player.getYPos());
 		if(Trigger.get(Player.getXPos(), Player.getYPos())==0.0 && forceUpdateNextTime==true) {	// To prevent left over fragments from popups
 			forceUpdateNextTime = false;
-
 			render(true);
 		}
 		Player.lastXPos = Player.newLastXPos;
 		Player.lastYPos = Player.newLastYPos;
+		System.out.println(TilesDrawn+" Tiles updated");
+		TilesDrawn = 0;
 	}
 	public static void UpdateOldData() {
 		// Update the background data necessary for modified rendering algorithm
