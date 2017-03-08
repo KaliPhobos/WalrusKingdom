@@ -1,4 +1,4 @@
-package CodeW;
+package WalrusKingdom;
 public class Player {
 	public static int PictureID;
 	public static int xPos = 5;

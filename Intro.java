@@ -1,4 +1,4 @@
-package CodeW;
+package WalrusKingdom;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,7 +11,7 @@ public class Intro {
 	   	Keys.checkInput();
 	   	WalriiWalkX(0, 15);
 		Menu.KeyPause = System.currentTimeMillis();
-		TileSource textbox = new TileSource("/CodeW/assets/textbox.png", window.blocksize);
+		TileSource textbox = new TileSource("/WalrusKingdom/assets/textbox.png", window.blocksize);
 		TileArea.drawTile(textbox, 9, 219, 0, 0, 558, 150);	// add foreground layer (screenPos, SourcePos, SourceDim)
 		Graphics2D g = TileArea.m_image.createGraphics();
 		g.setFont(new Font("DPComic", Font.PLAIN, General.adaptZoom(26))); 
@@ -97,7 +97,7 @@ public class Intro {
 	}
 	
 	public static void DisplayMessage(String Str1, String Str2, String Str3) {
-		TileSource textbox = new TileSource("/CodeW/assets/textbox.png", window.blocksize);
+		TileSource textbox = new TileSource("/WalrusKingdom/assets/textbox.png", window.blocksize);
 		Screen.render(true);
 		TileArea.drawTile(textbox, 9, 9, 0, 0, 558, 150);	// add foreground layer (screenPos, SourcePos, SourceDim)
 		Graphics2D g = prepareGraphics();

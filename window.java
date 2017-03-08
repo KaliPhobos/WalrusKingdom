@@ -1,7 +1,8 @@
-package CodeW;
+package WalrusKingdom;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
-import CodeW.TileArea;
+
+import WalrusKingdom.TileArea;
 
 
 public class window {
@@ -24,8 +25,8 @@ public class window {
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
 		TileArea tileArea = Screen.createTileArea(window);
-		//Menu.Menu();			// Call Start Menu
-		Intro.loadMainGame();
+		Menu.RunMenu();			// Call Start Menu
+		//Intro.loadMainGame();
 	}
 	
 	public static void Start() {
@@ -255,7 +256,7 @@ public class window {
 		Block.AddNew(187, "walrus", false, 187, 2);
 		Block.AddNew(188, "walrus", false, 188, 2);
 		Block.AddNew(189, "walrus", false, 189, 2);
-		Block.AddNew(190, "walrus", false, 190, 2);
+		Block.AddNew(190, "Stone", true, 190, 2);	// Steintisch
 		Block.AddNew(191, "walrus", false, 191, 2);
 		Block.AddNew(192, "walrus", false, 192, 2);
 		Block.AddNew(193, "walrus", false, 193, 2);

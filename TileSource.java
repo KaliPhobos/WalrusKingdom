@@ -1,4 +1,4 @@
-package CodeW;
+package WalrusKingdom;
 
 import java.awt.Component;
 import java.awt.image.BufferedImage;

@@ -1,4 +1,4 @@
-package CodeW;
+package WalrusKingdom;
 
 import javax.swing.JFrame;
 import java.awt.event.KeyListener;

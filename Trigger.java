@@ -1,4 +1,4 @@
-package CodeW;
+package WalrusKingdom;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -69,7 +69,7 @@ public class Trigger {
 		}
 	}
 	public static Graphics2D prepareGraphics() {
-		TileSource infobox = new TileSource("/CodeW/assets/infobox.png", window.blocksize);
+		TileSource infobox = new TileSource("/WalrusKingdom/assets/infobox.png", window.blocksize);
 		TileArea.drawTile(infobox, 203, 240, 0, 0, 170, 21);		// PRESS SPAE TO INTERACT
 		Graphics2D g = TileArea.m_image.createGraphics();
 		g.setFont(new Font("DPComic", Font.PLAIN, General.adaptZoom(16))); 

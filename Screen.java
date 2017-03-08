@@ -1,4 +1,4 @@
-package CodeW;
+package WalrusKingdom;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
@@ -13,7 +13,7 @@ public class Screen {
 	public static int scrollX = 0;	// pixels still left to scroll on X-axis (from this int to 0, so -12 will be 12px to the right)
 	public static int scrollY = 0;	// pixels still left to scroll on Y-axis (from this int to 0, so -12 will be 12px down)
 	public static boolean forceUpdateNextTime = false; // ment to be set to TRUE after Popup messages (so no fragments are left)
-	public static TileSource tiles = new TileSource("/CodeW/assets/tiles.png", window.blocksize);
+	public static TileSource tiles = new TileSource("/WalrusKingdom/assets/tiles.png", window.blocksize);
 	public static int TilesDrawn = 0;	// Just for testing purposes
 	public static void setSize(int _width, int _height) {
 		// set size of screen in px (called by WINDOW)
@@ -178,7 +178,7 @@ public class Screen {
 		try {
 		     GraphicsEnvironment ge = 
 		         GraphicsEnvironment.getLocalGraphicsEnvironment();
-		     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/CodeW/assets/font.ttf")));
+		     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/WalrusKingdom/assets/font.ttf")));
 		} catch (Exception e) {
 		     //Handle exception
 		}

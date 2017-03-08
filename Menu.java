@@ -1,13 +1,12 @@
-package CodeW;
+package WalrusKingdom;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Menu {
-	public static TileSource menuTileFront = new TileSource("/CodeW/assets/menu_front.png", window.blocksize);
-	public static TileSource menuTileText = new TileSource("/CodeW/assets/menu_text.png", window.blocksize);
-	public static TileSource menuTileBack = new TileSource("/CodeW/assets/menu_back.png", window.blocksize);
+	public static TileSource menuTileText = new TileSource("/WalrusKingdom/assets/menu_text.png", window.blocksize);
+	public static TileSource menuTileBack = new TileSource("/WalrusKingdom/assets/menu_back.png", window.blocksize);
 	public static long NextUpdate = System.currentTimeMillis();
 	public static long KeyPause = System.currentTimeMillis()-1;
 	public static int SelectedID = 0;

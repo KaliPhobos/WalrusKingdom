@@ -1,4 +1,4 @@
-package CodeW;
+package WalrusKingdom;
 
 import java.awt.Color;
 import java.awt.Component;

@@ -1,4 +1,4 @@
-package CodeW;
+package WalrusKingdom;
 public class Block {
 	// The Array BLOCKS defines all Information on the different Blocks / Tiles used in the Game
 	// Each Block only provides ONE picture-id since Foreground and Background will be two separated Layers of Blocks
