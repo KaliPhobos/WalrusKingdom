@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Trigger {
+	public static boolean ShowTrigger = false;
 	public static String[] NotificationTexts = {"Press A to read the sign", "Press A to open the door", "Press A to talk to statue"};
 	public static int getForegroundID(int _x, int _y) {
 		double _data = Map.EventMap[General.getBetween(0, _x, Map.getWidth())][General.getBetween(0, _y, Map.getHeight())];;
@@ -27,7 +28,7 @@ public class Trigger {
 		int BackgroundID = getBackgroundID(_x, _y);
 		if(BackgroundID!=0) {
 			Screen.forceUpdateNextTime = true;
-			System.out.println("trigger: "+BackgroundID);
+			if (ShowTrigger==true) { System.out.println("trigger: "+BackgroundID);}
 			int x = Player.getXPos();
 			int y = Player.getYPos();
 			switch(Map.currentMapName) {

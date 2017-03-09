@@ -84,11 +84,12 @@ public class Screen {
 					int _background = Map.getBackgroundID(data);	// extract background data
 					TilesDrawn++;
 					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
-				}
-				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
-					int _background = Map.getBackgroundID(data);	// extract background data
-					TilesDrawn++;
-					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
+				} else { // To prevent area around the character to be rendered twice (messes up partially transparent tiles in the menu plus slows down)
+					if (General.isCloseToChar(_x, _y)) {	// prevent shadows when close to the edge on in ScrollLock regions
+						int _background = Map.getBackgroundID(data);	// extract background data
+						TilesDrawn++;
+						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
+					}
 				}
 			}
 		}
@@ -101,12 +102,12 @@ public class Screen {
 				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld | ForceUpdate == true) {		// Update to map data or player moved
 					int _foreground = Map.getForegroundID(data);	// extrace foreground data
-					if(_foreground>0) {
+					if(_foreground>0 && General.isCloseToChar(_x, _y)==false) {	// To prevent area around the character to be rendered twice (messes up partially transparent tiles in the menu plus slows down)
 						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
 					}
 				}
-				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
+				if (General.isCloseToChar(_x, _y)) {	// prevent shadows when close to the edge on in ScrollLock regions
 					int _foreground = Map.getForegroundID(data);	// extrace foreground data
 					if(_foreground>0) {
 						TilesDrawn++;

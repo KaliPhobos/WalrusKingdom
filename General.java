@@ -74,4 +74,7 @@ public class General {
 	public static int adaptZoom(int input) {
 		return (input*Screen.getZoom())/24;
 	}
+	public static boolean isCloseToChar(int _x, int _y) {
+		return Screen.screenLeft+_x>Player.getXPos()-2 && Screen.screenLeft+_x<Player.getXPos()+2 && Screen.screenTop+_y>Player.getYPos()-3 && Screen.screenTop+_y<Player.getYPos()+2;
+	}
 }
