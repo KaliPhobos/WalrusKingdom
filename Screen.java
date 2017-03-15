@@ -129,7 +129,7 @@ public class Screen {
 						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
 						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
 						TilesDrawn++;
-						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-Math.round(getZoom()/4), 0));					// render char
+						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-window.blocksize/4, 0));					// render char
 						Player.newLastXPos = _x;
 						Player.newLastYPos = _y;
 						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
