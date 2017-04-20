@@ -40,10 +40,6 @@ public class TileArea extends Component {
 	public static void drawTile(TileSource tileSource, int screenx, int screeny, int tilex, int tiley, int tilexdim, int tileydim) {
 		//this draws tiles of different sizes (Menu, Inv)
 		Graphics2D g = m_image.createGraphics();
-		//float zoom = General.getMin((screenx+tilexdim)/window.getWidth(), (screeny+tileydim)/window.getHeight());
-		//float x = (screenx+tilexdim)/window.getWidth();
-		//float y =(screeny+tileydim)/window.getHeight();
-		//System.out.println("x-zoom="+x+"		y-zoom="+y);
 		screenx = General.adaptZoom(screenx);
 	    screeny = General.adaptZoom(screeny);
 	    int tilexdimZoomed = General.adaptZoom(tilexdim);
@@ -60,7 +56,7 @@ public class TileArea extends Component {
 	    int tilexdimZoomed = General.adaptZoom(tilexdim);
 	    int tileydimZoomed = General.adaptZoom(tileydim);
 	    
-	    //System.out.println("Tilesource X="+tilex+" Y="+tiley+" Breite="+tilexdim+" Höhe="+tileydim+" Wird gezeichnet auf X="+screenx+" Y="+screeny+" Breite="+tilexdimZoomed+" Höhe="+tileydimZoomed);
+	    //System.out.println("Tilesource X="+tilex+" Y="+tiley+" Breite="+tilexdim+" Hï¿½he="+tileydim+" Wird gezeichnet auf X="+screenx+" Y="+screeny+" Breite="+tilexdimZoomed+" Hï¿½he="+tileydimZoomed);
 		g.drawImage(tileSource.getTile(tilex, tiley, tilexdim+tilex, tileydim), screenx, screeny, tilexdimZoomed, tileydimZoomed, null);
 	}
 	public static void drawInfo() {

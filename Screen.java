@@ -117,9 +117,7 @@ public class Screen {
 			}
 		}
 	}
-	public static void render(boolean ForceUpdate) {
-		// main class that does all the rendering
-		renderBackground(ForceUpdate);
+	public static void renderWalrus() {
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				if (scrollLocked==false) {
@@ -152,6 +150,11 @@ public class Screen {
 				}
 			}
 		}
+	}
+	public static void render(boolean ForceUpdate) {
+		// main class that does all the rendering
+		renderBackground(ForceUpdate);
+		renderWalrus();
 		renderForeground(ForceUpdate);
 		Trigger.trigger(Player.getXPos(), Player.getYPos());
 		if(Trigger.get(Player.getXPos(), Player.getYPos())==0.0 && forceUpdateNextTime==true) {	// To prevent left over fragments from popups

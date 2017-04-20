@@ -115,7 +115,7 @@ public class Keys implements KeyListener
 				}
 				if(keyDown[32]==true) {
 					System.out.println("intro -> continue Intro");
-					window.GameStat = "ContinueIntro";
+					// window.GameStat = "ContinueIntro";		// Done in Intro.continueIntro as well
 					Intro.continueIntro();
 				}
 			} else if (window.GameStat.equals("ContinueIntro")) {									// INSIDE THE GAME INTRO (DIALOGUES)
