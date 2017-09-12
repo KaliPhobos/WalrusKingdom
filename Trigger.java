@@ -5,7 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Trigger {
-	public static String[] NotificationTexts = {"Press A to read the sign", "Press A to open the door", "Press A to talk to statue"};
+	public static String[] NotificationTexts = {"Press A to read the sign", "Press A to open the door", "Press A to talk to statue", "Press A to look inside"};
 	public static int getForegroundID(int _x, int _y) {
 		double _data = Map.EventMap[General.getBetween(0, _x, Map.getWidth())][General.getBetween(0, _y, Map.getHeight())];;
 		return (int) ((_data-(_data%901))/901)%901;
