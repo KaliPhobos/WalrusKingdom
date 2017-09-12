@@ -81,9 +81,11 @@ public class Screen {
 				double data = ScreenMatrix[_x][_y];				// load raw data
 				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld | ForceUpdate == true) {	// Player moved
-					int _background = Map.getBackgroundID(data);	// extract background data
-					TilesDrawn++;
-					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
+					if ((screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2)==false) {		// fix rendering bux with semi transparence
+						int _background = Map.getBackgroundID(data);	// extract background data
+						TilesDrawn++;
+						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
+					}
 				}
 				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
 					int _background = Map.getBackgroundID(data);	// extract background data
@@ -100,10 +102,12 @@ public class Screen {
 				double data = ScreenMatrix[_x][_y];				// load raw data
 				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld | ForceUpdate == true) {		// Update to map data or player moved
-					int _foreground = Map.getForegroundID(data);	// extrace foreground data
-					if(_foreground>0) {
-						TilesDrawn++;
-						TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
+					if ((screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2)==false) {		// fix rendering bux with semi transparence
+						int _foreground = Map.getForegroundID(data);	// extrace foreground data
+						if(_foreground>0) {
+							TilesDrawn++;
+							TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
+						}
 					}
 				}
 				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions

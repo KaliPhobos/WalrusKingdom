@@ -24,7 +24,7 @@ public class window {
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
 		TileArea tileArea = Screen.createTileArea(window);
-		//Menu.RunMenu();			// Call Start Menu									// Deaktivieren um direkt zu starten
+		Menu.RunMenu();			// Call Start Menu									// Deaktivieren um direkt zu starten
 		Intro.loadMainGame();
 	}
 	
