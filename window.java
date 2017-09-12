@@ -1,8 +1,7 @@
-package WalrusKingdom;
+package CodeW;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
-
-import WalrusKingdom.TileArea;
+import CodeW.TileArea;
 
 
 public class window {
@@ -25,8 +24,8 @@ public class window {
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
 		TileArea tileArea = Screen.createTileArea(window);
-		Menu.RunMenu();			// Call Start Menu
-		//Intro.loadMainGame();
+		//Menu.RunMenu();			// Call Start Menu									// Deaktivieren um direkt zu starten
+		Intro.loadMainGame();
 	}
 	
 	public static void Start() {
@@ -256,15 +255,46 @@ public class window {
 		Block.AddNew(187, "walrus", false, 187, 2);
 		Block.AddNew(188, "walrus", false, 188, 2);
 		Block.AddNew(189, "walrus", false, 189, 2);
-		Block.AddNew(190, "Stone", true, 190, 2);	// Steintisch
-		Block.AddNew(191, "walrus", false, 191, 2);
-		Block.AddNew(192, "walrus", false, 192, 2);
-		Block.AddNew(193, "walrus", false, 193, 2);
-		Block.AddNew(194, "walrus", false, 194, 2);
-		Block.AddNew(195, "walrus", false, 195, 2);
-		Block.AddNew(196, "walrus", false, 196, 2);
-		Block.AddNew(197, "walrus", false, 197, 2);
-		Block.AddNew(198, "walrus", false, 198, 2);
-		Block.AddNew(199, "walrus", false, 199, 2);
+		Block.AddNew(190, "Stone", true, 190, 2);	// Stone table
+		Block.AddNew(191, "-", false, 191, 2);
+		Block.AddNew(192, "-", false, 192, 2);
+		Block.AddNew(193, "-", false, 193, 2);
+		Block.AddNew(194, "-", false, 194, 2);
+		Block.AddNew(195, "-", false, 195, 2);
+		Block.AddNew(196, "-", false, 196, 2);
+		Block.AddNew(197, "library", true, 197, 7);
+		Block.AddNew(198, "library", true, 198, 7);
+		Block.AddNew(199, "library", true, 199, 7);
+		Block.AddNew(200, "library", true, 200, 7);
+		Block.AddNew(201, "library", true, 201, 7);
+		Block.AddNew(202, "library", true, 202, 7);
+		Block.AddNew(203, "library", true, 203, 7);
+		Block.AddNew(204, "library", true, 204, 7);
+		Block.AddNew(205, "library", true, 205, 7);
+		Block.AddNew(206, "library", true, 206, 7);
+		Block.AddNew(207, "library", true, 207, 7);
+		Block.AddNew(208, "library", true, 208, 7);
+		Block.AddNew(209, "library", true, 209, 7);
+		Block.AddNew(210, "-", false, 199, 2);
+		Block.AddNew(211, "-", false, 199, 2);
+		Block.AddNew(212, "library", true, 212, 7);
+		Block.AddNew(213, "library", true, 213, 7);
+		Block.AddNew(214, "library", true, 214, 7);
+		Block.AddNew(215, "library", true, 215, 7);
+		Block.AddNew(216, "library", true, 216, 7);
+		Block.AddNew(217, "library", true, 217, 7);
+		Block.AddNew(218, "library", true, 218, 7);
+		Block.AddNew(219, "library", true, 219, 7);
+		Block.AddNew(220, "-", false, 220, 2);
+		Block.AddNew(221, "-", false, 221, 2);
+		Block.AddNew(222, "-", false, 222, 2);
+		Block.AddNew(223, "-", false, 223, 2);
+		Block.AddNew(224, "library", true, 224, 2);
+		Block.AddNew(225, "library", true, 225, 2);
+		Block.AddNew(226, "library", true, 226, 2);
+		Block.AddNew(227, "library", true, 227, 2);
+		Block.AddNew(228, "library", true, 228, 2);
+		Block.AddNew(229, "library", true, 229, 2);
+
 	}
 }

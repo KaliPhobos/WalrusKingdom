@@ -1,11 +1,10 @@
-package WalrusKingdom;
+package CodeW;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Trigger {
-	public static boolean ShowTrigger = false;
 	public static String[] NotificationTexts = {"Press A to read the sign", "Press A to open the door", "Press A to talk to statue"};
 	public static int getForegroundID(int _x, int _y) {
 		double _data = Map.EventMap[General.getBetween(0, _x, Map.getWidth())][General.getBetween(0, _y, Map.getHeight())];;
@@ -28,7 +27,7 @@ public class Trigger {
 		int BackgroundID = getBackgroundID(_x, _y);
 		if(BackgroundID!=0) {
 			Screen.forceUpdateNextTime = true;
-			if (ShowTrigger==true) { System.out.println("trigger: "+BackgroundID);}
+			System.out.println("trigger: "+BackgroundID);
 			int x = Player.getXPos();
 			int y = Player.getYPos();
 			switch(Map.currentMapName) {
@@ -70,7 +69,7 @@ public class Trigger {
 		}
 	}
 	public static Graphics2D prepareGraphics() {
-		TileSource infobox = new TileSource("/WalrusKingdom/assets/infobox.png", window.blocksize);
+		TileSource infobox = new TileSource("/CodeW/assets/infobox.png", window.blocksize);
 		TileArea.drawTile(infobox, 203, 240, 0, 0, 170, 21);		// PRESS SPAE TO INTERACT
 		Graphics2D g = TileArea.m_image.createGraphics();
 		g.setFont(new Font("DPComic", Font.PLAIN, General.adaptZoom(16))); 

@@ -1,4 +1,4 @@
-package WalrusKingdom;
+package CodeW;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,7 +11,7 @@ public class Intro {
 	   	Keys.checkInput();
 	   	WalriiWalkX(0, 15);
 		Menu.KeyPause = System.currentTimeMillis();
-		TileSource textbox = new TileSource("/WalrusKingdom/assets/textbox.png", window.blocksize);
+		TileSource textbox = new TileSource("/CodeW/assets/textbox.png", window.blocksize);
 		TileArea.drawTile(textbox, 9, 219, 0, 0, 558, 150);	// add foreground layer (screenPos, SourcePos, SourceDim)
 		Graphics2D g = TileArea.m_image.createGraphics();
 		g.setFont(new Font("DPComic", Font.PLAIN, General.adaptZoom(26))); 
@@ -66,7 +66,7 @@ public class Intro {
 		window.GameStat = "ContinueIntro";
 		Menu.KeyPause = System.currentTimeMillis()+150;
 		DisplayMessage("Hey there, Walrii.", "As you maybe already know, I'm Dr. Elric and also", "a close friend of our King since many many years.");
-		//System.exit(0);
+		System.exit(0);
 		DisplayMessage("I do not know if he has ever told you this, but your", "grandfather used to be a good friend of mine, too,", "when we were younger.");
 		DisplayMessage("I am sending you this message as I have no-one else", "I can trust any longer.", "Someone has poisoned me and I'm probably already");
 		DisplayMessage("dead when you receive this message. But I need you", "to do something for me,  I need your help, Walrii!", "");
@@ -97,7 +97,7 @@ public class Intro {
 	}
 	
 	public static void DisplayMessage(String Str1, String Str2, String Str3) {
-		TileSource textbox = new TileSource("/WalrusKingdom/assets/textbox.png", window.blocksize);
+		TileSource textbox = new TileSource("/CodeW/assets/textbox.png", window.blocksize);
 		Screen.render(true);
 		TileArea.drawTile(textbox, 9, 9, 0, 0, 558, 150);	// add foreground layer (screenPos, SourcePos, SourceDim)
 		Graphics2D g = prepareGraphics();
