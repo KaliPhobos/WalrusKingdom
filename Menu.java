@@ -55,12 +55,12 @@ public class Menu {
 			   			} else {
 			   				window.Resume();}
 			   			}
-			   		if (y==13||y==14) {System.out.println("SAVE GAME");}
+			   		if (y==13||y==14) {General.DebugLog("SAVE GAME");}
 			   		
 			   	}
 			   	if (x==23) {
-			   		if (y==5||y==6) {System.out.println("SETTINGS");}
-			   		if (y==9||y==10) {System.out.println("CREDITS SCREEN");}
+			   		if (y==5||y==6) {General.DebugLog("SETTINGS");}
+			   		if (y==9||y==10) {General.DebugLog("CREDITS SCREEN");}
 			   		if (y==13||y==14) {System.exit(0);}
 			   		
 			   	}

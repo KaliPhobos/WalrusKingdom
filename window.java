@@ -19,19 +19,20 @@ public class window {
 		LoadBlocks();																// Loading background block data
 		Screen.setSize(Math.round(width/blocksize), Math.round(height/blocksize));	// Setup Screen (results in 0-11 x 0-17)
 		window = Screen.createWindow();												// Create window object (JFrame)
-		Keys keys = new Keys(window);
+		new Keys(window);		// Keys keys = new Keys(window) <--- never used variable "keys"
 		window.pack();
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
 		TileArea tileArea = Screen.createTileArea(window);
-		Menu.RunMenu();			// Call Start Menu									// Deaktivieren um direkt zu starten
+		General.preloadImages();
+		//Menu.RunMenu();			// Call Start Menu									// Deaktivieren um direkt zu starten
 		Intro.loadMainGame();
 	}
 	
 	public static void Start() {
 		Player.direction = "right";
 		GameStat = "Game";
-		System.out.println("window.start");
+		General.DebugLog("window.start");
 		//Player Walrii = Player.createPlayer(0, 10, 10);	// Define Player ONLY FOR LOCAL MULTIPLAYER
 		Map.loadIntro1();
 		Screen.update();
@@ -43,10 +44,10 @@ public class window {
 	
 	public static void Resume() {
 		GameStat = "Game";
-		System.out.println("window.resume");
+		General.DebugLog("window.resume");
 		if (Map.MapToResume=="City1") {Map.loadCity1();}
 		Player.xPos = Player.xPosToResume;			// resume with old position on the map
-		Player.yPos = Player.yPosToResume;
+		Player.yPos = Player.yPosToResume;			// Note to self: add player walking direction  but change to RICHT when going to the menu
 		Screen.update();
 	   	Screen.render(true);
 		while (true) {										// MAIN GAME LOOP

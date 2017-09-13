@@ -5,13 +5,13 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Intro {
+	public static TileSource textbox;
 	public static void RunIntro() {
 		window.GameStat = "Intro";
 		Menu.KeyPause = System.currentTimeMillis()+900001;	// To prevent skiping the intro before the first dialogue appears
 	   	Keys.checkInput();
 	   	WalriiWalkX(0, 15);
 		Menu.KeyPause = System.currentTimeMillis();
-		TileSource textbox = new TileSource("/CodeW/assets/textbox.png", window.blocksize);
 		TileArea.drawTile(textbox, 9, 219, 0, 0, 558, 150);	// add foreground layer (screenPos, SourcePos, SourceDim)
 		Graphics2D g = TileArea.m_image.createGraphics();
 		g.setFont(new Font("DPComic", Font.PLAIN, General.adaptZoom(26))); 
@@ -48,7 +48,7 @@ public class Intro {
 	}
 	public static void loadMainGame(){
 		window.GameStat = "Game";
-		System.out.println("intro.loadMainGame");
+		General.DebugLog("intro.loadMainGame");
 		Map.loadCity1();
 		Player.setXPos(0);
 		Player.setYPos(37);

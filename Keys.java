@@ -39,7 +39,7 @@ public class Keys implements KeyListener
 				Screen.render(true);		//causing troubls if Map.MAP[] isn't already defined (first run)
 			}
 		}
-		//System.out.println(window.GameStat);
+		//General.DebugLog(window.GameStat);
 		if (System.currentTimeMillis() > Menu.KeyPause) {
 			if (window.GameStat.equals("Game")) {											// IN THE GAME
 				Player.TileChangeWhileWalking = 0;
@@ -62,7 +62,7 @@ public class Keys implements KeyListener
 					Menu.RunMenu();
 				}
 				if(keyDown[73]==true) {
-					System.out.println("x="+Player.getXPos()+" y="+Player.getYPos());
+					General.DebugLog("x="+Player.getXPos()+" y="+Player.getYPos());
 					TileArea.drawInfo();
 				}
 			} else if (window.GameStat.equals("Menu")) {									// IN THE MAIN MENU
@@ -110,17 +110,17 @@ public class Keys implements KeyListener
 			} else if (window.GameStat.equals("Intro")) {									// ASKING TO START THE GAME INTRO (DIALOGUES)
 				if(keyDown[27]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+1000;
-					System.out.println("intro -> load main");
+					General.DebugLog("intro -> load main");
 					// goes to Intro.IntroEnd();	(walk out of forest)
 				}
 				if(keyDown[32]==true) {
-					System.out.println("intro -> continue Intro");
+					General.DebugLog("intro -> continue Intro");
 					window.GameStat = "ContinueIntro";
 					Intro.continueIntro();
 				}
 			} else if (window.GameStat.equals("ContinueIntro")) {									// INSIDE THE GAME INTRO (DIALOGUES)
 				if(keyDown[27]==true) {
-					System.out.println("continue intro -> load main");
+					General.DebugLog("continue intro -> load main");
 					Menu.KeyPause = System.currentTimeMillis()+150;
 					Intro.loadMainGame();
 				}

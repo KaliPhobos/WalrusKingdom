@@ -70,7 +70,7 @@ public class Player {
 	public static boolean checkPath(String _dir) {
 		int _x = getXPos();
 		int _y = getYPos();
-		//System.out.println("checking position ("+_x+" | "+_y+")");
+		//General.DebugLog("checking position ("+_x+" | "+_y+")");
 		switch(_dir) {
 			case "left":
 				_x = getXPos()-1;

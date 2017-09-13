@@ -27,14 +27,14 @@ public class TileSource extends Component {
 	}
 	public static int getXPos(int _id) {
 		int _pos = (_id%10);		// *m_tilesize
-		//System.out.println("XPos in tile:"+_pos);
+		//General.DebugLog("XPos in tile:"+_pos);
 		return _pos;
 	}
 	public static int getYPos(int _id) {
 		//int _pos = (int) _id/10;
 		//_pos = _pos*10;
 		int _pos = (_id-(_id%10))/10;
-		//System.out.println("YPos in tile:"+_pos);
+		//General.DebugLog("YPos in tile:"+_pos);
 		return _pos;
 	}
 	public int getTileSize() {
@@ -49,7 +49,7 @@ public class TileSource extends Component {
 			return m_tiles.getSubimage(tilex*(m_tileSize+1)+1, tiley*(m_tileSize+1)+1, m_tileSize, m_tileSize);
 		}
 		catch(Exception e){
-			System.out.println("Couldnt load tile subimage. Better check the BLOCKSIZE parameter and the sourcefile.");
+			General.DebugLog("Couldnt load tile subimage. Better check the BLOCKSIZE parameter and the sourcefile.");
 			return new BufferedImage(0, 0, 0);
 		}
 	}
@@ -61,7 +61,7 @@ public class TileSource extends Component {
 			return m_tiles.getSubimage(tileXmin, tileYmin, tileXdim-tileXmin, tileYdim-tileYmin);
 		}
 		catch(Exception e){
-			System.out.println("Couldnt load tile subimage. Better check the BLOCKSIZE parameter and the sourcefile.");
+			General.DebugLog("Couldnt load tile subimage. Better check the BLOCKSIZE parameter and the sourcefile.");
 			return new BufferedImage(0, 0, 0);
 		}
 	}

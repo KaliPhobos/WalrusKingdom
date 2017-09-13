@@ -30,7 +30,7 @@ public class Block {
 			// No such block
 		}
 		catch(Exception e) {
-			System.out.println("komischer Scheiß");
+			General.DebugLog("komischer Scheiï¿½");
 		}
 		return _PictureID;
 	}
@@ -44,7 +44,7 @@ public class Block {
 			// No such block
 		}
 		catch(Exception e) {
-			System.out.println("komischer Scheiß");
+			General.DebugLog("komischer Scheiï¿½");
 		}
 		return _PictureID;
 	}
@@ -62,7 +62,7 @@ public class Block {
 			// No such block
 		}
 		catch(Exception e) {
-			System.out.println("komischer Scheiß");
+			General.DebugLog("komischer Scheiï¿½");
 		}
 		return _TriggerID;
 	}
@@ -76,7 +76,7 @@ public class Block {
 			// No such block
 		}
 		catch(Exception e) {
-			System.out.println("komischer Scheiß");
+			General.DebugLog("komischer Scheiï¿½");
 		}
 		return _TriggerID;
 	}
@@ -107,7 +107,7 @@ public class Block {
         for(int i_AddNew=0; i_AddNew<Blocks.length; i_AddNew++) {
             if(getNameFromPos(i_AddNew).equals("")) {
                 Blocks[i_AddNew] = NewBlock;
-                System.out.println("Block created: °"+i_AddNew+"       id="+NewBlock.id+"      name="+NewBlock.name+"      isSolid="+NewBlock.isSolid+"        PictureID="+NewBlock.PictureID+"      TriggerID="+NewBlock.TriggerID);
+                General.DebugLog("Block created: ï¿½"+i_AddNew+"       id="+NewBlock.id+"      name="+NewBlock.name+"      isSolid="+NewBlock.isSolid+"        PictureID="+NewBlock.PictureID+"      TriggerID="+NewBlock.TriggerID);
                 break;
             }
         }
@@ -116,7 +116,7 @@ public class Block {
         for(int i_AddNew=0; i_AddNew<Blocks.length; i_AddNew++) {
             if(getNameFromPos(i_AddNew).equals("")) {
                 Blocks[i_AddNew] = new Block(_id, _name, _isSolid, _PictureID, _TriggerID);
-                System.out.println("Block created: °"+i_AddNew+"       id="+_id+"      name="+_name+"      isSolid="+_isSolid+"        PictureID="+_PictureID+"      TriggerID="+_TriggerID);
+                General.DebugLog("Block created: ï¿½"+i_AddNew+"       id="+_id+"      name="+_name+"      isSolid="+_isSolid+"        PictureID="+_PictureID+"      TriggerID="+_TriggerID);
                 break;
             }
         }

@@ -110,7 +110,7 @@ public class Screen {
 						}
 					}
 				}
-				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
+				if (screenLeft+_x>=Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
 					int _foreground = Map.getForegroundID(data);	// extrace foreground data
 					if(_foreground>0) {
 						TilesDrawn++;
@@ -122,6 +122,7 @@ public class Screen {
 	}
 	public static void render(boolean ForceUpdate) {
 		// main class that does all the rendering
+		General.updateZoomFactor();
 		renderBackground(ForceUpdate);
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
@@ -132,7 +133,8 @@ public class Screen {
 						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
 						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
 						TilesDrawn++;
-						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-Math.round(getZoom()/4), 0));					// render char
+						int __y = Math.round(General.getMax((_y*window.blocksize)-Math.round(window.blocksize/4), 0));
+						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, __y);					// render char
 						Player.newLastXPos = _x;
 						Player.newLastYPos = _y;
 						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
@@ -163,7 +165,7 @@ public class Screen {
 		}
 		Player.lastXPos = Player.newLastXPos;
 		Player.lastYPos = Player.newLastYPos;
-		System.out.println(TilesDrawn+" Tiles updated");
+		General.DebugLog(TilesDrawn+" Tiles updated");
 		TilesDrawn = 0;
 	}
 	public static void UpdateOldData() {
