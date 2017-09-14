@@ -63,8 +63,8 @@ public class window {
 		return window.getWidth();
 	}
 	public static int getHeight() {
-		return window.getHeight()-38;		// the window.getHeight get the height of the rendered window PLUS the window's bar. Add -38(px) to fix it
-	}
+		return window.getHeight()-38+16;		// the window.getHeight get the height of the rendered window PLUS the window's bar. Add -38(px) to fix it
+	}											// Aaaaand added 16 again to fix resizing bug (no more bottom border)
 	public static void LoadBlocks() {
 		Block.AddNew(0, "void", false, 0, 1);		// no walrus shall ever go there
 		Block.AddNew(1, "walrus", false, 1, 2);		// a walrus

@@ -1,6 +1,5 @@
 package CodeW;
 
-import java.awt.Graphics2D;
 
 // This class is for whatever stuff I need to put somewhere but don't know where exactly ^^
 public class General {
