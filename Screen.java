@@ -71,6 +71,15 @@ public class Screen {
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				setField(_x, _y, Map.get(screenLeft+_x, screenTop+_y));
+				
+			}
+			if (Map.ChangesPrecheckMap[screenTop+_y]) {
+				//General.DebugLog("Changes to map now visible, accessing MapChanges[]");
+				for(int _x=0;_x<getWidth();_x++) {
+					if (Map.ChangesMap[screenLeft+_x][screenTop+_y] !=0) {
+						setField(_x, _y, Map.getChanges(screenLeft+_x, screenTop+_y));
+					};
+				}
 			}
 		}
 	}
@@ -165,13 +174,15 @@ public class Screen {
 		}
 		Player.lastXPos = Player.newLastXPos;
 		Player.lastYPos = Player.newLastYPos;
-		General.DebugLog(TilesDrawn+" Tiles updated");
+		if (General.ShowTileUpdates) {
+			General.DebugLog(TilesDrawn+" Tiles updated");
+		}
 		TilesDrawn = 0;
 	}
 	public static void UpdateOldData() {
 		// Update the background data necessary for modified rendering algorithm
-		for(int _x=0;_x<(int)window.width/24;_x++) {
-			for(int _y=0;_y<(int)window.height/24;_y++) {
+		for(int _y=0;_y<(int)window.height/24;_y++) {		
+			for(int _x=0;_x<(int)window.width/24;_x++) {
 				ScreenMatrixOld[_x][_y] = ScreenMatrix[_x][_y];
 			}
 		}

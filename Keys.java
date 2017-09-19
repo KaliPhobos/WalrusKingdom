@@ -28,6 +28,11 @@ public class Keys implements KeyListener
 
 	public static void checkInput()
 	{
+		/*for (int _temp = 0;_temp<1024;_temp++) {
+			if (keyDown[_temp]) {
+				System.out.println(_temp);
+			}
+		}*/
 		if (window.window.getWidth()* window.window.getHeight()!=Screen.ScreenSizeIndicator) {		// triggered if you resize the window
 			
 			if (Screen.ScreenSizeIndicator==0) {
@@ -60,6 +65,9 @@ public class Keys implements KeyListener
 					Player.xPosToResume = Player.xPos;
 					Player.yPosToResume = Player.yPos;
 					Menu.RunMenu();
+				}
+				if(keyDown[65]==true) {
+		    		Player.Interact();
 				}
 				if(keyDown[73]==true) {
 					General.DebugLog("x="+Player.getXPos()+" y="+Player.getYPos());

@@ -49,7 +49,7 @@ public class TileSource extends Component {
 			return m_tiles.getSubimage(tilex*(m_tileSize+1)+1, tiley*(m_tileSize+1)+1, m_tileSize, m_tileSize);
 		}
 		catch(Exception e){
-			General.DebugLog("Couldnt load tile subimage. Better check the BLOCKSIZE parameter and the sourcefile.");
+			General.DebugLog("Couldnt load tile subimage.If BLOCKSIZE==" + window.blocksize + " is correct, better check the sourcefile.");
 			return new BufferedImage(0, 0, 0);
 		}
 	}
@@ -61,7 +61,7 @@ public class TileSource extends Component {
 			return m_tiles.getSubimage(tileXmin, tileYmin, tileXdim-tileXmin, tileYdim-tileYmin);
 		}
 		catch(Exception e){
-			General.DebugLog("Couldnt load tile subimage. Better check the BLOCKSIZE parameter and the sourcefile.");
+			General.DebugLog("Couldnt load tile subimage. If BLOCKSIZE==" + window.blocksize + " is correct, better check the sourcefile.");
 			return new BufferedImage(0, 0, 0);
 		}
 	}

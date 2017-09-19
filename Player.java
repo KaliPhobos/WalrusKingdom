@@ -67,6 +67,26 @@ public class Player {
 	public static void turn(String _dir) {
 		direction = _dir;
 	}
+	public static int[] facingPos() {
+		int _x = getXPos();
+		int _y = getYPos();
+		switch(Player.getDirectionToINT()+"") {
+		case "0":
+			_x = getXPos()-1;
+			break;
+		case "1":
+			_x = getXPos()+1;
+			break;
+		case "2":
+			_y = getYPos()-1;
+			break;
+		case "3":
+			_y = getYPos()+1;
+			break;
+		}
+		int[] temp = {_x, _y};
+		return temp;
+	}
 	public static boolean checkPath(String _dir) {
 		int _x = getXPos();
 		int _y = getYPos();
@@ -86,7 +106,14 @@ public class Player {
 				break;
 		}
 		// add the -1 to prevent the walrus from triggering the out of border bug
-		boolean solid = Block.getSolidFromID(Map.getBackgroundID(General.getBetween(0, _x, Map.getWidth()-1), General.getBetween(0, _y, Map.getHeight()-1))) || Block.getSolidFromID(Map.getForegroundID(General.getBetween(0, _x, Map.getWidth()-1), General.getBetween(0, _y, Map.getHeight()-1)));
+		_x = General.getBetween(0, _x, Map.getWidth()-1);
+		_y = General.getBetween(0, _y, Map.getHeight()-1);
+		boolean solid = false;
+		if (Map.ChangesPrecheckMap[General.getBetween(0, _y, Map.getHeight()-1)] && Map.ChangesMap[_x][_y]!=0) {		// Get isSolid from shanges map
+			solid = Block.getSolidFromID(Map.ChangesMap[_x][_y]%901);
+		} else {																										// Get isSolid from regular map
+			solid = Block.getSolidFromID(Map.getBackgroundID(_x, _y)) || Block.getSolidFromID(Map.getForegroundID(_x, _y));
+		}
 		return solid;
 	}
 	public static void go(String _dir) {
@@ -124,6 +151,15 @@ public class Player {
 				Screen.scrollY();	// do the smooth scrolling animation
 				//Trigger.trigger(getXPos(), getYPos());
 				break;
+		}
+	}
+	public static void Interact() {
+		int[] direction = getDirectionToINT();
+		if (Trigger.currentTrigger==0) {
+			Map.ChangeMap(getXPos()+direction[0], getYPos()+direction[1]);
+			General.DebugLog(Trigger.currentTrigger);
+		} else {
+			General.DebugLog("Trigger " + Trigger.currentTrigger + " interaction");		// Not yet working properly, returned trigger is always 0
 		}
 	}
 	public static boolean isLastPosition(int _x, int _y) {

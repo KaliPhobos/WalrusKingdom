@@ -5,7 +5,9 @@ package CodeW;
 public class General {
 	public static long secondOld = 0;
 	public static int fps = 0;
-	public static boolean ShowFPS = true;
+	public static boolean ShowFPS = true;			// General.cs
+	public static boolean ShowTileUpdates = false;	// Screen.cs
+	public static boolean ShowTriggers = false;		// Triggers.cs
 	public static int currentZoom;
 	public static int getMax(int _a, int _b) {
 		if(_a>_b) {
@@ -63,7 +65,7 @@ public class General {
 		    	fps++;
 		    } else {
 		    	if(ShowFPS==true) {
-		    		General.DebugLog(fps);			// Will give me the current FPS
+		    		General.DebugLog(fps + "Frames/s");			// Will give me the current FPS
 		    	}
 		    	fps = 0;								// 115 heavy load (running around)	(5000 max with no sleep)
 		    }											// 185 idle							(9500 max with no sleep)
