@@ -11,8 +11,13 @@ public class Menu {
 	public static long NextUpdate = System.currentTimeMillis();
 	public static long KeyPause = System.currentTimeMillis()-1;
 	public static int SelectedID = 0;
+	public static int oldWidth;
+	public static int oldHeight;
 	public static String LastMap = Map.currentMapName;		// used to go back to the right map after opening the menu
 	public static void RunMenu() {
+		oldWidth = window.getWidth();			// necessary since the menu is not flexible in size
+		oldHeight = window.getHeight();			// ... and never will be, not gonna change that
+		window.resize(576, 384);
 		Map.loadMenu();
 		if (!window.GameStat.equals("Menu")) {
 			// If the game didnt just start but you came from inside the game
@@ -50,6 +55,7 @@ public class Menu {
 			   	if (x==0) {
 			   		if (y==5||y==6) {window.Start();}
 			   		if (y==9||y==10) {
+			   			window.resize(oldWidth, oldHeight);				// return to previous screen size
 			   			if (Map.MapToResume.equals("initial")) {
 			   				window.Start();
 			   			} else {

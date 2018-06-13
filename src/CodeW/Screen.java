@@ -198,6 +198,7 @@ public class Screen {
 		     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("/CodeW/assets/font.ttf")));
 		} catch (Exception e) {
 		     //Handle exception
+			General.DebugLog("Exception in loading fonts");
 		}
 	}
 	public static int getWidth() {

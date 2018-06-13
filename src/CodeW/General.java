@@ -93,23 +93,27 @@ public class General {
 	}
 	
 	public static void DebugLog(String text) {
-		System.out.println(System.currentTimeMillis() + "   " + text);
+		long time = System.currentTimeMillis();
+		System.out.println(time + " (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + text);
 	}
 	public static void DebugLog(int text) {
-		System.out.println(System.currentTimeMillis() + "   " + text);
+		long time = System.currentTimeMillis();
+		System.out.println(time + " (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + text);
 	}
 	public static void DebugLog(int[] text) {
 		String tempString = "" + text[0];
 		for(int temp = 1; temp < text.length; temp++) {
 			tempString = tempString + ", " + text[temp];
 		}
-		System.out.println(System.currentTimeMillis() + "   " + tempString);
+		long time = System.currentTimeMillis();
+		System.out.println(time + " (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + tempString);
 	}
 	public static void DebugLog(long[] text) {
 		String tempString = "" + text[0];
 		for(int temp = 1; temp < text.length; temp++) {
 			tempString = tempString + ", " + text[temp];
 		}
-		System.out.println(System.currentTimeMillis() + "   " + tempString);
+		long time = System.currentTimeMillis();
+		System.out.println(time + " (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + tempString);
 	}
 }

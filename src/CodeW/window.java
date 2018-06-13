@@ -5,28 +5,41 @@ import CodeW.TileArea;
 
 
 public class window {
-	public static String GameStat = "Menu";					// Tells where in the program we are (Game, Menu, Paused, ...) Used for different key inputs
-	public static int width = 576;
-	public static int height = 384;
-	public static int blocksize = 24;						// size of tiles used in the game (24px)
-	public static JFrame window;
+	public static String GameStat = "Menu";				// Tells where in the program we are (Game, Menu, Paused, ...) Used for different key inputs
+	public static int width = 576+240*0;
+	public static int height = 384+120*0;
+	public static final int blocksize = 24;				// size of tiles used in the game (24px)
+	public static JFrame window;						// Never change this setting except for HD texture packs
 	public static BufferStrategy buffer;
+	public static long LaunchTimestamp;
 	public static void main(String[] args) {
+		LaunchTimestamp = System.currentTimeMillis();
+		General.DebugLog("Run!");
 		Screen.loadFont();
 		Map.loadIntro1();
-		GameStat = "Menu";		// just to prevent the bug
-		
+		GameStat = "Menu";			// just to prevent the bug
 		LoadBlocks();																// Loading background block data
+		prepare();
+		General.preloadImages();
+		//Menu.RunMenu();			// Call Start Menu								// Deactivate to skip intro
+		Menu.oldWidth = width;		// Backup those values to fall back to after intro
+		Menu.oldHeight = height;
+		Intro.loadMainGame();
+	}
+	public static void prepare() {
 		Screen.setSize(Math.round(width/blocksize), Math.round(height/blocksize));	// Setup Screen (results in 0-11 x 0-17)
 		window = Screen.createWindow();												// Create window object (JFrame)
-		new Keys(window);		// Keys keys = new Keys(window) <--- never used variable "keys"
+		new Keys(window);			// Keys keys = new Keys(window) <--- never used variable "keys"
 		window.pack();
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
 		TileArea tileArea = Screen.createTileArea(window);
-		General.preloadImages();
-		//Menu.RunMenu();			// Call Start Menu									// Deaktivieren um direkt zu starten
-		Intro.loadMainGame();
+	}
+	public static void resize (int _width, int _height) {
+		window.dispose();
+		width = _width;
+		height = _height;
+		prepare();
 	}
 	
 	public static void Start() {
@@ -38,11 +51,13 @@ public class window {
 		Screen.update();
 		Screen.render(true);
 		Intro.RunIntro();
+		resize(Menu.oldWidth, Menu.oldWidth);
 		Resume();
 	}
 	
 	
 	public static void Resume() {
+		resize(Menu.oldWidth, Menu.oldHeight);
 		GameStat = "Game";
 		General.DebugLog("window.resume");
 		if (Map.MapToResume=="City1") {Map.loadCity1();}
@@ -50,7 +65,7 @@ public class window {
 		Player.yPos = Player.yPosToResume;			// Note to self: add player walking direction  but change to RICHT when going to the menu
 		Screen.update();
 	   	Screen.render(true);
-		while (true) {										// MAIN GAME LOOP
+		while (true) {								// MAIN GAME LOOP
 		   	Screen.update();
 		   	Screen.render(false);
 		   	Screen.UpdateOldData();
@@ -63,8 +78,8 @@ public class window {
 		return window.getWidth();
 	}
 	public static int getHeight() {
-		return window.getHeight()-38+16;		// the window.getHeight get the height of the rendered window PLUS the window's bar. Add -38(px) to fix it
-	}											// Aaaaand added 16 again to fix resizing bug (no more bottom border)
+		return window.getHeight()-38+16;			// the window.getHeight get the height of the rendered window PLUS the window's bar. Add -38(px) to fix it
+	}												// Aaaaand added 16 again to fix resizing bug (no more bottom border)
 	public static void LoadBlocks() {
 		Block.AddNew(0, "void", false, 0, 1);		// no walrus shall ever go there
 		Block.AddNew(1, "walrus", false, 1, 2);		// a walrus
@@ -75,7 +90,7 @@ public class window {
 		Block.AddNew(6, "walrus", false, 6, 2);
 		Block.AddNew(7, "walrus", false, 7, 2);
 		Block.AddNew(8, "walrus", false, 8, 2);
-		Block.AddNew(9, "void SOLID", true, 9, 3);		// used for menu
+		Block.AddNew(9, "void SOLID", true, 9, 3);	// used for menu
 		Block.AddNew(10, "grass", false, 10, 4);	// nice grass
 		Block.AddNew(11, "flower", false, 11, 5);	// nice flower
 		Block.AddNew(12, "flower", false, 12, 5);

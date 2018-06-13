@@ -26,8 +26,7 @@ public class Keys implements KeyListener
 		_window.addKeyListener(this);
 	}
 
-	public static void checkInput()
-	{
+	public static void checkInput() {
 		/*for (int _temp = 0;_temp<1024;_temp++) {
 			if (keyDown[_temp]) {
 				System.out.println(_temp);
