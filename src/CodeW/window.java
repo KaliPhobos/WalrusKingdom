@@ -6,8 +6,8 @@ import CodeW.TileArea;
 
 public class window {
 	public static String GameStat = "Menu";				// Tells where in the program we are (Game, Menu, Paused, ...) Used for different key inputs
-	public static int width = 576+240*0;
-	public static int height = 384+120*0;
+	public static int width = 576*1 +816*0 +408*0;
+	public static int height = 384*1 +504*0 +288*0;
 	public static final int blocksize = 24;				// size of tiles used in the game (24px)
 	public static JFrame window;						// Never change this setting except for HD texture packs
 	public static BufferStrategy buffer;
@@ -36,6 +36,10 @@ public class window {
 		TileArea tileArea = Screen.createTileArea(window);
 	}
 	public static void resize (int _width, int _height) {
+		_width = General.getBetween(17*blocksize, _width, 48*blocksize);			// limit to width and height
+		_height = General.getBetween(12*blocksize, _height, 32*blocksize);			// have fun on 4k (just use the zoom option)
+		_width = _width - _width%(blocksize*2)+blocksize*0;
+		_height = _height - _height%(blocksize*2)+blocksize;
 		window.dispose();
 		width = _width;
 		height = _height;

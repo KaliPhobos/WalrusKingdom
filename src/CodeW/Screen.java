@@ -62,7 +62,11 @@ public class Screen {
 		switch(Map.currentMapName) {
 			case "City1":
 				if (Player.getXPos()>24 && Player.getXPos()<49 && Player.getYPos()<31 && Player.getYPos()>12) {	// Inside the big garden --> only Y-axis scrolling enabled
-					screenLeft = 25;
+					if(Screen.getWidth()<=24) {		// Window is the physical window border, Screen is the ingame area shown
+						screenLeft = General.getBetween(25, Player.getXPos()-Math.round(getWidth()/2), 49-(Screen.getWidth()));		//17 tiles is the min width, 49 the x pos
+					} else {
+						screenLeft = 37-(Screen.getWidth()-Screen.getWidth()%2)/2;	// centered entrence x-coord is 37
+					}
 					scrollLocked = true;
 				} else {
 					scrollLocked = false;
