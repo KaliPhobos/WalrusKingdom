@@ -1,7 +1,6 @@
 package CodeW;
 import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
-import CodeW.TileArea;
 
 
 public class window {
@@ -13,6 +12,8 @@ public class window {
 	public static BufferStrategy buffer;
 	public static long LaunchTimestamp;
 	public static void main(String[] args) {
+		width = checkWidth(width);						// Prevent full failure at first run with settings out of bounds
+		height = checkHeight(height);
 		LaunchTimestamp = System.currentTimeMillis();
 		General.DebugLog("Run!");
 		Screen.loadFont();
@@ -36,16 +37,21 @@ public class window {
 		TileArea tileArea = Screen.createTileArea(window);
 	}
 	public static void resize (int _width, int _height) {
-		_width = General.getBetween(17*blocksize, _width, 48*blocksize);			// limit to width and height
-		_height = General.getBetween(12*blocksize, _height, 32*blocksize);			// have fun on 4k (just use the zoom option)
-		_width = _width - _width%(blocksize*2)+blocksize*0;
-		_height = _height - _height%(blocksize*2)+blocksize;
+		width = checkWidth(_width);
+		height = checkHeight(_height);
 		window.dispose();
-		width = _width;
-		height = _height;
 		prepare();
 	}
-	
+	public static int checkWidth(int _width) {
+		_width = General.getBetween(17*blocksize, _width, 48*blocksize);			// limit to width and height
+		_width = _width - _width%(blocksize*2)+blocksize*0;
+		return _width;
+	}
+	public static int checkHeight(int _height) {
+		_height = General.getBetween(12*blocksize, _height, 32*blocksize);			// have fun on 4k (just use the zoom option)
+		_height = _height - _height%(blocksize*2)+blocksize;
+		return _height;
+	}
 	public static void Start() {
 		Player.direction = "right";
 		GameStat = "Game";
