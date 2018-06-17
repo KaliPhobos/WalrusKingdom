@@ -41,12 +41,12 @@ public class Trigger {
 				case "City1":
 					if(BackgroundID>0) {		// Positive trigger IDs are regular items/signs
 						Graphics2D g = prepareGraphics(1);		// Show trigger text
-						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(Screen.getWidth()*12-60), General.adaptZoom(255));
+						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 						// General.DebugLog("... drew text");
 					} else {					// negative trigger IDs are teleportations points
 						if((x==43)&&(y>45)&&(y<49)) {
 							Graphics2D g = prepareGraphics(2);			// Show trigger text
-							g.drawString("Enter the forest?", General.adaptZoom(Screen.getWidth()*12-60), General.adaptZoom(255));
+							g.drawString("Enter the forest?", General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 						}										// 0 = none, -1 = forest/town teleporter
 						if((x==44)&&(y>45)&&(y<49)) {		// automated teleport (enter forest)
 							Map.loadForestHouse();
@@ -59,11 +59,11 @@ public class Trigger {
 				case "ForestHouse":
 					if(BackgroundID>0) {
 						Graphics2D g = prepareGraphics(3);			// Show trigger text
-						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(Screen.getWidth()*12-60), General.adaptZoom(255));
+						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 					} else {
 						if((x==13)&&(y>7)&&(y<11)) {
 							Graphics2D g = prepareGraphics(4);		// Show trigger text
-							g.drawString("Leave the forest?", General.adaptZoom(Screen.getWidth()*12-60), General.adaptZoom(255));
+							g.drawString("Leave the forest?", General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 						}
 						if((x==12)&&(y>7)&&(y<11)) {
 							Map.loadCity1();
@@ -79,7 +79,7 @@ public class Trigger {
 	}
 	public static Graphics2D prepareGraphics(int _mode) {
 			//General.DebugLog("-> Trigger.prepareGraphics");
-			TileArea.drawTile(infobox, Screen.getWidth()*12-85, 240, 0, 0, 170, 21);		// PRESS SPACE TO INTERACT
+			TileArea.drawTile(infobox, Screen.getWidth()*12-85, Screen.getHeight()*(window.blocksize/2)+(window.blocksize*3/2)-3, 0, 0, 170, 21);		// PRESS SPACE TO INTERACT
 			g = TileArea.m_image.createGraphics();
 			//General.DebugLog("... created Graphics");
 			g.setFont(new Font("DPComic", Font.PLAIN, General.adaptZoom(16)));
