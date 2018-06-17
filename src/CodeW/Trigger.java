@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 public class Trigger {
 	public static int _modeOld = 7;
 	public static Graphics2D g;
-	public static String[] NotificationTexts = {"Press A to read the sign", "Press A to open the door", "Press A to talk to statue", "Press A to look inside"};
+	public static String[] NotificationTexts = {"[A]: read the sign", "[A]: open the door", "[A]: talk to statue", "[A]: look inside"};
 	public static TileSource infobox; 		// for preloading ->preloadImages()
 	public static int currentTrigger = 0;	// Global variable to hand over the current trigger's id
 	public static int getForegroundID(int _x, int _y) {
@@ -39,31 +39,31 @@ public class Trigger {
 			int y = Player.getYPos();
 			switch(Map.currentMapName) {
 				case "City1":
-					if(BackgroundID>0) {
+					if(BackgroundID>0) {		// Positive trigger IDs are regular items/signs
 						Graphics2D g = prepareGraphics(1);		// Show trigger text
-						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(215), General.adaptZoom(254));
+						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(Screen.getWidth()*12-60), General.adaptZoom(255));
 						// General.DebugLog("... drew text");
-					} else {
+					} else {					// negative trigger IDs are teleportations points
 						if((x==43)&&(y>45)&&(y<49)) {
-							Graphics2D g = prepareGraphics(2);		// Show trigger text
-							g.drawString("Enter the forest?", General.adaptZoom(215), General.adaptZoom(254));
-						}
-						if((x==44)&&(y>45)&&(y<49)) {
+							Graphics2D g = prepareGraphics(2);			// Show trigger text
+							g.drawString("Enter the forest?", General.adaptZoom(Screen.getWidth()*12-60), General.adaptZoom(255));
+						}										// 0 = none, -1 = forest/town teleporter
+						if((x==44)&&(y>45)&&(y<49)) {		// automated teleport (enter forest)
 							Map.loadForestHouse();
 							Player.setXPos(Player.getXPos()-30);
 							Player.setYPos(Player.getYPos()-38);
 							General.DebugLog("Teleport INTO FOREST");
 						}
 					}
-				
+					break;
 				case "ForestHouse":
 					if(BackgroundID>0) {
-						Graphics2D g = prepareGraphics(3);		// Show trigger text
-						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(215), General.adaptZoom(254));
+						Graphics2D g = prepareGraphics(3);			// Show trigger text
+						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(Screen.getWidth()*12-60), General.adaptZoom(255));
 					} else {
 						if((x==13)&&(y>7)&&(y<11)) {
 							Graphics2D g = prepareGraphics(4);		// Show trigger text
-							g.drawString("Leave the forest?", General.adaptZoom(215), General.adaptZoom(254));
+							g.drawString("Leave the forest?", General.adaptZoom(Screen.getWidth()*12-60), General.adaptZoom(255));
 						}
 						if((x==12)&&(y>7)&&(y<11)) {
 							Map.loadCity1();
@@ -72,24 +72,22 @@ public class Trigger {
 							General.DebugLog("teleport BACK");
 						}
 					}
+					break;
 					
 			}
 		}
 	}
 	public static Graphics2D prepareGraphics(int _mode) {
-		if (_mode != _modeOld) {
 			//General.DebugLog("-> Trigger.prepareGraphics");
-			TileArea.drawTile(infobox, 203, 240, 0, 0, 170, 21);		// PRESS SPACE TO INTERACT
+			TileArea.drawTile(infobox, Screen.getWidth()*12-85, 240, 0, 0, 170, 21);		// PRESS SPACE TO INTERACT
 			g = TileArea.m_image.createGraphics();
 			//General.DebugLog("... created Graphics");
 			g.setFont(new Font("DPComic", Font.PLAIN, General.adaptZoom(16)));
 			//General.DebugLog("... prepared Font");
 			g.setColor(Color.decode("#161618"));
 			//General.DebugLog("... prepared Colorcode");
-			_modeOld = _mode;
-		} else {
-			
-		}
+			_modeOld = _mode;		// no longer in use
+			General.DebugLog("Trigger mode "+ _mode);
 		return g;
 	}
 }

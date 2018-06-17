@@ -78,7 +78,9 @@ public class General {
 	public static int adaptZoom(int input) {
 		return (input*currentZoom)/24;
 	}
-	
+	public static int adaptResolution(int input) {
+		return input+Screen.getWidth()*12;
+	}
 	public static void updateZoomFactor() {
 		currentZoom = Screen.getZoom();
 	}
