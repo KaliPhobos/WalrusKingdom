@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 
 public class window {
 	public static String GameStat = "Menu";				// Tells where in the program we are (Game, Menu, Paused, ...) Used for different key inputs
-	public static int width = 576*1 +816*0 +408*0;
-	public static int height = 384*1 +504*0 +288*0;
+	public static int width = 576*0 +816*0 +408*1;
+	public static int height = 384*0 +504*0 +288*1;
 	public static final int blocksize = 24;				// size of tiles used in the game (24px)
 	public static JFrame window;						// Never change this setting except for HD texture packs
 	public static BufferStrategy buffer;

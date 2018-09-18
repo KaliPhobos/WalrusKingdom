@@ -58,7 +58,7 @@ public class General {
 	}
 	public static void sleep(int _i) {
 		try { // wait 10ms to avoid any flicker
-		    Thread.sleep(_i);
+		    Thread.sleep(_i/2);
 		    //System.currentTimeMillis();
 		    long millis = System.currentTimeMillis();
 		    if (millis - millis%1000 == secondOld) {
@@ -117,5 +117,16 @@ public class General {
 		}
 		long time = System.currentTimeMillis();
 		System.out.println(time + " (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + tempString);
+	}
+	public static double[][] wipedMatrix(double[][] matrix) {
+		int xmax = matrix.length;
+		int ymax = matrix[0].length;
+		for(int y=0;y<ymax;y++) {
+			matrix[0][y] = 0;
+		}
+		for(int x=0;x<xmax;x++) {		// faster method to fill with '0'
+			matrix[x] = matrix[0];
+		}
+		return matrix;
 	}
 }

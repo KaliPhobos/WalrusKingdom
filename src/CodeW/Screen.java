@@ -24,6 +24,8 @@ public class Screen {
 	public static int PlayerTile = 6;	// the current tile (cuz it's animated)
 	public static double[][] ScreenMatrix;		// visible part of map data is copied there
 	public static double[][] ScreenMatrixOld;	// same as above, last frame (necessary for modified rendering)
+	public static double[][] ScreenMatrixOverlay;	// Used to add changes to the map, like paths through the forest that take different turns depending on player position
+	public static boolean useScreenMatrixOverlay = false;	//see above
 	public static int ScreenWidth;
 	public static int ScreenHeight;
 	public static TileArea tileArea;
@@ -51,37 +53,73 @@ public class Screen {
 	public static Screen createScreen(int _width, int _height) {
 		// Create the screen itself
 		Screen screen = new Screen(_width, _height);
-		ScreenMatrix = new double[_width][_height];
-		ScreenMatrixOld = new double[_width][_height];
+		ScreenMatrix = new double[_width][_height];				// current screen content
+		ScreenMatrixOld = new double[_width][_height];			// to compare to last frames - render changes
+		ScreenMatrixOverlay = new double[_width][_height];		// used only in special area - map manipulations
 		return screen;
 	}
 	public static void update() {
 		// This updates the screen position (what part of the map is shown, is something outside the border, ...)
+		// top left tile shown on screen
 		screenTop = General.getBetween(0, Map.getHeight()-getHeight(), Player.getYPos()-Math.round(getHeight()/2));
 		screenLeft = General.getBetween(0, Map.getWidth()-getWidth(), Player.getXPos()-Math.round(getWidth()/2));
 		switch(Map.currentMapName) {
 			case "City1":
 				if (Player.getXPos()>24 && Player.getXPos()<49 && Player.getYPos()<31 && Player.getYPos()>12) {	// Inside the big garden --> only Y-axis scrolling enabled
-					if(Screen.getWidth()<=24) {		// Window is the physical window border, Screen is the ingame area shown
-						screenLeft = General.getBetween(25, Player.getXPos()-Math.round(getWidth()/2), 49-(Screen.getWidth()));		//17 tiles is the min width, 49 the x pos
+					// PALAST GARDEN
+					if(getWidth()<=24) {		// Window is the physical window border, Screen is the ingame area shown
+						screenLeft = General.getBetween(25, Player.getXPos()-Math.round(getWidth()/2), 49-(getWidth()));		//17 tiles is the min width, 49 the x pos
 					} else {
-						screenLeft = 37-(Screen.getWidth()-Screen.getWidth()%2)/2;	// centered entrence x-coord is 37
+						screenLeft = 37-(getWidth()-getWidth()%2)/2;	// centered entrence x-coord is 37
 					}
 					scrollLocked = true;
+				} else if ((Player.getYPos()<46)&&(Player.getYPos()+(getHeight()/2)>49) && ((Player.getXPos()+getWidth()/2)>55 && (Player.getXPos()-getWidth()/2)<57)) {
+					// FAKE FOREST PATH
+					// hide the *secret* forest level, no one shall see it <3
+					General.DebugLog("Matrix overlay active! *it's magic*");
+					ScreenMatrixOverlay = General.wipedMatrix(ScreenMatrixOverlay);				// THIS IS UGLY
+					// Left side of path, x=56
+					if ((Player.getYPos()<46)&&(Player.getYPos()+(getHeight()/2)>49) && ((Player.getXPos()+getWidth()/2)>55 && (Player.getXPos()-getWidth()/2)<57)) {
+						for(int i=Player.getYPos()+(getHeight()/2);i>49;i--) {
+							int x = 56-Player.getXPos()+getWidth()/2;
+							int y = i-Player.getYPos()+getHeight()/2;
+							General.DebugLog("x="+x+", y="+y+", max="+getWidth());
+							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][y] = 15;
+							ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
+							ScreenMatrixOld[General.getMax(0, x-1)][y] = 0;
+						}
+					}
+					// Right side of path, x=57
+					if ((Player.getYPos()<46)&&(Player.getYPos()+(getHeight()/2)>49) && ((Player.getXPos()+getWidth()/2)>56 && (Player.getXPos()-getWidth()/2)<58)) {
+						for(int i=Player.getYPos()+(getHeight()/2);i>49;i--) {
+							int x = 57-Player.getXPos()+getWidth()/2;
+							int y = i-Player.getYPos()+getHeight()/2;
+							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][y] = 16;
+							ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
+							ScreenMatrixOld[General.getMax(0, x-1)][y] = 0;
+						}
+					}
+					// causes rendering mechanisms to stop, nice one...  edit: fixed :3
+					// commit changes to ScreenMatrixOverlay[]
+					useScreenMatrixOverlay = true;
+					scrollLocked = true;
 				} else {
+					// boooring
 					scrollLocked = false;
+					useScreenMatrixOverlay = false;
 				}
 		}
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				setField(_x, _y, Map.get(screenLeft+_x, screenTop+_y));
-				
+				// Copies map content to Screen Map
 			}
 			if (Map.ChangesPrecheckMap[screenTop+_y]) {
-				//General.DebugLog("Changes to map now visible, accessing MapChanges[]");
+				General.DebugLog("Changes to map now visible, accessing MapChanges[]");
 				for(int _x=0;_x<getWidth();_x++) {
 					if (Map.ChangesMap[screenLeft+_x][screenTop+_y] !=0) {
 						setField(_x, _y, Map.getChanges(screenLeft+_x, screenTop+_y));
+						// Applies changes to Screen Map
 					};
 				}
 			}
@@ -91,8 +129,12 @@ public class Screen {
 		// Renders background layer *obviously*
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
-				double data = ScreenMatrix[_x][_y];				// load raw data
-				double dataOld = ScreenMatrixOld[_x][_y];
+				double data;
+				if(useScreenMatrixOverlay==true && ScreenMatrixOverlay[_x][_y]>0) {		// BROKEN
+					data = ScreenMatrixOverlay[_x][_y];			// changes
+				} else {
+					data = ScreenMatrix[_x][_y];				// no changes
+				}				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld | ForceUpdate == true) {	// Player moved
 					if ((screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2)==false) {		// fix rendering bux with semi transparence
 						int _background = Map.getBackgroundID(data);	// extract background data
@@ -111,8 +153,13 @@ public class Screen {
 	public static void renderForeground(boolean ForceUpdate) {
 		// Renders foreground layer *obviously*
 		for(int _y=0;_y<getHeight();_y++) {
-			for(int _x=0;_x<getWidth();_x++) {
-				double data = ScreenMatrix[_x][_y];				// load raw data
+			for(int _x=0;_x<getWidth();_x++) {					// load raw data
+				double data;
+				if(useScreenMatrixOverlay==true && ScreenMatrixOverlay[_x][_y]>0) {		// BROKEN
+					data = ScreenMatrixOverlay[_x][_y];			// changes
+				} else {
+					data = ScreenMatrix[_x][_y];				// no changes
+				}
 				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld | ForceUpdate == true) {		// Update to map data or player moved
 					if ((screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2)==false) {		// fix rendering bux with semi transparence
@@ -151,8 +198,9 @@ public class Screen {
 						Player.newLastXPos = _x;
 						Player.newLastYPos = _y;
 						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
-						if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
-						
+						if(_foreground>0) {
+							TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
+						}	// add foreground layer
 					}
 				} else {	//This disables the automated screenscrolling for special areas on the map (like in huge gardens) so only the y-axis scrolls. Similar to behavior close to map's edges
 					if(Player.getXPos()-screenLeft==_x && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
@@ -165,7 +213,9 @@ public class Screen {
 						Player.newLastXPos = _x;
 						Player.newLastYPos = _y;
 						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
-						if(_foreground>0) {TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);}	// add foreground layer
+						if(_foreground>0) {
+							TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
+						}	// add foreground layer
 					}
 				}
 			}
@@ -193,6 +243,8 @@ public class Screen {
 	}
 	public static void setField(int _x, int _y, double i) {
 		// To directly alter the screen's content without changing the map (making tiles flicker between different ones and stuff like that)
+		// Also used to copy Map contents to Screen Map
+		// General.DebugLog("set x="+_x+" y="+_y+" to id="+i);
 		ScreenMatrix[_x][_y] = i;		
 	}
 	public static void loadFont() {

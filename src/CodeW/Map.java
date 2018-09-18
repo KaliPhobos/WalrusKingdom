@@ -50,7 +50,15 @@ public class Map {
 		return Map[0].length;
 	}
 	public static long get(int _x, int _y) {
+		try {
+			return Map[General.getBetween(0, _x, getWidth())][General.getBetween(0, _y, getHeight())];
+		}
+		catch (java.lang.ArrayIndexOutOfBoundsException e) {
+			General.DebugLog("call for MAP on x="+_x+" y="+_y);
+			e.printStackTrace();
+		}
 		return Map[General.getBetween(0, _x, getWidth())][General.getBetween(0, _y, getHeight())];
+		// Abandon ship if called
 	}
 	public static long getChanges(int _x, int _y) {
 		return ChangesMap[General.getBetween(0, _x, getWidth())][General.getBetween(0, _y, getHeight())];
@@ -64,7 +72,6 @@ public class Map {
 				Map[_x][_y] = _data;
 			}
 		}
-		
 	}
 	public static long createData(int _foreground, int _background) {
 		return (long) _foreground*901+_background;
