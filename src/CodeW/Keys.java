@@ -69,7 +69,9 @@ public class Keys implements KeyListener
 		    		Player.Interact();
 				}
 				if(keyDown[73]==true) {
-					General.DebugLog("x="+Player.getXPos()+" y="+Player.getYPos());
+					if(General.showDebug) {
+						General.DebugLog("x="+Player.getXPos()+" y="+Player.getYPos());
+					}
 					TileArea.drawInfo();
 				}
 			} else if (window.GameStat.equals("Menu")) {									// IN THE MAIN MENU
@@ -117,17 +119,23 @@ public class Keys implements KeyListener
 			} else if (window.GameStat.equals("Intro")) {									// ASKING TO START THE GAME INTRO (DIALOGUES)
 				if(keyDown[27]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+1000;
-					General.DebugLog("intro -> load main");
+					if(General.showTeleport) {
+						General.DebugLog("keys.intro -> load main");
+					}
 					// goes to Intro.IntroEnd();	(walk out of forest)
 				}
 				if(keyDown[32]==true) {
-					General.DebugLog("intro -> continue Intro");
+					if(General.showTeleport) {
+						General.DebugLog("keys.intro -> continue Intro");
+					}
 					window.GameStat = "ContinueIntro";
 					Intro.continueIntro();
 				}
 			} else if (window.GameStat.equals("ContinueIntro")) {									// INSIDE THE GAME INTRO (DIALOGUES)
 				if(keyDown[27]==true) {
-					General.DebugLog("continue intro -> load main");
+					if(General.showTeleport) {
+						General.DebugLog("keys.continue intro -> load main");
+					}
 					Menu.KeyPause = System.currentTimeMillis()+150;
 					Intro.loadMainGame();
 				}

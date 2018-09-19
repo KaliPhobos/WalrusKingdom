@@ -76,14 +76,18 @@ public class Screen {
 				} else if ((Player.getYPos()<46)&&(Player.getYPos()+(getHeight()/2)>49) && ((Player.getXPos()+getWidth()/2)>55 && (Player.getXPos()-getWidth()/2)<57)) {
 					// FAKE FOREST PATH
 					// hide the *secret* forest level, no one shall see it <3
-					General.DebugLog("Matrix overlay active! *it's magic*");
+					if (General.showTrigger) {
+						General.DebugLog("Matrix overlay active! *it's magic*");
+					}
 					ScreenMatrixOverlay = General.wipedMatrix(ScreenMatrixOverlay);				// THIS IS UGLY
 					// Left side of path, x=56
 					if ((Player.getYPos()<46)&&(Player.getYPos()+(getHeight()/2)>49) && ((Player.getXPos()+getWidth()/2)>55 && (Player.getXPos()-getWidth()/2)<57)) {
 						for(int i=Player.getYPos()+(getHeight()/2);i>49;i--) {
 							int x = 56-Player.getXPos()+getWidth()/2;
 							int y = i-Player.getYPos()+getHeight()/2;
-							General.DebugLog("x="+x+", y="+y+", max="+getWidth());
+							if (General.showTrigger) {
+								General.DebugLog("x="+x+", y="+y+", max="+getWidth());
+							}
 							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][y] = 15;
 							ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
 							ScreenMatrixOld[General.getMax(0, x-1)][y] = 0;
@@ -228,7 +232,7 @@ public class Screen {
 		}
 		Player.lastXPos = Player.newLastXPos;
 		Player.lastYPos = Player.newLastYPos;
-		if (General.ShowTileUpdates) {
+		if (General.showTileUpdates) {
 			General.DebugLog(TilesDrawn+" Tiles updated");
 		}
 		TilesDrawn = 0;

@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 
 public class window {
 	public static String GameStat = "Menu";				// Tells where in the program we are (Game, Menu, Paused, ...) Used for different key inputs
-	public static int width = 576*0 +816*0 +408*1;
-	public static int height = 384*0 +504*0 +288*1;
+	public static int width = 576*0 +816*1 +408*0;
+	public static int height = 384*0 +504*1 +288*0;
 	public static final int blocksize = 24;				// size of tiles used in the game (24px)
 	public static JFrame window;						// Never change this setting except for HD texture packs
 	public static BufferStrategy buffer;
@@ -18,19 +18,19 @@ public class window {
 		General.DebugLog("Run!");
 		Screen.loadFont();
 		Map.loadIntro1();
-		GameStat = "Menu";			// just to prevent the bug
-		LoadBlocks();																// Loading background block data
+		GameStat = "Menu";								// just to prevent the bug
+		LoadBlocks();									// Loading background block data
 		prepare();
 		General.preloadImages();
-		//Menu.RunMenu();			// Call Start Menu								// Deactivate to skip intro
-		Menu.oldWidth = width;		// Backup those values to fall back to after intro
+		//Menu.RunMenu();		// Del to skip intro	// Call Start Menu
+		Menu.oldWidth = width;							// Backup those values to fall back to after intro
 		Menu.oldHeight = height;
 		Intro.loadMainGame();
 	}
 	public static void prepare() {
 		Screen.setSize(Math.round(width/blocksize), Math.round(height/blocksize));	// Setup Screen (results in 0-11 x 0-17)
 		window = Screen.createWindow();												// Create window object (JFrame)
-		new Keys(window);			// Keys keys = new Keys(window) <--- never used variable "keys"
+		new Keys(window);								// Keys keys = new Keys(window) <--- never used variable "keys"
 		window.pack();
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();
@@ -69,19 +69,21 @@ public class window {
 	public static void Resume() {
 		resize(Menu.oldWidth, Menu.oldHeight);
 		GameStat = "Game";
-		General.DebugLog("window.resume");
+		if (General.showClasses) {
+			General.DebugLog("window.resume");
+		}
 		if (Map.MapToResume=="City1") {Map.loadCity1();}
 		Player.xPos = Player.xPosToResume;			// resume with old position on the map
-		Player.yPos = Player.yPosToResume;			// Note to self: add player walking direction  but change to RICHT when going to the menu
+		Player.yPos = Player.yPosToResume;			// Note to self: add player walking direction  but change to RIGHT when going to the menu
 		Screen.update();
 	   	Screen.render(true);
 		while (true) {								// MAIN GAME LOOP
 		   	Screen.update();
-		   	Screen.render(false);
+		   	Screen.render(false);					// false -> not forcefully updating ALL tiles, just changes
 		   	Screen.UpdateOldData();
 		   	Keys.checkInput();
 		   	window.repaint();
-		   	General.sleep(70);
+		   	General.sleep(25);						// Delay to avoid flickering
 		}
 	}
 	public static int getWidth() {

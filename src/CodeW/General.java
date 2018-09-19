@@ -5,9 +5,13 @@ package CodeW;
 public class General {
 	public static long secondOld = 0;
 	public static int fps = 0;
-	public static boolean ShowFPS = true;			// General.cs
-	public static boolean ShowTileUpdates = false;	// Screen.cs
-	public static boolean ShowTriggers = false;		// Triggers.cs
+	public static boolean showFPS = true;			// show FPS counter
+	public static boolean showTrigger = false;		// show information about trigger areas
+	public static boolean showTeleport = true;		// show information about silent teleportations
+	public static boolean showClasses = true;		// show calls of main classes
+	public static boolean showToDo = true;			// show current processed item during startup
+	public static boolean showTileUpdates = false;	// shows tile update counters and additional information
+	public static boolean showDebug = true;		// shows additional information when pressing debug key
 	public static int currentZoom;
 	public static int getMax(int _a, int _b) {
 		if(_a>_b) {
@@ -58,13 +62,13 @@ public class General {
 	}
 	public static void sleep(int _i) {
 		try { // wait 10ms to avoid any flicker
-		    Thread.sleep(_i/2);
+		    Thread.sleep(_i);
 		    //System.currentTimeMillis();
 		    long millis = System.currentTimeMillis();
 		    if (millis - millis%1000 == secondOld) {
 		    	fps++;
 		    } else {
-		    	if(ShowFPS==true) {
+		    	if(showFPS==true) {
 		    		General.DebugLog(fps + "Frames/s");			// Will give me the current FPS
 		    	}
 		    	fps = 0;								// 115 heavy load (running around)	(5000 max with no sleep)
@@ -96,11 +100,11 @@ public class General {
 	
 	public static void DebugLog(String text) {
 		long time = System.currentTimeMillis();
-		System.out.println(time + " (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + text);
+		System.out.println((time-window.LaunchTimestamp)/1000.0 + "s (+" + (time-secondOld)/1000.0 + "s)   " + text);
 	}
 	public static void DebugLog(int text) {
 		long time = System.currentTimeMillis();
-		System.out.println(time + " (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + text);
+		System.out.println((time-window.LaunchTimestamp)/1000.0 + "s (+" + (time-secondOld)/1000.0 + "s)   " + text);
 	}
 	public static void DebugLog(int[] text) {
 		String tempString = "" + text[0];
@@ -108,7 +112,7 @@ public class General {
 			tempString = tempString + ", " + text[temp];
 		}
 		long time = System.currentTimeMillis();
-		System.out.println(time + " (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + tempString);
+		System.out.println((time-window.LaunchTimestamp)/1000.0 + "s (+" + (time-secondOld)/1000.0 + "s)   " + tempString);
 	}
 	public static void DebugLog(long[] text) {
 		String tempString = "" + text[0];
@@ -116,7 +120,7 @@ public class General {
 			tempString = tempString + ", " + text[temp];
 		}
 		long time = System.currentTimeMillis();
-		System.out.println(time + " (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + tempString);
+		System.out.println((time-window.LaunchTimestamp)/1000.0 + "s (+" + (time-window.LaunchTimestamp)/1000.0 + "s)   " + tempString);
 	}
 	public static double[][] wipedMatrix(double[][] matrix) {
 		int xmax = matrix.length;

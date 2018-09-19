@@ -22,7 +22,7 @@ public class Menu {
 		if (!window.GameStat.equals("Menu")) {
 			// If the game didnt just start but you came from inside the game
 			window.GameStat = "Paused";
-			KeyPause = System.currentTimeMillis()+250;
+			KeyPause = System.currentTimeMillis()+250;			// Key update interval - 4Hz
 		}
 		Screen.update();
 		while(true) {
@@ -44,7 +44,7 @@ public class Menu {
 			   	
 				
 			   	NextUpdate = System.currentTimeMillis()+10;
-			   	while (System.currentTimeMillis()<NextUpdate) {
+			   	while (System.currentTimeMillis()<NextUpdate) {			// wait for update
 				   	General.sleep(1);
 			   		if(System.currentTimeMillis()>KeyPause) {
 			   			Keys.checkInput();
@@ -61,12 +61,12 @@ public class Menu {
 			   			} else {
 			   				window.Resume();}
 			   			}
-			   		if (y==13||y==14) {General.DebugLog("SAVE GAME");}
+			   		if (y==13||y==14) {if (General.showClasses) {General.DebugLog("Menu.SAVE GAME");}}
 			   		
 			   	}
 			   	if (x==23) {
-			   		if (y==5||y==6) {General.DebugLog("SETTINGS");}
-			   		if (y==9||y==10) {General.DebugLog("CREDITS SCREEN");}
+			   		if (y==5||y==6) {if (General.showClasses) {General.DebugLog("Menu.SETTINGS");}}
+			   		if (y==9||y==10) {if (General.showClasses) {General.DebugLog("Menu.CREDITS SCREEN");}}
 			   		if (y==13||y==14) {System.exit(0);}
 			   		
 			   	}

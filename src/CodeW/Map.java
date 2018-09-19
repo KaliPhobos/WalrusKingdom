@@ -404,7 +404,9 @@ public class Map {
 		for(int _i=0;_i<24;_i++) {Map[_i][15] = new long[] { 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}[_i];}
 	}
 	public static void loadChanges() {
-		General.DebugLog("Analyzing changes to map data");
+		if (General.showToDo) {
+			General.DebugLog("Map.Analyzing changes to map data");
+		}
 		ChangesPrecheckMap = new boolean[MapWidth];
 		boolean temp;
 		for (int _y=0;_y<MapHeight;_y++) {

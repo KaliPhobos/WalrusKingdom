@@ -31,7 +31,7 @@ public class Trigger {
 		int BackgroundID = getBackgroundID(_x, _y);
 		if(BackgroundID!=0) {
 			Screen.forceUpdateNextTime = true;
-			if (General.ShowTriggers) {
+			if (General.showTrigger) {
 				General.DebugLog("trigger: "+BackgroundID);
 				currentTrigger = BackgroundID;
 			}
@@ -52,7 +52,9 @@ public class Trigger {
 							Map.loadForestHouse();
 							Player.setXPos(Player.getXPos()-30);
 							Player.setYPos(Player.getYPos()-38);
-							General.DebugLog("Teleport INTO FOREST");
+							if (General.showTrigger) {
+								General.DebugLog("Teleport INTO FOREST");
+							}
 						}
 					}
 					break;
@@ -69,7 +71,9 @@ public class Trigger {
 							Map.loadCity1();
 							Player.setXPos(Player.getXPos()+30);
 							Player.setYPos(Player.getYPos()+38);
-							General.DebugLog("teleport BACK");
+							if (General.showTrigger) {
+								General.DebugLog("teleport BACK");
+							}
 						}
 					}
 					break;
@@ -87,7 +91,9 @@ public class Trigger {
 			g.setColor(Color.decode("#161618"));
 			//General.DebugLog("... prepared Colorcode");
 			_modeOld = _mode;		// no longer in use
-			General.DebugLog("Trigger mode "+ _mode);
+			if (General.showTrigger) {
+				General.DebugLog("Trigger mode "+ _mode);
+			}
 		return g;
 	}
 }
