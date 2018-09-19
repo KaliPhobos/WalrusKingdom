@@ -7,7 +7,7 @@ import java.awt.Graphics2D;
 public class Trigger {
 	public static int _modeOld = 7;
 	public static Graphics2D g;
-	public static String[] NotificationTexts = {"[A]: read the sign", "[A]: open the door", "[A]: talk to statue", "[A]: look inside"};
+	public static String[] NotificationTexts = {"[A]: read the sign", "[A]: enter house", "[A]: talk to statue", "[A]: look inside"};
 	public static TileSource infobox; 		// for preloading ->preloadImages()
 	public static int currentTrigger = 0;	// Global variable to hand over the current trigger's id
 	public static int getForegroundID(int _x, int _y) {
@@ -50,7 +50,7 @@ public class Trigger {
 						}										// 0 = none, -1 = forest/town teleporter
 						if((x==44)&&(y>45)&&(y<49)) {		// automated teleport (enter forest)
 							Map.loadForestHouse();
-							Player.setXPos(Player.getXPos()-30);
+							Player.setXPos(Player.getXPos()-33);		// not similar to number below for whatever reason (changed forest map size)
 							Player.setYPos(Player.getYPos()-38);
 							if (General.showTrigger) {
 								General.DebugLog("Teleport INTO FOREST");
@@ -63,13 +63,13 @@ public class Trigger {
 						Graphics2D g = prepareGraphics(3);			// Show trigger text
 						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 					} else {
-						if((x==13)&&(y>7)&&(y<11)) {
+						if((x==16)&&(y>7)&&(y<11)) {
 							Graphics2D g = prepareGraphics(4);		// Show trigger text
 							g.drawString("Leave the forest?", General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 						}
-						if((x==12)&&(y>7)&&(y<11)) {
+						if((x==15)&&(y>7)&&(y<11)) {
 							Map.loadCity1();
-							Player.setXPos(Player.getXPos()+30);
+							Player.setXPos(Player.getXPos()+27);		// not similar to number above for whatever reason (changed forest map size)
 							Player.setYPos(Player.getYPos()+38);
 							if (General.showTrigger) {
 								General.DebugLog("teleport BACK");
