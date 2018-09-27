@@ -7,6 +7,7 @@ public class General {
 	public static int fps = 0;
 	public static boolean showFPS = true;			// show FPS counter
 	public static boolean showTrigger = false;		// show information about trigger areas
+	public static boolean showMapChanges = false;	// shows information about map overlays
 	public static boolean showTeleport = true;		// show information about silent teleportations
 	public static boolean showClasses = true;		// show calls of main classes
 	public static boolean showToDo = true;			// show current processed item during startup

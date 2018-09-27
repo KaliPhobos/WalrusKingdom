@@ -119,7 +119,9 @@ public class Screen {
 				// Copies map content to Screen Map
 			}
 			if (Map.ChangesPrecheckMap[screenTop+_y]) {
-				General.DebugLog("Changes to map now visible, accessing MapChanges[]");
+				if (General.showMapChanges) {
+					General.DebugLog("Changes to map now visible, accessing MapChanges[]");
+				}
 				for(int _x=0;_x<getWidth();_x++) {
 					if (Map.ChangesMap[screenLeft+_x][screenTop+_y] !=0) {
 						setField(_x, _y, Map.getChanges(screenLeft+_x, screenTop+_y));
