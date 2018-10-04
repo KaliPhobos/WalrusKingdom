@@ -6,7 +6,7 @@ public class General {
 	public static long secondOld = 0;
 	public static int fps = 0;
 	public static boolean showFPS = true;			// show FPS counter
-	public static boolean showTrigger = true;		// show information about trigger areas
+	public static boolean showTrigger = false;		// show information about trigger areas
 	public static boolean showMapChanges = false;	// shows information about map overlays
 	public static boolean showTeleport = true;		// show information about silent teleportations
 	public static boolean showClasses = true;		// show calls of main classes
@@ -24,7 +24,7 @@ public class General {
 		}
 	}
 	public static int getMax(int[] _a) {
-		int _max = -999999;
+		int _max = _a[0];
 		for(int i=0;i<_a.length;i++) {
 			if(_a[i]>_max) {
 				_max=_a[i];
@@ -47,7 +47,7 @@ public class General {
 		}
 	}
 	public static int getMin(int[] _a) {
-		int _max = 999999;
+		int _max = _a[0];
 		for(int i=0;i<_a.length;i++) {
 			if(_a[i]<_max) {
 				_max=_a[i];

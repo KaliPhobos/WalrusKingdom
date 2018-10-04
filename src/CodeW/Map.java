@@ -464,7 +464,7 @@ public class Map {
 	public static void FixTree(int _x, int _y) {
 		if (_y<1) {
 			if (General.showCritical) {
-				General.DebugLog("Map.FixTree: Corrupted data detected: "+_y);
+				General.DebugLog("Map.FixTree: Corrupted data detected: y="+_y+" (while x="+_x+")");
 			}
 		}
 		_y = General.getMax(1, _y);		// causes minor graphics bugs, but at least prevents a full crash. Should never be triggered anyways
@@ -477,7 +477,7 @@ public class Map {
 			ChangesPrecheckMap[_y-1] = true;
 		}
 		if ((getBackgroundID(getChangedData(_x, _y-1)) == 118) || (getForegroundID(getChangedData(_x, _y-1)) == 118)) {		// Single bright tree
-			ChangesMap[_x][_y-1] = 10;
+			ChangesMap[_x][_y-1] = 901*9+getBackgroundID(_x, _y-1);		// empty tile (ID NOT 0) in foreground but old background 
 			ChangesPrecheckMap[_y-1] = true;
 		}
 	}
