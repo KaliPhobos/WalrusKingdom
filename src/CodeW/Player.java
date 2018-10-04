@@ -154,12 +154,19 @@ public class Player {
 		}
 	}
 	public static void Interact() {
-		int[] direction = getDirectionToINT();
-		if (Trigger.currentTrigger==0) {
-			Map.ChangeMap(getXPos()+direction[0], getYPos()+direction[1]);
-			General.DebugLog(Trigger.currentTrigger);
+		int[] direction = getDirectionToINT();														// Coordinates of Tile in front of the player
+		if (Map.ChangeMap(getXPos()+direction[0], getYPos()+direction[1])) {						// Hey, Map! Do your thing, you know...
+			if (General.showInteractions) {
+				if (Trigger.currentTrigger==0) {
+					General.DebugLog("Trigger (id=" + Trigger.currentTrigger + ") interaction");	// Cut down tree
+				} else {
+					General.DebugLog("Trigger (id=" + Trigger.currentTrigger + ") interaction");	// actual trigger (statue, chest, door, ...)
+				}
+			}
 		} else {
-			General.DebugLog("Trigger " + Trigger.currentTrigger + " interaction");		// Not yet working properly, returned trigger is always 0
+			if (General.showInteractions) {															// No changes made (no triggers nor trees)
+				General.DebugLog("No triggers here");												// Maybe add little easter eggs later? ("You found... a colorful leaf on the ground!")
+			}
 		}
 	}
 	public static boolean isLastPosition(int _x, int _y) {

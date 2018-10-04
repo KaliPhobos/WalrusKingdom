@@ -35,10 +35,10 @@ public class Keys implements KeyListener
 		if (window.window.getWidth()* window.window.getHeight()!=Screen.ScreenSizeIndicator) {		// triggered if you resize the window
 			
 			if (Screen.ScreenSizeIndicator==0) {
-				Screen.tileArea = new TileArea(window.window.getWidth(), window.window.getHeight());	// thx p4nix for tellign me to do this xD
+				Screen.tileArea = new TileArea(window.window.getWidth(), window.window.getHeight());	// thx p4nix for telling me to do this xD
 				Screen.ScreenSizeIndicator = window.window.getWidth()* window.window.getHeight();
 			} else {
-				Screen.tileArea = new TileArea(window.window.getWidth(), window.window.getHeight());	// thx p4nix for tellign me to do this xD
+				Screen.tileArea = new TileArea(window.window.getWidth(), window.window.getHeight());	// thx p4nix for telling me to do this xD
 				Screen.ScreenSizeIndicator = window.window.getWidth()* window.window.getHeight();
 				Screen.render(true);		//causing troubls if Map.MAP[] isn't already defined (first run)
 			}
@@ -66,7 +66,7 @@ public class Keys implements KeyListener
 					Menu.RunMenu();
 				}
 				if(keyDown[65]==true) {
-		    		Player.Interact();
+		    		Player.Interact();			// Cut tree, open chest, talk, ...
 				}
 				if(keyDown[73]==true) {
 					if(General.showDebug) {

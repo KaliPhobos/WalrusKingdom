@@ -28,12 +28,12 @@ public class Trigger {
 		return Map.EventMap[General.getBetween(0, _x, Map.getWidth())][General.getBetween(0, _y, Map.getHeight())];
 	}
 	public static void trigger(int _x, int _y) {
-		int BackgroundID = getBackgroundID(_x, _y);
-		if(BackgroundID!=0) {
-			Screen.forceUpdateNextTime = true;
+		int BackgroundID = getBackgroundID(_x, _y);		// Accessing TRIGGER map, not regular map!
+		if(BackgroundID!=0) {	// Trigger in place
+			Screen.forceUpdateNextTime = true;			// Hide "press A to ..." pop-up with next interaction
+			currentTrigger = BackgroundID;
 			if (General.showTrigger) {
 				General.DebugLog("trigger: "+BackgroundID);
-				currentTrigger = BackgroundID;
 			}
 			int x = Player.getXPos();
 			int y = Player.getYPos();
@@ -79,7 +79,10 @@ public class Trigger {
 					break;
 					
 			}
+		} else {
+			currentTrigger = 0;
 		}
+		
 	}
 	public static Graphics2D prepareGraphics(int _mode) {
 			//General.DebugLog("-> Trigger.prepareGraphics");

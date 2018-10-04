@@ -6,13 +6,15 @@ public class General {
 	public static long secondOld = 0;
 	public static int fps = 0;
 	public static boolean showFPS = true;			// show FPS counter
-	public static boolean showTrigger = false;		// show information about trigger areas
+	public static boolean showTrigger = true;		// show information about trigger areas
 	public static boolean showMapChanges = false;	// shows information about map overlays
 	public static boolean showTeleport = true;		// show information about silent teleportations
 	public static boolean showClasses = true;		// show calls of main classes
 	public static boolean showToDo = true;			// show current processed item during startup
 	public static boolean showTileUpdates = false;	// shows tile update counters and additional information
-	public static boolean showDebug = true;		// shows additional information when pressing debug key
+	public static boolean showDebug = true;			// shows additional information when pressing debug key
+	public static boolean showInteractions = true;	// shows information about passive triggers (user input required to trigger)
+	public static boolean showCritical = true;		// Information about critical failures (corrupted map data and stuff)
 	public static int currentZoom;
 	public static int getMax(int _a, int _b) {
 		if(_a>_b) {

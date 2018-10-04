@@ -437,28 +437,35 @@ public class Map {
 		}
 		return _return;
 	}
-	public static void ChangeMap(int _x, int _y) {
+	public static boolean ChangeMap(int _x, int _y) {
+		boolean appliedChanges = false;
 		//ChangesMap[_x][_y] = _id;
 		//ChangesPrecheckMap[_y] = true;
 		if ((getBackgroundID(getChangedData(_x, _y)) == 116) || (getForegroundID(getChangedData(_x, _y)) == 116)) {
 			ChangesMap[_x][_y] = 10;
 			ChangesPrecheckMap[_y] = true;
 			FixTree(_x, _y);
+			appliedChanges = true;
 		}
 		if ((getBackgroundID(getChangedData(_x, _y)) == 117) || (getForegroundID(getChangedData(_x, _y)) == 117)) {
 			ChangesMap[_x][_y] = 901*118+10;
 			ChangesPrecheckMap[_y] = true;
 			FixTree(_x, _y);
+			appliedChanges = true;
 		}
 		if ((getBackgroundID(getChangedData(_x, _y)) == 119) || (getForegroundID(getChangedData(_x, _y)) == 119)) {
 			ChangesMap[_x][_y] = 10;
 			ChangesPrecheckMap[_y] = true;
 			FixTree(_x, _y);
+			appliedChanges = true;
 		}
+		return appliedChanges;
 	}
 	public static void FixTree(int _x, int _y) {
 		if (_y<1) {
-			General.DebugLog("Map.FixTree: Corrupted data detected: "+_y);
+			if (General.showCritical) {
+				General.DebugLog("Map.FixTree: Corrupted data detected: "+_y);
+			}
 		}
 		_y = General.getMax(1, _y);		// causes minor graphics bugs, but at least prevents a full crash. Should never be triggered anyways
 		if ((getBackgroundID(getChangedData(_x, _y-1)) == 117) || (getForegroundID(getChangedData(_x, _y-1)) == 117)) {		// Bright tree below dark tree
