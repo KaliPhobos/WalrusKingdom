@@ -44,13 +44,13 @@ public class Trigger {
 						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 						// General.DebugLog("... drew text");
 					} else {					// negative trigger IDs are teleportations points
-						if((x==43)&&(y>45)&&(y<49)) {
+						if((x==44)&&(y>45)&&(y<49)) {
 							Graphics2D g = prepareGraphics(2);			// Show trigger text
 							g.drawString("Enter the forest?", General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 						}										// 0 = none, -1 = forest/town teleporter
-						if((x==44)&&(y>45)&&(y<49)) {		// automated teleport (enter forest)
+						if((x==45)&&(y>45)&&(y<49)) {		// automated teleport (enter forest)
 							Map.loadForestHouse();
-							Player.setXPos(Player.getXPos()-33);		// not similar to number below for whatever reason (changed forest map size)
+							Player.setXPos(Player.getXPos()-33+6);		// not similar to number below for whatever reason (changed forest map size)
 							Player.setYPos(Player.getYPos()-38);
 							if (General.showTrigger) {
 								General.DebugLog("Teleport INTO FOREST");
@@ -63,11 +63,11 @@ public class Trigger {
 						Graphics2D g = prepareGraphics(3);			// Show trigger text
 						g.drawString(NotificationTexts[BackgroundID-1], General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 					} else {
-						if((x==16)&&(y>7)&&(y<11)) {
+						if((x==17)&&(y>7)&&(y<11)) {
 							Graphics2D g = prepareGraphics(4);		// Show trigger text
 							g.drawString("Leave the forest?", General.adaptZoom(Screen.getWidth()*(window.blocksize/2)-60), General.adaptZoom(Screen.getHeight()*(window.blocksize/2)+(window.blocksize*2)));
 						}
-						if((x==15)&&(y>7)&&(y<11)) {
+						if((x==16)&&(y>7)&&(y<11)) {
 							Map.loadCity1();
 							Player.setXPos(Player.getXPos()+27);		// not similar to number above for whatever reason (changed forest map size)
 							Player.setYPos(Player.getYPos()+38);

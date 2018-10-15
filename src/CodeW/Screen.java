@@ -81,7 +81,11 @@ public class Screen {
 					}
 					ScreenMatrixOverlay = General.wipedMatrix(ScreenMatrixOverlay);				// THIS IS UGLY
 					// Left side of path, x=56
-					if ((Player.getYPos()<46)&&(Player.getYPos()+(getHeight()/2)>49) && ((Player.getXPos()+getWidth()/2)>55 && (Player.getXPos()-getWidth()/2)<57)) {
+					
+					// X: >45 && <49 instead of <46 && >49
+					// Y: >45 && <49 instead of >55 && <57
+					// is this even working?
+					if ((Player.getYPos()>45)&&(Player.getYPos()+(getHeight()/2)<49) && ((Player.getXPos()+getWidth()/2)>45 && (Player.getXPos()-getWidth()/2)<49)) {
 						for(int i=Player.getYPos()+(getHeight()/2);i>49;i--) {
 							int x = 56-Player.getXPos()+getWidth()/2;
 							int y = i-Player.getYPos()+getHeight()/2;
