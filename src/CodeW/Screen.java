@@ -36,7 +36,7 @@ public class Screen {
 	}
 	public static JFrame createWindow() {
 		// Pretty obvious, it *creates window*
-		JFrame frame = new JFrame("CodeW");
+		JFrame frame = new JFrame("CodeW "+getWidth()+"x"+getHeight());
         frame.setIgnoreRepaint(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(window.blocksize*ScreenWidth, window.blocksize*ScreenHeight);		// set window size
@@ -68,49 +68,74 @@ public class Screen {
 				if (Player.getXPos()>24 && Player.getXPos()<49 && Player.getYPos()<31 && Player.getYPos()>12) {	// Inside the big garden --> only Y-axis scrolling enabled
 					// PALAST GARDEN
 					if(getWidth()<=24) {		// Window is the physical window border, Screen is the ingame area shown
-						screenLeft = General.getBetween(25, Player.getXPos()-Math.round(getWidth()/2), 49-(getWidth()));		//17 tiles is the min width, 49 the x pos
+						screenLeft = General.getBetween(25, Player.getXPos()-Math.round(getWidth()/2), 49-getWidth());		//17 tiles is the min width, 49 the x pos
 					} else {
 						screenLeft = 37-(getWidth()-getWidth()%2)/2;	// centered entrence x-coord is 37
 					}
 					scrollLocked = true;
-				} else if ( (Player.getYPos()<46) && (Player.getYPos()+(getHeight()/2)>47) && (Player.getXPos()+(getWidth()/2)>55) && (Player.getXPos()-(getWidth()/2)<57) ) {
+				} else if ( (Player.getYPos()<46) && (Player.getYPos()+(getHeight()/2-(getHeight()+1)%2)>47) && (Player.getXPos()+(getWidth()/2)>55) && (Player.getXPos()-(getWidth()/2)<57) ) {	// The -(getHeight()+1)%2) makes it work on both odd and even screen heights
 					// FAKE FOREST PATH, first tile after turn south already visible, Character not on the forest path (north of it)
 					// hide the *secret* forest level, no one shall see it <3
 					if (General.showTrigger) {
 						General.DebugLog("Matrix overlay active! *it's magic*");
 					}
-					ScreenMatrixOverlay = General.wipedMatrix(ScreenMatrixOverlay);				// THIS IS UGLY
+					ScreenMatrixOverlay = General.wipedMatrix(ScreenMatrixOverlay);				// THIS IS UGLY --> but at least it works
 					// path after turn south is x=56 and x=57
 					
-					if ( ((Player.getXPos()+(getWidth()-1)/2)>55) && ((Player.getXPos()-(getWidth()-1)/2)<57) ) {
-						//General.DebugLog("left side visible");
-						int x = 56+1-Player.getXPos()+((getWidth()-1)/2);
-						for(int i=Player.getYPos()+((getHeight()-1)/2);i>47;i--) {
-							int y = i-Player.getYPos()+((getHeight()-1)/2);
+					if ( ((Player.getXPos()+getWidth()/2)>55) && ((Player.getXPos()-getWidth()/2)<57) ) {
+						int x = 56-Player.getXPos()+(getWidth()/2);
+						for(int i=Player.getYPos()+((getHeight())/2);i>47;i--) {
+							int y = i-Player.getYPos()+((getHeight())/2);
 							if (General.showTrigger) General.DebugLog("x="+x+", y="+y+", max="+getWidth());
-							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][y] = 15;
+							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][General.getMin(getHeight()-1, y)] = 15;
 							//ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
-							ScreenMatrixOld[General.getMax(0, x-1)][y] = 0;
+							ScreenMatrixOld[General.getMax(0, x-1)][General.getMin(getHeight()-1, y)] = 0;
 						}
 					}
 					// Right side of path, x=57
-					if ( ((Player.getXPos()+(getWidth()-1)/2)>57) && ((Player.getXPos()-(getWidth()-1)/2)<58) ) {
-						//General.DebugLog("right side visible");
-						int x = 57+1-Player.getXPos()+(getWidth()-1)/2;
-						for(int i=Player.getYPos()+((getHeight()-1)/2);i>47;i--) {
-							int y = i-Player.getYPos()+(getHeight()-1)/2;
-							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][y] = 16;
-							ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
+					if ( ((Player.getXPos()+getWidth()/2)>57) && ((Player.getXPos()-getWidth()/2)<58) ) {
+						int x = 57-Player.getXPos()+getWidth()/2;
+						for(int i=Player.getYPos()+getHeight()/2;i>47;i--) {
+							int y = i-Player.getYPos()+(getHeight())/2;
+							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][General.getMin(getHeight()-1, y)] = 16;
+							ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][General.getMin(getHeight()-1, y)] = 0;
 							//ScreenMatrixOld[General.getMax(0, x-1)][y] = 0;
 						}
 					}
 					useScreenMatrixOverlay = true;		// ScreenMatrixOverlay[] will be used as source for (double)data instead of the actual map where ever it is not 0.0
 					scrollLocked = true;
+				} else if (Player.getYPos()>45 && Player.getYPos()<49 && Player.getXPos()+getWidth()/2>55 && Player.getXPos()<55) {
+					// On the forest path
+					// ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Player.getXPos()][45+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// one tile to the left
+					ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Player.getXPos()][46+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// one tile to the left
+					ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Player.getXPos()][47+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// CRASH WITH OUT OF BOUNDS: -1 WHEN PLAYING ON 27x16 SCREEN AND LEAVING THE FOREST
+					ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Player.getXPos()][48+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
+					// ScreenMatrixOld[56+((getWidth()-1)%2/2)-Player.getXPos()][46+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// Force those tiles to be rendered again
+					// ScreenMatrixOld[56+((getWidth()-1)%2/2)-Player.getXPos()][47+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// Edit: No need for that
+					ScreenMatrixOld[56+((getWidth()-1)%2/2)-Player.getXPos()][48+((getHeight()-1)%2/2)-Player.getYPos()] = 0;		// REMOVE LATER when adapting forest trees to fit forest map
+					for (int x=56+((getWidth()-1)%2/2)-Player.getXPos()%2;x<getWidth();x++) {
+						ScreenMatrixOverlay[x][45+((getHeight()-1)%2/2)-Player.getYPos()] = 109;
+						ScreenMatrixOverlay[x][46+((getHeight()-1)%2/2)-Player.getYPos()] = 17;
+						ScreenMatrixOverlay[x][47+((getHeight()-1)%2/2)-Player.getYPos()] = 18;
+						ScreenMatrixOverlay[x][48+((getHeight()-1)%2/2)-Player.getYPos()] = 106328;
+						ScreenMatrixOld[x][45+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
+						ScreenMatrixOld[x][46+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
+						ScreenMatrixOld[x][47+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
+						ScreenMatrixOld[x][48+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
+					}
+					useScreenMatrixOverlay = true;
 				} else {
 					// boooring
 					scrollLocked = false;
 					useScreenMatrixOverlay = false;
 				}
+				break;
+			case "ForestHouse":
+				General.DebugLog("FOREST");
+				break;
+			default:
+				General.DebugLog("whatever");
+				break;
 		}
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {

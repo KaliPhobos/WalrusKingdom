@@ -48,7 +48,6 @@ public class window {
 		return _width;
 	}
 	public static int checkHeight(int _height) {
-		//_height = General.getBetween(12*blocksize, _height, 17*blocksize);			// have fun on 4k (just use the zoom option)
 		_height = _height - _height%(blocksize*2)+blocksize;
 		return _height;
 	}
