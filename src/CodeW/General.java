@@ -105,6 +105,10 @@ public class General {
 		long time = System.currentTimeMillis();
 		System.out.println((time-window.LaunchTimestamp)/1000.0 + "s (+" + (time-secondOld)/1000.0 + "s)   " + text);
 	}
+	public static void DebugLog(double text) {
+		long time = System.currentTimeMillis();
+		System.out.println((time-window.LaunchTimestamp)/1000.0 + "s (+" + (time-secondOld)/1000.0 + "s)   " + text);
+	}
 	public static void DebugLog(int text) {
 		long time = System.currentTimeMillis();
 		System.out.println((time-window.LaunchTimestamp)/1000.0 + "s (+" + (time-secondOld)/1000.0 + "s)   " + text);
@@ -128,11 +132,10 @@ public class General {
 	public static double[][] wipedMatrix(double[][] matrix) {
 		int xmax = matrix.length;
 		int ymax = matrix[0].length;
-		for(int y=0;y<ymax;y++) {
-			matrix[0][y] = 0;
-		}
-		for(int x=0;x<xmax;x++) {		// faster method to fill with '0'
-			matrix[x] = matrix[0];
+		for (int y=0;y<ymax;y++) {
+			for (int x=0;x<xmax;x++) {
+				matrix[x][y] = 0.0;
+			}
 		}
 		return matrix;
 	}

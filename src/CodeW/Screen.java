@@ -73,43 +73,38 @@ public class Screen {
 						screenLeft = 37-(getWidth()-getWidth()%2)/2;	// centered entrence x-coord is 37
 					}
 					scrollLocked = true;
-				} else if ((Player.getYPos()<46)&&(Player.getYPos()+(getHeight()/2)>49) && ((Player.getXPos()+getWidth()/2)>55 && (Player.getXPos()-getWidth()/2)<57)) {
-					// FAKE FOREST PATH
+				} else if ( (Player.getYPos()<46) && (Player.getYPos()+(getHeight()/2)>47) && (Player.getXPos()+(getWidth()/2)>55) && (Player.getXPos()-(getWidth()/2)<57) ) {
+					// FAKE FOREST PATH, first tile after turn south already visible, Character not on the forest path (north of it)
 					// hide the *secret* forest level, no one shall see it <3
 					if (General.showTrigger) {
 						General.DebugLog("Matrix overlay active! *it's magic*");
 					}
 					ScreenMatrixOverlay = General.wipedMatrix(ScreenMatrixOverlay);				// THIS IS UGLY
-					// Left side of path, x=56
+					// path after turn south is x=56 and x=57
 					
-					// X: >45 && <49 instead of <46 && >49
-					// Y: >45 && <49 instead of >55 && <57
-					// is this even working?
-					if ((Player.getYPos()>45)&&(Player.getYPos()+(getHeight()/2)<49) && ((Player.getXPos()+getWidth()/2)>45 && (Player.getXPos()-getWidth()/2)<49)) {
-						for(int i=Player.getYPos()+(getHeight()/2);i>49;i--) {
-							int x = 56-Player.getXPos()+getWidth()/2;
-							int y = i-Player.getYPos()+getHeight()/2;
-							if (General.showTrigger) {
-								General.DebugLog("x="+x+", y="+y+", max="+getWidth());
-							}
+					if ( ((Player.getXPos()+(getWidth()-1)/2)>55) && ((Player.getXPos()-(getWidth()-1)/2)<57) ) {
+						//General.DebugLog("left side visible");
+						int x = 56+1-Player.getXPos()+((getWidth()-1)/2);
+						for(int i=Player.getYPos()+((getHeight()-1)/2);i>47;i--) {
+							int y = i-Player.getYPos()+((getHeight()-1)/2);
+							if (General.showTrigger) General.DebugLog("x="+x+", y="+y+", max="+getWidth());
 							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][y] = 15;
-							ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
+							//ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
 							ScreenMatrixOld[General.getMax(0, x-1)][y] = 0;
 						}
 					}
 					// Right side of path, x=57
-					if ((Player.getYPos()<46)&&(Player.getYPos()+(getHeight()/2)>49) && ((Player.getXPos()+getWidth()/2)>56 && (Player.getXPos()-getWidth()/2)<58)) {
-						for(int i=Player.getYPos()+(getHeight()/2);i>49;i--) {
-							int x = 57-Player.getXPos()+getWidth()/2;
-							int y = i-Player.getYPos()+getHeight()/2;
+					if ( ((Player.getXPos()+(getWidth()-1)/2)>57) && ((Player.getXPos()-(getWidth()-1)/2)<58) ) {
+						//General.DebugLog("right side visible");
+						int x = 57+1-Player.getXPos()+(getWidth()-1)/2;
+						for(int i=Player.getYPos()+((getHeight()-1)/2);i>47;i--) {
+							int y = i-Player.getYPos()+(getHeight()-1)/2;
 							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][y] = 16;
 							ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
-							ScreenMatrixOld[General.getMax(0, x-1)][y] = 0;
+							//ScreenMatrixOld[General.getMax(0, x-1)][y] = 0;
 						}
 					}
-					// causes rendering mechanisms to stop, nice one...  edit: fixed :3
-					// commit changes to ScreenMatrixOverlay[]
-					useScreenMatrixOverlay = true;
+					useScreenMatrixOverlay = true;		// ScreenMatrixOverlay[] will be used as source for (double)data instead of the actual map where ever it is not 0.0
 					scrollLocked = true;
 				} else {
 					// boooring
@@ -140,12 +135,13 @@ public class Screen {
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				double data;
-				if(useScreenMatrixOverlay==true && ScreenMatrixOverlay[_x][_y]>0) {		// BROKEN
+				if(useScreenMatrixOverlay==true && ScreenMatrixOverlay[_x][_y]!=0) {		// BROKEN
 					data = ScreenMatrixOverlay[_x][_y];			// changes
 				} else {
 					data = ScreenMatrix[_x][_y];				// no changes
-				}				double dataOld = ScreenMatrixOld[_x][_y];
-				if (data!=dataOld | ForceUpdate == true) {	// Player moved
+				}
+				double dataOld = ScreenMatrixOld[_x][_y];
+				if (data!=dataOld || ForceUpdate == true) {	// Player moved
 					if ((screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2)==false) {		// fix rendering bux with semi transparence
 						int _background = Map.getBackgroundID(data);	// extract background data
 						TilesDrawn++;
