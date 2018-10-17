@@ -5,8 +5,8 @@ import javax.swing.JFrame;
 
 public class window {
 	public static String GameStat = "Menu";				// Tells where in the program we are (Game, Menu, Paused, ...) Used for different key inputs
-	public static int width = 576*0 +744*1 +408*0;
-	public static int height = 384*0 +408*1 +288*0 +504*0;	// 504 looks great but crashes in the main menu and forest map
+	public static int width = 576*1 +744*0 +408*0 +24*0;
+	public static int height = 384*1 +408*0 +288*0 +504*0 +24*0;	// 504 looks great but crashes in the main menu and forest map
 	public static final int blocksize = 24;				// size of tiles used in the game (24px)
 	public static JFrame window;						// Never change this setting except for HD texture packs
 	public static BufferStrategy buffer;
@@ -44,11 +44,12 @@ public class window {
 	}
 	public static int checkWidth(int _width) {
 		_width = General.getBetween(17*blocksize, _width, 31*blocksize);			// limit to width and height
-		_width = _width - _width%(blocksize*2)+blocksize*0;
+		_width = _width - _width%(blocksize);
 		return _width;
 	}
 	public static int checkHeight(int _height) {
-		_height = _height - _height%(blocksize*2)+blocksize;
+		_height = General.getBetween(12*blocksize, _height, 19*blocksize);			// have fun on 4k (just use the zoom option)
+		_height = _height - _height%(blocksize);									// 19 tiles is the max height (forest map height)
 		return _height;
 	}
 	public static void Start() {

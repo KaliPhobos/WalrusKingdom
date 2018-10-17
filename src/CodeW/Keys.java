@@ -4,24 +4,18 @@ import javax.swing.JFrame;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 
-public class Keys implements KeyListener
-{
+public class Keys implements KeyListener {
 	public static boolean keyDown[];
 	
-	public void keyPressed(KeyEvent ke)
-	{
+	public void keyPressed(KeyEvent ke)	{
 		keyDown[ke.getKeyCode()] = true;
 	}	
-	public void keyReleased(KeyEvent ke)
-	{
+	public void keyReleased(KeyEvent ke) {
 		keyDown[ke.getKeyCode()] = false;
 	}	
-	public void keyTyped(KeyEvent ke)
-	{
-	}
+	public void keyTyped(KeyEvent ke) { }
 	
-	public Keys(JFrame _window)
-	{
+	public Keys(JFrame _window)	{
 		keyDown = new boolean[1024];
 		_window.addKeyListener(this);
 	}
@@ -74,6 +68,12 @@ public class Keys implements KeyListener
 					}
 					TileArea.drawInfo();
 				}
+				if(keyDown[79]==true) {
+					Screen.forceUpdateNextTime = true;		// Force full rendering
+					Screen.clearScreenMatrixOverlay();		// Remove overlay artefacts
+					if(General.showDebug) {	General.DebugLog("Forced screen update"); }
+				}
+
 			} else if (window.GameStat.equals("Menu")) {									// IN THE MAIN MENU
 				Player.TileChangeWhileWalking = 0;
 				if(keyDown[37]==true) {
@@ -119,13 +119,13 @@ public class Keys implements KeyListener
 			} else if (window.GameStat.equals("Intro")) {									// ASKING TO START THE GAME INTRO (DIALOGUES)
 				if(keyDown[27]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+1000;
-					if(General.showTeleport) {
+					if(General.showTeleport || General.showClasses) {
 						General.DebugLog("keys.intro -> load main");
 					}
 					// goes to Intro.IntroEnd();	(walk out of forest)
 				}
 				if(keyDown[32]==true) {
-					if(General.showTeleport) {
+					if(General.showTeleport || General.showClasses) {
 						General.DebugLog("keys.intro -> continue Intro");
 					}
 					window.GameStat = "ContinueIntro";
@@ -133,7 +133,7 @@ public class Keys implements KeyListener
 				}
 			} else if (window.GameStat.equals("ContinueIntro")) {									// INSIDE THE GAME INTRO (DIALOGUES)
 				if(keyDown[27]==true) {
-					if(General.showTeleport) {
+					if(General.showTeleport || General.showClasses) {
 						General.DebugLog("keys.continue intro -> load main");
 					}
 					Menu.KeyPause = System.currentTimeMillis()+150;

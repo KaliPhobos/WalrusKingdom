@@ -73,11 +73,15 @@ public class Screen {
 						screenLeft = 37-(getWidth()-getWidth()%2)/2;	// centered entrence x-coord is 37
 					}
 					scrollLocked = true;
-				} else if ( (Player.getYPos()<46) && (Player.getYPos()+(getHeight()/2-(getHeight()+1)%2)>47) && (Player.getXPos()+(getWidth()/2)>55) && (Player.getXPos()-(getWidth()/2)<57) ) {	// The -(getHeight()+1)%2) makes it work on both odd and even screen heights
+				} else if ( (Player.getYPos()<43) && (Player.getYPos()+(getHeight()/2-(getHeight()+1)%2)>47) && (Player.getXPos()+(getWidth()/2)>55) && (Player.getXPos()-(getWidth()/2)<57) ) {	// The -(getHeight()+1)%2) makes it work on both odd and even screen heights
 					// FAKE FOREST PATH, first tile after turn south already visible, Character not on the forest path (north of it)
 					// hide the *secret* forest level, no one shall see it <3
+					
+					
+					// Note to self: little bug on screen with width of 31 tiles - the last tile won't trigger overlay. check formulas for borders
+					
 					if (General.showTrigger) {
-						General.DebugLog("Matrix overlay active! *it's magic*");
+						General.DebugLog("Matrix overlay active! *it's magic* --> Secret forest path takes a fake turn south");
 					}
 					ScreenMatrixOverlay = General.wipedMatrix(ScreenMatrixOverlay);				// THIS IS UGLY --> but at least it works
 					// path after turn south is x=56 and x=57
@@ -85,7 +89,7 @@ public class Screen {
 					if ( ((Player.getXPos()+getWidth()/2)>55) && ((Player.getXPos()-getWidth()/2)<57) ) {
 						int x = 56-Player.getXPos()+(getWidth()/2);
 						for(int i=Player.getYPos()+((getHeight())/2);i>47;i--) {
-							int y = i-Player.getYPos()+((getHeight())/2);
+							int y = i-Player.getYPos()+(getHeight()/2);
 							if (General.showTrigger) General.DebugLog("x="+x+", y="+y+", max="+getWidth());
 							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][General.getMin(getHeight()-1, y)] = 15;
 							//ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
@@ -107,23 +111,31 @@ public class Screen {
 				} else if (Player.getYPos()>45 && Player.getYPos()<49 && Player.getXPos()+getWidth()/2>55 && Player.getXPos()<55) {
 					// On the forest path
 					// ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Player.getXPos()][45+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// one tile to the left
-					ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Player.getXPos()][46+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// one tile to the left
-					ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Player.getXPos()][47+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// CRASH WITH OUT OF BOUNDS: -1 WHEN PLAYING ON 27x16 SCREEN AND LEAVING THE FOREST
-					ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Player.getXPos()][48+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
-					// ScreenMatrixOld[56+((getWidth()-1)%2/2)-Player.getXPos()][46+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// Force those tiles to be rendered again
-					// ScreenMatrixOld[56+((getWidth()-1)%2/2)-Player.getXPos()][47+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// Edit: No need for that
-					ScreenMatrixOld[56+((getWidth()-1)%2/2)-Player.getXPos()][48+((getHeight()-1)%2/2)-Player.getYPos()] = 0;		// REMOVE LATER when adapting forest trees to fit forest map
-					for (int x=56+((getWidth()-1)%2/2)-Player.getXPos()%2;x<getWidth();x++) {
-						ScreenMatrixOverlay[x][45+((getHeight()-1)%2/2)-Player.getYPos()] = 109;
-						ScreenMatrixOverlay[x][46+((getHeight()-1)%2/2)-Player.getYPos()] = 17;
-						ScreenMatrixOverlay[x][47+((getHeight()-1)%2/2)-Player.getYPos()] = 18;
-						ScreenMatrixOverlay[x][48+((getHeight()-1)%2/2)-Player.getYPos()] = 106328;
-						ScreenMatrixOld[x][45+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
-						ScreenMatrixOld[x][46+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
-						ScreenMatrixOld[x][47+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
-						ScreenMatrixOld[x][48+((getHeight()-1)%2/2)-Player.getYPos()] = 0;
+					
+					
+					
+					// redo formulas for y-coords
+					ScreenMatrixOld[toOnScreenXCoord(55)][toOnScreenYCoord(45)] = 0;
+					ScreenMatrixOld[toOnScreenXCoord(55)][toOnScreenYCoord(46)] = 0;
+					ScreenMatrixOld[toOnScreenXCoord(55)][toOnScreenYCoord(47)] = 0;
+					ScreenMatrixOld[toOnScreenXCoord(55)][toOnScreenYCoord(48)] = 0;
+					for (int x=toOnScreenXCoord(56);x<getWidth();x++) {
+						ScreenMatrixOverlay[x][toOnScreenYCoord(45)] = 109;
+						ScreenMatrixOverlay[x][toOnScreenYCoord(46)] = 17;
+						ScreenMatrixOverlay[x][toOnScreenYCoord(47)] = 18;
+						ScreenMatrixOverlay[x][toOnScreenYCoord(48)] = 106328;
+						ScreenMatrixOld[x][toOnScreenYCoord(44)] = 0;			// No artefacts when moving up and down
+						ScreenMatrixOld[x][toOnScreenYCoord(45)] = 0;
+						ScreenMatrixOld[x][toOnScreenYCoord(46)] = 0;
+						ScreenMatrixOld[x][toOnScreenYCoord(47)] = 0;
+						ScreenMatrixOld[x][toOnScreenYCoord(48)] = 0;
+						ScreenMatrixOld[x][toOnScreenYCoord(49)] = 0;
 					}
 					useScreenMatrixOverlay = true;
+					
+					
+					
+					
 				} else {
 					// boooring
 					scrollLocked = false;
@@ -131,10 +143,10 @@ public class Screen {
 				}
 				break;
 			case "ForestHouse":
-				General.DebugLog("FOREST");
+				// General.DebugLog("FOREST");
 				break;
 			default:
-				General.DebugLog("whatever");
+				General.DebugLog("Screen: Unknown map");
 				break;
 		}
 		for(int _y=0;_y<getHeight();_y++) {
@@ -155,6 +167,16 @@ public class Screen {
 			}
 		}
 	}
+	public static void clearScreenMatrixOverlay() {
+		ScreenMatrixOverlay = General.wipedMatrix(ScreenMatrixOverlay);
+		if (General.showMapChanges) { General.DebugLog("ScreenMatrixOverlay wiped"); }
+	}
+	public static int toOnScreenXCoord(int in) {
+		return in-Player.getXPos()+(getWidth()/2);
+	}
+	public static int toOnScreenYCoord(int in) {
+		return in-Player.getYPos()+(getHeight()/2);
+	}
 	public static void renderBackground(boolean ForceUpdate) {
 		// Renders background layer *obviously*
 		for(int _y=0;_y<getHeight();_y++) {
@@ -166,7 +188,7 @@ public class Screen {
 					data = ScreenMatrix[_x][_y];				// no changes
 				}
 				double dataOld = ScreenMatrixOld[_x][_y];
-				if (data!=dataOld || ForceUpdate == true) {	// Player moved
+				if (data!=dataOld || ForceUpdate) {	// Player moved
 					if ((screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2)==false) {		// fix rendering bux with semi transparence
 						int _background = Map.getBackgroundID(data);	// extract background data
 						TilesDrawn++;
@@ -213,6 +235,8 @@ public class Screen {
 	}
 	public static void render(boolean ForceUpdate) {
 		// main class that does all the rendering
+		ForceUpdate = (ForceUpdate || forceUpdateNextTime);				// why is this necessary? Do I already do this elsewhere?
+		forceUpdateNextTime = false;
 		General.updateZoomFactor();
 		renderBackground(ForceUpdate);
 		for(int _y=0;_y<getHeight();_y++) {

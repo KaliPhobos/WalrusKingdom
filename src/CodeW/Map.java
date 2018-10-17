@@ -318,6 +318,7 @@ public class Map {
 		loadChanges();
 	}
 	public static void loadForestHouse() {
+		Screen.clearScreenMatrixOverlay();
 		setSize(93, 19);
 		currentMapName = "ForestHouse";
 		for(int _i=0;_i<93;_i++) {Map[_i][0] = new long[] { 97326, 97326, 97326, 97326, 97326, 97326, 18, 18, 97326, 18, 18, 97326, 97326, 97326, 97326, 18, 97326, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 18, 97326, 97326, 97326, 97326, 97441, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 114437, 96417, 109, 97318, 96417, 96417, 109, 96417, 96417, 96417, 96417, 96417, 109, 109, 109, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417}[_i];}
@@ -409,8 +410,8 @@ public class Map {
 		if (General.showToDo) {
 			General.DebugLog("Map.Analyzing changes to map data");
 		}
-		ChangesPrecheckMap = new boolean[MapWidth];
-		boolean temp;
+		ChangesPrecheckMap = new boolean[MapWidth];					// This will mark all lines (vertical) with active changes
+		boolean temp;												// so changes will only be looked up when needed
 		for (int _y=0;_y<MapHeight;_y++) {
 			temp = false;
 			for (int _x=0;_x<MapWidth;_x++) {
