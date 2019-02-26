@@ -12,6 +12,7 @@ public class window {
 	public static BufferStrategy buffer;
 	public static long LaunchTimestamp;
 	static Player Walrii = null;								// Player object
+	public static MultiplayerUser[] multiplayerUsers= new MultiplayerUser[100];	// Lists all users, both online "friends" and NPCs
 	public static void main(String[] args) {
 		Walrii = Player.createPlayer(0, 10, 10);		// Define Player ONLY FOR LOCAL MULTIPLAYER <-- At least so far ;)
 		width = checkWidth(width);						// Prevent full failure at first run with settings out of bounds
@@ -33,6 +34,7 @@ public class window {
 		Screen.setSize(Math.round(width/blocksize), Math.round(height/blocksize));	// Setup Screen (results in 0-11 x 0-17)
 		window = Screen.createWindow();												// Create window object (JFrame)
 		new Keys(window);								// Keys keys = new Keys(window) <--- never used variable "keys"
+		
 		window.pack();
 		window.setVisible(true);
 		Screen.ScreenSizeIndicator = window.getWidth()* window.getHeight();

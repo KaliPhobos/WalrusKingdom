@@ -13,6 +13,7 @@ public class Player {
 	public int TileChangeWhileWalking = 0;
 	public static int StepDuration = 200;			//time for one animated step in MS
 	public long nextStep = 0;
+	public String currentMapName = "initial";
 	
 	public static Player createPlayer(int pictureID, int xPos, int yPos) {
 		return new Player(pictureID, xPos, yPos, "", xPos, yPos, xPos, yPos);
@@ -26,6 +27,7 @@ public class Player {
 		this.lastYPos = lastYPos;
 		this.newLastXPos = newLastXPos;
 		this.newLastYPos = newLastYPos;
+		this.currentMapName = currentMapName;
 	}
 	public void setTileChangeWhileWalking() {
 		if (System.currentTimeMillis()>nextStep) {
@@ -33,11 +35,14 @@ public class Player {
 			nextStep = System.currentTimeMillis()+StepDuration;
 		}
 	}
+	public String getDirection() {return this.direction;}
 	public int getCurrentTile() {
 		int[] _dir = this.getDirectionToINT();
 		int[] tiles = {0, 3, 0, 0, 7, 0, 1, 0, 0, 5};								// Still ignoring the "pictureID setting - change this later to implement different characters
 		return tiles[4*(_dir[0]+1)+_dir[1]+1];
 	}
+	public String getCurrentMapName() {return this.currentMapName;}
+	public void setCurrentMapName(String name) {this.currentMapName = name;}
 	public int[] getDirectionToINT() {
 		int[] dirINT = {0, 0};
 		if(this.direction.equals("up")){

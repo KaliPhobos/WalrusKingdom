@@ -65,7 +65,7 @@ public class Screen {
 		// top left tile shown on screen
 		screenTop = General.getBetween(0, Map.getHeight()-getHeight(), Walrii.getYPos()-Math.round(getHeight()/2));
 		screenLeft = General.getBetween(0, Map.getWidth()-getWidth(), Walrii.getXPos()-Math.round(getWidth()/2));
-		switch(Map.currentMapName) {
+		switch(Walrii.getCurrentMapName()) {
 			case "City1":
 				if (Walrii.getXPos()>24 && Walrii.getXPos()<49 && Walrii.getYPos()<31 && Walrii.getYPos()>12) {	// Inside the big garden --> only Y-axis scrolling enabled
 					// PALAST GARDEN

@@ -80,7 +80,7 @@ public class TileArea extends Component {
 	    g.drawString("solid="+Block.getSolidFromID((Map.getBackgroundID(Map.Map[Walrii.xPos][Walrii.yPos]))), 15, 100);
 	    g.drawString("id="+Map.getBackgroundID(Map.Map[Walrii.xPos][Walrii.yPos]), 15, 110);
 	    g.drawString("Block-ID: "+Map.Map[Walrii.xPos][Walrii.yPos], 10, 125);
-	    g.drawString("Map="+Map.currentMapName, 10, 140);
+	    g.drawString("Map="+Walrii.getCurrentMapName(), 10, 140);
 	}
 	
 }

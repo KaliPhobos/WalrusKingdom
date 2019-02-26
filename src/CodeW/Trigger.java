@@ -38,7 +38,7 @@ public class Trigger {
 			}
 			int x = Walrii.getXPos();
 			int y = Walrii.getYPos();
-			switch(Map.currentMapName) {
+			switch(Walrii.getCurrentMapName()) {
 				case "City1":
 					if(BackgroundID>0) {		// Positive trigger IDs are regular items/signs
 						Graphics2D g = prepareGraphics(1);		// Show trigger text

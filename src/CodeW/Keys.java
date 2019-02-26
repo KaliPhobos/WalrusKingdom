@@ -56,7 +56,7 @@ public class Keys implements KeyListener {
 					Walrii.go("down");
 				}
 				if(keyDown[27]==true) {
-					Map.MapToResume = Map.currentMapName;
+					Map.MapToResume = Walrii.getCurrentMapName();
 					Walrii.setXPosToResume(Walrii.xPos);
 					Walrii.setYPosToResume(Walrii.yPos);
 					Menu.RunMenu();

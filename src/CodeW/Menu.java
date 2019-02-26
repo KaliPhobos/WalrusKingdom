@@ -14,7 +14,7 @@ public class Menu {
 	public static int oldWidth;
 	public static int oldHeight;
 	static Player Walrii = window.getPlayerObject();
-	public static String LastMap = Map.currentMapName;		// used to go back to the right map after opening the menu
+	public static String LastMap = Walrii.getCurrentMapName();		// used to go back to the right map after opening the menu
 	public static void RunMenu() {
 		oldWidth = window.getWidth();			// necessary since the menu is not flexible in size
 		oldHeight = window.getHeight();			// ... and never will be, not gonna change that
