@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 
 @SuppressWarnings("serial")
 public class TileArea extends Component {
+	static Player Walrii = window.getPlayerObject();
 	public static BufferedImage m_image;
 	private int m_width, m_height;
 	
@@ -68,17 +69,17 @@ public class TileArea extends Component {
 		Graphics2D g = m_image.createGraphics();
 		g.setFont(new Font("Arial", Font.BOLD, 12)); 
 		g.setColor(Color.white);
-		g.drawString("X="+Player.xPos+"     Y="+Player.yPos, 10, 10);
-	    g.drawString("Facing: "+Player.direction, 10, 20);
+		g.drawString("X="+Walrii.xPos+"     Y="+Walrii.yPos, 10, 10);
+	    g.drawString("Facing: "+Walrii.direction, 10, 20);
 	    g.drawString("Block foreground:", 10, 35);
-	    g.drawString("name="+Block.getNameFromID(Map.getForegroundID(Map.Map[Player.xPos][Player.yPos])), 15, 45);
-	    g.drawString("solid="+Block.getSolidFromID((Map.getForegroundID(Map.Map[Player.xPos][Player.yPos]))), 15, 55);
-	    g.drawString("id="+Map.getForegroundID(Map.Map[Player.xPos][Player.yPos]), 15, 65);
+	    g.drawString("name="+Block.getNameFromID(Map.getForegroundID(Map.Map[Walrii.xPos][Walrii.yPos])), 15, 45);
+	    g.drawString("solid="+Block.getSolidFromID((Map.getForegroundID(Map.Map[Walrii.xPos][Walrii.yPos]))), 15, 55);
+	    g.drawString("id="+Map.getForegroundID(Map.Map[Walrii.xPos][Walrii.yPos]), 15, 65);
 	    g.drawString("Block background:", 10, 80);
-	    g.drawString("name="+Block.getNameFromID(Map.getBackgroundID(Map.Map[Player.xPos][Player.yPos])), 15, 90);
-	    g.drawString("solid="+Block.getSolidFromID((Map.getBackgroundID(Map.Map[Player.xPos][Player.yPos]))), 15, 100);
-	    g.drawString("id="+Map.getBackgroundID(Map.Map[Player.xPos][Player.yPos]), 15, 110);
-	    g.drawString("Block-ID: "+Map.Map[Player.xPos][Player.yPos], 10, 125);
+	    g.drawString("name="+Block.getNameFromID(Map.getBackgroundID(Map.Map[Walrii.xPos][Walrii.yPos])), 15, 90);
+	    g.drawString("solid="+Block.getSolidFromID((Map.getBackgroundID(Map.Map[Walrii.xPos][Walrii.yPos]))), 15, 100);
+	    g.drawString("id="+Map.getBackgroundID(Map.Map[Walrii.xPos][Walrii.yPos]), 15, 110);
+	    g.drawString("Block-ID: "+Map.Map[Walrii.xPos][Walrii.yPos], 10, 125);
 	    g.drawString("Map="+Map.currentMapName, 10, 140);
 	}
 	

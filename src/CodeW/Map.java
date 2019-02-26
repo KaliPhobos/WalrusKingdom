@@ -13,7 +13,7 @@ public class Map {
 	public static String MapToResume = "initial";
 	public static int MapWidth;
 	public static int MapHeight;
-	
+	static Player Walrii = window.getPlayerObject();
 	
 	public static void setSize(int _x, int _y) {		// Set size of Map;
 		Map = new long[_x][_y];
@@ -365,8 +365,8 @@ public class Map {
 	public static void loadIntro1() {
 		setSize(30, 16);
 		currentMapName = "Intro1";
-		Player.setXPos(0);
-		Player.setYPos(8);
+		Walrii.setXPos(0);
+		Walrii.setYPos(8);
 		for(int _i=0;_i<30;_i++) {Map[_i][0] = new long[] { 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 105427, 105427, 113536, 96417, 114437, 105427, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417}[_i];}
 		for(int _i=0;_i<30;_i++) {Map[_i][1] = new long[] { 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 105427, 105427, 113536, 96417, 114437, 105427, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417, 96417}[_i];}
 		for(int _i=0;_i<30;_i++) {Map[_i][2] = new long[] { 96417, 96417, 96417, 96417, 114437, 114437, 96417, 96417, 96417, 114437, 114437, 114437, 114437, 96417, 96417, 113536, 113536, 96417, 96417, 105427, 113536, 96417, 96417, 96417, 96417, 96417, 114437, 96417, 96417, 96417}[_i];}
@@ -387,8 +387,8 @@ public class Map {
 	public static void loadMenu() {
 		setSize(24, 16);
 		currentMapName = "Menu";
-		Player.setXPos(10);
-		Player.setYPos(10);
+		Walrii.setXPos(10);
+		Walrii.setYPos(10);
 		for(int _i=0;_i<24;_i++) {Map[_i][0] = new long[] { 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}[_i];}
 		for(int _i=0;_i<24;_i++) {Map[_i][1] = new long[] { 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}[_i];}
 		for(int _i=0;_i<24;_i++) {Map[_i][2] = new long[] { 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9}[_i];}

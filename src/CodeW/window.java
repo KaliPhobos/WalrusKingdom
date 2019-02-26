@@ -11,7 +11,9 @@ public class window {
 	public static JFrame window;						// Never change this setting except for HD texture packs
 	public static BufferStrategy buffer;
 	public static long LaunchTimestamp;
+	static Player Walrii = null;								// Player object
 	public static void main(String[] args) {
+		Walrii = Player.createPlayer(0, 10, 10);		// Define Player ONLY FOR LOCAL MULTIPLAYER <-- At least so far ;)
 		width = checkWidth(width);						// Prevent full failure at first run with settings out of bounds
 		height = checkHeight(height);
 		LaunchTimestamp = System.currentTimeMillis();
@@ -53,10 +55,10 @@ public class window {
 		return _height;
 	}
 	public static void Start() {
-		Player.direction = "right";
 		GameStat = "Game";
 		General.DebugLog("window.start");
-		//Player Walrii = Player.createPlayer(0, 10, 10);	// Define Player ONLY FOR LOCAL MULTIPLAYER
+		// Walrii = Player.createPlayer(0, 10, 10);	// Define Player ONLY FOR LOCAL MULTIPLAYER
+		Walrii.direction = "right";
 		Map.loadIntro1();
 		Screen.update();
 		Screen.render(true);
@@ -64,8 +66,9 @@ public class window {
 		resize(Menu.oldWidth, Menu.oldWidth);
 		Resume();
 	}
-	
-	
+	public static Player getPlayerObject() {
+		return Walrii;
+	}
 	public static void Resume() {
 		resize(Menu.oldWidth, Menu.oldHeight);
 		GameStat = "Game";
@@ -73,8 +76,8 @@ public class window {
 			General.DebugLog("window.resume");
 		}
 		if (Map.MapToResume=="City1") {Map.loadCity1();}
-		Player.xPos = Player.xPosToResume;			// resume with old position on the map
-		Player.yPos = Player.yPosToResume;			// Note to self: add player walking direction  but change to RIGHT when going to the menu
+		Walrii.setXPos(Walrii.xPosToResume);		// resume with old position on the map
+		Walrii.setYPos(Walrii.yPosToResume);		// Note to self: add player walking direction  but change to RIGHT when going to the menu
 		Screen.update();
 	   	Screen.render(true);
 		while (true) {								// MAIN GAME LOOP

@@ -6,6 +6,8 @@ import java.io.File;
 import javax.swing.JFrame;
 
 public class Screen {
+	static Player Walrii = window.getPlayerObject();
+
 	public static long ScreenSizeIndicator = 0;
 	public static boolean scrollLocked = false;
 	public static int screenLeft;
@@ -61,19 +63,19 @@ public class Screen {
 	public static void update() {
 		// This updates the screen position (what part of the map is shown, is something outside the border, ...)
 		// top left tile shown on screen
-		screenTop = General.getBetween(0, Map.getHeight()-getHeight(), Player.getYPos()-Math.round(getHeight()/2));
-		screenLeft = General.getBetween(0, Map.getWidth()-getWidth(), Player.getXPos()-Math.round(getWidth()/2));
+		screenTop = General.getBetween(0, Map.getHeight()-getHeight(), Walrii.getYPos()-Math.round(getHeight()/2));
+		screenLeft = General.getBetween(0, Map.getWidth()-getWidth(), Walrii.getXPos()-Math.round(getWidth()/2));
 		switch(Map.currentMapName) {
 			case "City1":
-				if (Player.getXPos()>24 && Player.getXPos()<49 && Player.getYPos()<31 && Player.getYPos()>12) {	// Inside the big garden --> only Y-axis scrolling enabled
+				if (Walrii.getXPos()>24 && Walrii.getXPos()<49 && Walrii.getYPos()<31 && Walrii.getYPos()>12) {	// Inside the big garden --> only Y-axis scrolling enabled
 					// PALAST GARDEN
 					if(getWidth()<=24) {		// Window is the physical window border, Screen is the ingame area shown
-						screenLeft = General.getBetween(25, Player.getXPos()-Math.round(getWidth()/2), 49-getWidth());		//17 tiles is the min width, 49 the x pos
+						screenLeft = General.getBetween(25, Walrii.getXPos()-Math.round(getWidth()/2), 49-getWidth());		//17 tiles is the min width, 49 the x pos
 					} else {
 						screenLeft = 37-(getWidth()-getWidth()%2)/2;	// centered entrence x-coord is 37
 					}
 					scrollLocked = true;
-				} else if ( (Player.getYPos()<43) && (Player.getYPos()+(getHeight()/2-(getHeight()+1)%2)>47) && (Player.getXPos()+(getWidth()/2)>55) && (Player.getXPos()-(getWidth()/2)<57) ) {	// The -(getHeight()+1)%2) makes it work on both odd and even screen heights
+				} else if ( (Walrii.getYPos()<43) && (Walrii.getYPos()+(getHeight()/2-(getHeight()+1)%2)>47) && (Walrii.getXPos()+(getWidth()/2)>55) && (Walrii.getXPos()-(getWidth()/2)<57) ) {	// The -(getHeight()+1)%2) makes it work on both odd and even screen heights
 					// FAKE FOREST PATH, first tile after turn south already visible, Character not on the forest path (north of it)
 					// hide the *secret* forest level, no one shall see it <3
 					
@@ -86,10 +88,10 @@ public class Screen {
 					ScreenMatrixOverlay = General.wipedMatrix(ScreenMatrixOverlay);				// THIS IS UGLY --> but at least it works
 					// path after turn south is x=56 and x=57
 					
-					if ( ((Player.getXPos()+getWidth()/2)>55) && ((Player.getXPos()-getWidth()/2)<57) ) {
-						int x = 56-Player.getXPos()+(getWidth()/2);
-						for(int i=Player.getYPos()+((getHeight())/2);i>47;i--) {
-							int y = i-Player.getYPos()+(getHeight()/2);
+					if ( ((Walrii.getXPos()+getWidth()/2)>55) && ((Walrii.getXPos()-getWidth()/2)<57) ) {
+						int x = 56-Walrii.getXPos()+(getWidth()/2);
+						for(int i=Walrii.getYPos()+((getHeight())/2);i>47;i--) {
+							int y = i-Walrii.getYPos()+(getHeight()/2);
 							if (General.showTrigger) General.DebugLog("x="+x+", y="+y+", max="+getWidth());
 							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][General.getMin(getHeight()-1, y)] = 15;
 							//ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][y] = 0;
@@ -97,10 +99,10 @@ public class Screen {
 						}
 					}
 					// Right side of path, x=57
-					if ( ((Player.getXPos()+getWidth()/2)>57) && ((Player.getXPos()-getWidth()/2)<58) ) {
-						int x = 57-Player.getXPos()+getWidth()/2;
-						for(int i=Player.getYPos()+getHeight()/2;i>47;i--) {
-							int y = i-Player.getYPos()+(getHeight())/2;
+					if ( ((Walrii.getXPos()+getWidth()/2)>57) && ((Walrii.getXPos()-getWidth()/2)<58) ) {
+						int x = 57-Walrii.getXPos()+getWidth()/2;
+						for(int i=Walrii.getYPos()+getHeight()/2;i>47;i--) {
+							int y = i-Walrii.getYPos()+(getHeight())/2;
 							ScreenMatrixOverlay[General.getMin(getWidth()-1, x)][General.getMin(getHeight()-1, y)] = 16;
 							ScreenMatrixOld[General.getMin(getWidth()-1, x+1)][General.getMin(getHeight()-1, y)] = 0;
 							//ScreenMatrixOld[General.getMax(0, x-1)][y] = 0;
@@ -108,9 +110,9 @@ public class Screen {
 					}
 					useScreenMatrixOverlay = true;		// ScreenMatrixOverlay[] will be used as source for (double)data instead of the actual map where ever it is not 0.0
 					scrollLocked = true;
-				} else if (Player.getYPos()>45 && Player.getYPos()<49 && Player.getXPos()+getWidth()/2>55 && Player.getXPos()<55) {
+				} else if (Walrii.getYPos()>45 && Walrii.getYPos()<49 && Walrii.getXPos()+getWidth()/2>55 && Walrii.getXPos()<55) {
 					// On the forest path
-					// ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Player.getXPos()][45+((getHeight()-1)%2/2)-Player.getYPos()] = 0;	// one tile to the left
+					// ScreenMatrixOverlay[56+((getWidth()-1)%2/2)-Walrii.getXPos()][45+((getHeight()-1)%2/2)-Walrii.getYPos()] = 0;	// one tile to the left
 					
 					
 					
@@ -172,10 +174,10 @@ public class Screen {
 		if (General.showMapChanges) { General.DebugLog("ScreenMatrixOverlay wiped"); }
 	}
 	public static int toOnScreenXCoord(int in) {
-		return in-Player.getXPos()+(getWidth()/2);
+		return in-Walrii.getXPos()+(getWidth()/2);
 	}
 	public static int toOnScreenYCoord(int in) {
-		return in-Player.getYPos()+(getHeight()/2);
+		return in-Walrii.getYPos()+(getHeight()/2);
 	}
 	public static void renderBackground(boolean ForceUpdate) {
 		// Renders background layer *obviously*
@@ -189,13 +191,13 @@ public class Screen {
 				}
 				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld || ForceUpdate) {	// Player moved
-					if ((screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2)==false) {		// fix rendering bux with semi transparence
+					if ((screenLeft+_x>Walrii.getXPos()-2 && screenLeft+_x<Walrii.getXPos()+2 && screenTop+_y>Walrii.getYPos()-3 && screenTop+_y<Walrii.getYPos()+2)==false) {		// fix rendering bux with semi transparence
 						int _background = Map.getBackgroundID(data);	// extract background data
 						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
 					}
 				}
-				if (screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
+				if (screenLeft+_x>Walrii.getXPos()-2 && screenLeft+_x<Walrii.getXPos()+2 && screenTop+_y>Walrii.getYPos()-3 && screenTop+_y<Walrii.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
 					int _background = Map.getBackgroundID(data);	// extract background data
 					TilesDrawn++;
 					TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
@@ -215,7 +217,7 @@ public class Screen {
 				}
 				double dataOld = ScreenMatrixOld[_x][_y];
 				if (data!=dataOld | ForceUpdate == true) {		// Update to map data or player moved
-					if ((screenLeft+_x>Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2)==false) {		// fix rendering bux with semi transparence
+					if ((screenLeft+_x>Walrii.getXPos()-2 && screenLeft+_x<Walrii.getXPos()+2 && screenTop+_y>Walrii.getYPos()-3 && screenTop+_y<Walrii.getYPos()+2)==false) {		// fix rendering bux with semi transparence
 						int _foreground = Map.getForegroundID(data);	// extrace foreground data
 						if(_foreground>0) {
 							TilesDrawn++;
@@ -223,7 +225,7 @@ public class Screen {
 						}
 					}
 				}
-				if (screenLeft+_x>=Player.getXPos()-2 && screenLeft+_x<Player.getXPos()+2 && screenTop+_y>Player.getYPos()-3 && screenTop+_y<Player.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
+				if (screenLeft+_x>=Walrii.getXPos()-2 && screenLeft+_x<Walrii.getXPos()+2 && screenTop+_y>Walrii.getYPos()-3 && screenTop+_y<Walrii.getYPos()+2) {	// prevent shadows when close to the edge on in ScrollLock regions
 					int _foreground = Map.getForegroundID(data);	// extrace foreground data
 					if(_foreground>0) {
 						TilesDrawn++;
@@ -242,31 +244,31 @@ public class Screen {
 		for(int _y=0;_y<getHeight();_y++) {
 			for(int _x=0;_x<getWidth();_x++) {
 				if (scrollLocked==false) {
-					if(General.getBetween(0, Player.getXPos()-Math.round(getWidth()/2), Map.getWidth()-getWidth())+_x == Player.getXPos() && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
+					if(General.getBetween(0, Walrii.getXPos()-Math.round(getWidth()/2), Map.getWidth()-getWidth())+_x == Walrii.getXPos() && General.getBetween(0, Walrii.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Walrii.getYPos()) {
 						int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data
 						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
-						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
+						PlayerTile = Walrii.getCurrentTile()+Walrii.TileChangeWhileWalking;
 						TilesDrawn++;
 						int __y = Math.round(General.getMax((_y*window.blocksize)-Math.round(window.blocksize/4), 0));
 						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, __y);					// render char
-						Player.newLastXPos = _x;
-						Player.newLastYPos = _y;
+						Walrii.setNewLastXPos(_x);
+						Walrii.setNewLastYPos(_y);
 						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
 						if(_foreground>0) {
 							TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
 						}	// add foreground layer
 					}
 				} else {	//This disables the automated screenscrolling for special areas on the map (like in huge gardens) so only the y-axis scrolls. Similar to behavior close to map's edges
-					if(Player.getXPos()-screenLeft==_x && General.getBetween(0, Player.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Player.getYPos()) {
+					if(Walrii.getXPos()-screenLeft==_x && General.getBetween(0, Walrii.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Walrii.getYPos()) {
 						int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data
 						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);
-						PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
+						PlayerTile = Walrii.getCurrentTile()+Walrii.TileChangeWhileWalking;
 						TilesDrawn++;
 						TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, General.getMax(window.blocksize*_y-Math.round(getZoom()/4), 0));		// render char
-						Player.newLastXPos = _x;
-						Player.newLastYPos = _y;
+						Walrii.setNewLastXPos(_x);
+						Walrii.setNewLastYPos(_y);
 						int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
 						if(_foreground>0) {
 							TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
@@ -276,13 +278,13 @@ public class Screen {
 			}
 		}
 		renderForeground(ForceUpdate);
-		Trigger.trigger(Player.getXPos(), Player.getYPos());
-		if(Trigger.get(Player.getXPos(), Player.getYPos())==0.0 && forceUpdateNextTime==true) {	// To prevent left over fragments from popups
+		Trigger.trigger(Walrii.getXPos(), Walrii.getYPos());
+		if(Trigger.get(Walrii.getXPos(), Walrii.getYPos())==0.0 && forceUpdateNextTime==true) {	// To prevent left over fragments from popups
 			forceUpdateNextTime = false;
 			render(true);
 		}
-		Player.lastXPos = Player.newLastXPos;
-		Player.lastYPos = Player.newLastYPos;
+		Walrii.setLastXPos(Walrii.newLastXPos);
+		Walrii.setLastYPos(Walrii.newLastYPos);
 		if (General.showTileUpdates) {
 			General.DebugLog(TilesDrawn+" Tiles updated");
 		}

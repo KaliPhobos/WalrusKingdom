@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Intro {
+	static Player Walrii = window.getPlayerObject();
 	public static TileSource textbox;
 	public static void RunIntro() {
 		window.GameStat = "Intro";
@@ -50,10 +51,10 @@ public class Intro {
 		window.GameStat = "Game";
 		General.DebugLog("intro.loadMainGame");
 		Map.loadCity1();
-		Player.setXPos(0);
-		Player.setYPos(37);
-		Player.setXPosToResume(0);		// WIll be restored instead of xPos and yPos (overwritten in Menu)
-		Player.setYPosToResume(37);
+		Walrii.setXPos(0);
+		Walrii.setYPos(37);
+		Walrii.setXPosToResume(0);		// WIll be restored instead of xPos and yPos (overwritten in Menu)
+		Walrii.setYPosToResume(37);
 		Screen.update();
 		Screen.render(true);
 	   	window.window.repaint();
@@ -124,20 +125,20 @@ public class Intro {
 	
 	public static void WalriiWalkX(int xStart, int xEnd) {
 		for(int _i=xStart;_i<xEnd;_i++) {
-			Player.TileChangeWhileWalking = 1;
-			Player.nextStep = System.currentTimeMillis()+Player.StepDuration;
+			Walrii.TileChangeWhileWalking = 1;
+			Walrii.nextStep = System.currentTimeMillis()+Walrii.StepDuration;
 			Screen.update();
 			Screen.render(true);
 		   	window.window.repaint();
 		   	Keys.checkInput();
-			General.sleep(Player.StepDuration/2);
-			Player.TileChangeWhileWalking = 0;
-			Player.setXPos(_i);
+			General.sleep(Walrii.StepDuration/2);
+			Walrii.TileChangeWhileWalking = 0;
+			Walrii.setXPos(_i);
 			Screen.update();
 			Screen.render(true);
 		   	window.window.repaint();
 		   	Keys.checkInput();
-		   	General.sleep(Player.StepDuration);
+		   	General.sleep(Walrii.StepDuration);
 		}
 	}
 }

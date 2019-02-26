@@ -1,108 +1,112 @@
 package CodeW;
 public class Player {
-	public static int PictureID;
-	public static int xPos = 5;
-	public static int yPos = 5;
-	public static int xPosToResume = 5;
-	public static int yPosToResume = 5;
-	public static String direction = "right";
-	public static int lastXPos = 0;
-	public static int lastYPos = 0;
-	public static int newLastXPos = 0;
-	public static int newLastYPos = 0;
-	public static int TileChangeWhileWalking = 0;
+	public int PictureID;
+	public int xPos = 5;
+	public int yPos = 5;
+	public int xPosToResume = 5;
+	public int yPosToResume = 5;
+	public String direction = "right";
+	public int lastXPos = 0;
+	public int lastYPos = 0;
+	public int newLastXPos = 0;
+	public int newLastYPos = 0;
+	public int TileChangeWhileWalking = 0;
 	public static int StepDuration = 200;			//time for one animated step in MS
-	public static long nextStep = 0;
-	public static Player createPlayer(int _PictureID, int _xPos, int _yPos) {
-		Player player = new Player();
-		player.PictureID = _PictureID;	// Current Frame used for the animated Walrii. Depends on @MSEC and at walking/standing
-		player.xPos = _xPos;				// x-Position on global map
-		player.yPos = _yPos;				// y-Position on global map
-		player.direction = direction;
-		player.lastXPos = 0;
-		player.lastYPos = 0;
-		player.newLastXPos = 0;
-		player.newLastYPos = 0;
-		return player;
+	public long nextStep = 0;
+	
+	public static Player createPlayer(int pictureID, int xPos, int yPos) {
+		return new Player(pictureID, xPos, yPos, "", xPos, yPos, xPos, yPos);
 	}
-	public static int getXPos() {
-		return xPos;
+	public Player(int pictureID, int xPos, int yPos, String direction, int lastXPos, int lastYPos, int newLastXPos, int newLastYPos) {
+		//this.PictureID = _PictureID;	// Current Frame used for the animated Walrii. Depends on @MSEC and at walking/standing
+		this.xPos = xPos;				// x-Position on global map
+		this.yPos = yPos;				// y-Position on global map
+		this.direction = direction;
+		this.lastXPos = lastXPos;
+		this.lastYPos = lastYPos;
+		this.newLastXPos = newLastXPos;
+		this.newLastYPos = newLastYPos;
 	}
-	public static void setTileChangeWhileWalking() {
+	public void setTileChangeWhileWalking() {
 		if (System.currentTimeMillis()>nextStep) {
-			Player.TileChangeWhileWalking = Math.abs(Player.TileChangeWhileWalking-1);
+			this.TileChangeWhileWalking = Math.abs(this.TileChangeWhileWalking-1);
 			nextStep = System.currentTimeMillis()+StepDuration;
 		}
 	}
-	public static int getCurrentTile() {
-		int[] _dir = getDirectionToINT();
-		int[] tiles = {0, 3, 0, 0, 7, 0, 1, 0, 0, 5};
+	public int getCurrentTile() {
+		int[] _dir = this.getDirectionToINT();
+		int[] tiles = {0, 3, 0, 0, 7, 0, 1, 0, 0, 5};								// Still ignoring the "pictureID setting - change this later to implement different characters
 		return tiles[4*(_dir[0]+1)+_dir[1]+1];
 	}
-	public static int[] getDirectionToINT() {
+	public int[] getDirectionToINT() {
 		int[] dirINT = {0, 0};
-		if(direction.equals("up")){
+		if(this.direction.equals("up")){
 			dirINT[0] = 0;
 			dirINT[1] = -1;
 		}
-		if(direction.equals("down")){
+		if(this.direction.equals("down")){
 			dirINT[0] = 0;
 			dirINT[1] = 1;
 		}
-		if(direction.equals("left")){
+		if(this.direction.equals("left")){
 			dirINT[0] = -1;
 			dirINT[1] = 0;
 		}
-		if(direction.equals("right")){
+		if(this.direction.equals("right")){
 			dirINT[0] = 1;
 			dirINT[1] = 0;
 		}
 		return dirINT;
 	}
-	public static int getYPos() {return yPos;}
-	public static void setXPos(int _x) {xPos = _x;}
-	public static void setXPosToResume(int _x) {xPosToResume = _x;}
-	public static void setYPos(int _y) {yPos = _y;}
-	public static void setYPosToResume(int _y) {yPosToResume = _y;}
-	public static void turn(String _dir) {
-		direction = _dir;
+	public int getXPos() {return this.xPos;}
+	public int getYPos() {return this.yPos;}
+	public void setXPos(int _x) {this.xPos = _x;}
+	public void setYPos(int _y) {this.yPos = _y;}
+	public void setXPosToResume(int _x) {this.xPosToResume = _x;}
+	public void setYPosToResume(int _y) {this.yPosToResume = _y;}
+	public void setLastXPos(int _x) {this.lastXPos = _x;}
+	public void setLastYPos(int _y) {this.lastXPos = _y;}
+	public void setNewLastXPos(int _x) {this.newLastXPos = _x;}
+	public void setNewLastYPos(int _y) {this.newLastXPos = _y;}
+	public void turn(String _dir) {
+		this.direction = _dir;
 	}
-	public static int[] facingPos() {
-		int _x = getXPos();
-		int _y = getYPos();
-		switch(Player.getDirectionToINT()+"") {
+	public int[] facingPos() {
+		int _x = this.getXPos();
+		int _y = this.getYPos();
+		switch(this.getDirectionToINT()+"") {
 		case "0":
-			_x = getXPos()-1;
+			_x = this.getXPos()-1;
 			break;
 		case "1":
-			_x = getXPos()+1;
+			_x = this.getXPos()+1;
 			break;
 		case "2":
-			_y = getYPos()-1;
+			_y = this.getYPos()-1;
 			break;
 		case "3":
-			_y = getYPos()+1;
+			_y = this.getYPos()+1;
 			break;
 		}
 		int[] temp = {_x, _y};
 		return temp;
 	}
-	public static boolean checkPath(String _dir) {
-		int _x = getXPos();
-		int _y = getYPos();
+	public boolean checkPath(String _dir) {
+		int _x = this.getXPos();
+		int _y = this.getYPos();
 		//General.DebugLog("checking position ("+_x+" | "+_y+")");
 		switch(_dir) {
 			case "left":
-				_x = getXPos()-1;
+				_x = this.getXPos()-1;
 				break;
 			case "right":
-				_x = getXPos()+1;
+				_x = this.getXPos()+1;
 				break;
 			case "up":
-				_y = getYPos()-1;
+				_y = this.getYPos()-1;
 				break;
 			case "down":
-				_y = getYPos()+1;
+				_y = this.getYPos()+1;
 				break;
 		}
 		// add the -1 to prevent the walrus from triggering the out of border bug
@@ -116,46 +120,46 @@ public class Player {
 		}
 		return solid;
 	}
-	public static void go(String _dir) {
+	public void go(String _dir) {
 		//long nextStep = System.currentTimeMillis()+StepDuration;				// Not in use
-		Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration/2;
-		Player.setTileChangeWhileWalking();
+		Menu.KeyPause = System.currentTimeMillis()+StepDuration/2;		// DELAY
+		this.setTileChangeWhileWalking();
 		turn(_dir);
 		if (!checkPath(_dir)) {
-			move(_dir);
+			this.move(_dir);
 		}
 	}
-	public static void move(String _dir) {
+	public void move(String _dir) {
 		switch(_dir) {
 			case "left":
-				setXPos(General.getBetween(0, getXPos()-1, Map.getWidth()-1));
+				setXPos(General.getBetween(0, this.getXPos()-1, Map.getWidth()-1));
 				Screen.scrollX = -1*window.blocksize;							// will be multiplied with ZoomFactor later. Internally working with pixels in 1:1 zoom
 				Screen.scrollX();	// do the smooth scrolling animation
 				//Trigger.trigger(getXPos(), getYPos());
 				break;
 			case "right":
-				setXPos(General.getBetween(0, getXPos()+1, Map.getWidth()-1));
+				setXPos(General.getBetween(0, this.getXPos()+1, Map.getWidth()-1));
 				Screen.scrollX = window.blocksize;
 				Screen.scrollX();	// do the smooth scrolling animation
 				//Trigger.trigger(getXPos(), getYPos());
 				break;
 			case "up":
-				setYPos(General.getBetween(0, getYPos()-1, Map.getHeight()-1));
+				setYPos(General.getBetween(0, this.getYPos()-1, Map.getHeight()-1));
 				Screen.scrollY = -1*window.blocksize;
 				Screen.scrollY();	// do the smooth scrolling animation
 				//Trigger.trigger(getXPos(), getYPos());
 				break;
 			case "down":
-				setYPos(General.getBetween(0, getYPos()+1, Map.getHeight()-1));
+				setYPos(General.getBetween(0, this.getYPos()+1, Map.getHeight()-1));
 				Screen.scrollY = window.blocksize;
 				Screen.scrollY();	// do the smooth scrolling animation
 				//Trigger.trigger(getXPos(), getYPos());
 				break;
 		}
 	}
-	public static void Interact() {
-		int[] direction = getDirectionToINT();														// Coordinates of Tile in front of the player
-		if (Map.ChangeMap(getXPos()+direction[0], getYPos()+direction[1])) {						// Hey, Map! Do your thing, you know...
+	public void Interact() {
+		int[] direction = this.getDirectionToINT();														// Coordinates of Tile in front of the player
+		if (Map.ChangeMap(this.getXPos()+direction[0], this.getYPos()+direction[1])) {						// Hey, Map! Do your thing, you know...
 			if (General.showInteractions) {
 				if (Trigger.currentTrigger==0) {
 					General.DebugLog("Trigger (id=" + Trigger.currentTrigger + ") interaction");	// Cut down tree
@@ -169,8 +173,8 @@ public class Player {
 			}
 		}
 	}
-	public static boolean isLastPosition(int _x, int _y) {
-		if (_x==lastXPos && _y ==lastYPos ) {
+	public boolean isLastPosition(int _x, int _y) {
+		if (_x==this.lastXPos && _y ==this.lastYPos ) {
 			return true;
 		} else {
 			return false;

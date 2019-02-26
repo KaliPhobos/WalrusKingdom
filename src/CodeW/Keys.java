@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent;
 
 public class Keys implements KeyListener {
 	public static boolean keyDown[];
+	static Player Walrii = window.getPlayerObject();
+
 	
 	public void keyPressed(KeyEvent ke)	{
 		keyDown[ke.getKeyCode()] = true;
@@ -40,31 +42,31 @@ public class Keys implements KeyListener {
 		//General.DebugLog(window.GameStat);
 		if (System.currentTimeMillis() > Menu.KeyPause) {
 			if (window.GameStat.equals("Game")) {											// IN THE GAME
-				Player.TileChangeWhileWalking = 0;
+				Walrii.TileChangeWhileWalking = 0;
 				if(keyDown[37]==true) {
-		    		Player.go("left");
+					Walrii.go("left");
 				}
 				if(keyDown[38]==true) {
-		    		Player.go("up");
+					Walrii.go("up");
 				}
 				if(keyDown[39]==true) {
-		    		Player.go("right");
+					Walrii.go("right");
 				}
 				if(keyDown[40]==true) {
-		    		Player.go("down");
+					Walrii.go("down");
 				}
 				if(keyDown[27]==true) {
 					Map.MapToResume = Map.currentMapName;
-					Player.xPosToResume = Player.xPos;
-					Player.yPosToResume = Player.yPos;
+					Walrii.setXPosToResume(Walrii.xPos);
+					Walrii.setYPosToResume(Walrii.yPos);
 					Menu.RunMenu();
 				}
 				if(keyDown[65]==true) {
-		    		Player.Interact();			// Cut tree, open chest, talk, ...
+		    		Walrii.Interact();			// Cut tree, open chest, talk, ...
 				}
 				if(keyDown[73]==true) {
 					if(General.showDebug) {
-						General.DebugLog("x="+Player.getXPos()+" y="+Player.getYPos());
+						General.DebugLog("x="+Walrii.getXPos()+" y="+Walrii.getYPos());
 					}
 					TileArea.drawInfo();
 				}
@@ -75,43 +77,43 @@ public class Keys implements KeyListener {
 				}
 
 			} else if (window.GameStat.equals("Menu")) {									// IN THE MAIN MENU
-				Player.TileChangeWhileWalking = 0;
+				Walrii.TileChangeWhileWalking = 0;
 				if(keyDown[37]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
-		    		Player.go("left");
+					Walrii.go("left");
 				}
 				if(keyDown[38]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
-		    		Player.go("up");
+					Walrii.go("up");
 				}
 				if(keyDown[39]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
-		    		Player.go("right");
+					Walrii.go("right");
 				}
 				if(keyDown[40]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
-		    		Player.go("down");
+					Walrii.go("down");
 				}
 				if(keyDown[73]==true) {
 					TileArea.drawInfo();
 				}
 			} else if (window.GameStat.equals("Paused")) {									// GAME IS PAUSED
-				Player.TileChangeWhileWalking = 0;
+				Walrii.TileChangeWhileWalking = 0;
 				if(keyDown[37]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
-		    		Player.go("left");
+					Walrii.go("left");
 				}
 				if(keyDown[38]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
-		    		Player.go("up");
+					Walrii.go("up");
 				}
 				if(keyDown[39]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
-		    		Player.go("right");
+					Walrii.go("right");
 				}
 				if(keyDown[40]==true) {
 					Menu.KeyPause = System.currentTimeMillis()+Player.StepDuration;
-		    		Player.go("down");
+					Walrii.go("down");
 				}
 				if(keyDown[73]==true) {
 					TileArea.drawInfo();

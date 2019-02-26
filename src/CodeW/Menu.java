@@ -13,6 +13,7 @@ public class Menu {
 	public static int SelectedID = 0;
 	public static int oldWidth;
 	public static int oldHeight;
+	static Player Walrii = window.getPlayerObject();
 	public static String LastMap = Map.currentMapName;		// used to go back to the right map after opening the menu
 	public static void RunMenu() {
 		oldWidth = window.getWidth();			// necessary since the menu is not flexible in size
@@ -36,8 +37,8 @@ public class Menu {
 				TileArea.drawTile(menuTileBack, 0, 0, _shiftX, 0, 576, 384, "abc");	// add foreground layer (screenPos, SourcePos, SourceDim)
 				Screen.renderBackground(true);
 				TileArea.drawTile(menuTileText, 0, 0, 0, 0, 576, 384);	// add foreground layer (screenPos, SourcePos, SourceDim)
-				Screen.PlayerTile = Player.getCurrentTile()+Player.TileChangeWhileWalking;
-				TileArea.drawTile(Screen.tiles, TileSource.getXPos(Screen.PlayerTile), TileSource.getYPos(Screen.PlayerTile), window.blocksize*Player.getXPos(), General.getMax(window.blocksize*Player.getYPos()-6, 0));		// render char
+				Screen.PlayerTile = Walrii.getCurrentTile()+Walrii.TileChangeWhileWalking;
+				TileArea.drawTile(Screen.tiles, TileSource.getXPos(Screen.PlayerTile), TileSource.getYPos(Screen.PlayerTile), window.blocksize*Walrii.getXPos(), General.getMax(window.blocksize*Walrii.getYPos()-6, 0));		// render char
 				Screen.renderForeground(true);
 
 				window.window.repaint();
@@ -50,8 +51,8 @@ public class Menu {
 			   			Keys.checkInput();
 			   		}
 			   	}
-			   	int x = Player.getXPos();
-			   	int y = Player.getYPos();
+			   	int x = Walrii.getXPos();
+			   	int y = Walrii.getYPos();
 			   	if (x==0) {
 			   		if (y==5||y==6) {window.Start();}
 			   		if (y==9||y==10) {

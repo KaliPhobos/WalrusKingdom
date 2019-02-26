@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 
 public class Trigger {
+	static Player Walrii = window.getPlayerObject();
 	public static int _modeOld = 7;
 	public static Graphics2D g;
 	public static String[] NotificationTexts = {"[A]: read the sign", "[A]: enter house", "[A]: talk to statue", "[A]: look inside"};
@@ -35,8 +36,8 @@ public class Trigger {
 			if (General.showTrigger) {
 				General.DebugLog("trigger: "+BackgroundID);
 			}
-			int x = Player.getXPos();
-			int y = Player.getYPos();
+			int x = Walrii.getXPos();
+			int y = Walrii.getYPos();
 			switch(Map.currentMapName) {
 				case "City1":
 					if(BackgroundID>0) {		// Positive trigger IDs are regular items/signs
@@ -50,8 +51,8 @@ public class Trigger {
 						}										// 0 = none, -1 = forest/town teleporter
 						if((x==45)&&(y>45)&&(y<49)) {		// automated teleport (enter forest)
 							Map.loadForestHouse();
-							Player.setXPos(Player.getXPos()-33+6);		// not similar to number below for whatever reason (changed forest map size)
-							Player.setYPos(Player.getYPos()-38);
+							Walrii.setXPos(Walrii.getXPos()-33+6);		// not similar to number below for whatever reason (changed forest map size)
+							Walrii.setYPos(Walrii.getYPos()-38);
 							if (General.showTrigger) {
 								General.DebugLog("Teleport INTO FOREST");
 							}
@@ -69,8 +70,8 @@ public class Trigger {
 						}
 						if((x==16)&&(y>7)&&(y<11)) {
 							Map.loadCity1();
-							Player.setXPos(Player.getXPos()+27);		// not similar to number above for whatever reason (changed forest map size)
-							Player.setYPos(Player.getYPos()+38);
+							Walrii.setXPos(Walrii.getXPos()+27);		// not similar to number above for whatever reason (changed forest map size)
+							Walrii.setYPos(Walrii.getYPos()+38);
 							if (General.showTrigger) {
 								General.DebugLog("teleport BACK");
 							}
