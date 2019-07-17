@@ -15,10 +15,10 @@ public class Player {
 	public long nextStep = 0;
 	public String currentMapName = "initial";
 	
-	public static Player createPlayer(int pictureID, int xPos, int yPos) {
-		return new Player(pictureID, xPos, yPos, "", xPos, yPos, xPos, yPos);
+	public static Player createPlayer(int pictureID, int xPos, int yPos, String currentMapName) {
+		return new Player(pictureID, xPos, yPos, "", xPos, yPos, xPos, yPos, currentMapName);
 	}
-	public Player(int pictureID, int xPos, int yPos, String direction, int lastXPos, int lastYPos, int newLastXPos, int newLastYPos) {
+	public Player(int pictureID, int xPos, int yPos, String direction, int lastXPos, int lastYPos, int newLastXPos, int newLastYPos, String currentMapName) {
 		//this.PictureID = _PictureID;	// Current Frame used for the animated Walrii. Depends on @MSEC and at walking/standing
 		this.xPos = xPos;				// x-Position on global map
 		this.yPos = yPos;				// y-Position on global map

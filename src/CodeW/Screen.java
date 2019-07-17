@@ -259,6 +259,30 @@ public class Screen {
 							TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
 						}	// add foreground layer
 					}
+					for(int _i=0;_i<100;_i++) {		// render NPCs and multiplayer "friends"
+						if(window.multiplayerUsers[_i]!=null) {															// Has player ever been active?
+							if(window.multiplayerUsers[_i].isActive) {													// is player currently active?
+								if(window.multiplayerUsers[_i].getCurrentMapName().equals(Walrii.currentMapName)) {		// is player on same map?
+									if(General.getBetween(0, window.multiplayerUsers[_i].getXPos()-Math.round(getWidth()/2), Map.getWidth()-getWidth())+_x == window.multiplayerUsers[_i].getXPos() && General.getBetween(0, window.multiplayerUsers[_i].getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == window.multiplayerUsers[_i].getYPos()) {
+										int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data
+										TilesDrawn++;
+										TileArea.drawTile(tiles, TileSource.getXPos(_background), TileSource.getYPos(_background), window.blocksize*_x, window.blocksize*_y);						// render background layer
+										PlayerTile = window.multiplayerUsers[_i].getCurrentTile(); //+Walrii.getCurrentTile();
+										TilesDrawn++;
+										int __y = Math.round(General.getMax((_y*window.blocksize)-Math.round(window.blocksize/4), 0));
+										System.out.println("NPC found on coords: x="+_x+" y="+_y+" y__="+__y); // WHY IS IT MOVING WITH ME?? D:
+										TileArea.drawTile(tiles, TileSource.getXPos(PlayerTile), TileSource.getYPos(PlayerTile), window.blocksize*_x, __y);					// render char
+										window.multiplayerUsers[_i].setNewLastXPos(_x);
+										window.multiplayerUsers[_i].setNewLastYPos(_y);
+										int _foreground = Map.getForegroundID(ScreenMatrix[_x][_y]);	// extrace foreground data
+										if(_foreground>0) {
+											TileArea.drawTile(tiles, TileSource.getXPos(_foreground), TileSource.getYPos(_foreground), window.blocksize*_x, window.blocksize*_y);
+										}	// add foreground layer
+									}
+								}
+							}
+						}
+					}
 				} else {	//This disables the automated screenscrolling for special areas on the map (like in huge gardens) so only the y-axis scrolls. Similar to behavior close to map's edges
 					if(Walrii.getXPos()-screenLeft==_x && General.getBetween(0, Walrii.getYPos()-Math.round(getHeight()/2), Map.getHeight()-getHeight())+_y == Walrii.getYPos()) {
 						int _background = Map.getBackgroundID(ScreenMatrix[_x][_y]);	// extract background data

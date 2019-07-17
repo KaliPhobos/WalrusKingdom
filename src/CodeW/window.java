@@ -14,7 +14,7 @@ public class window {
 	static Player Walrii = null;								// Player object
 	public static MultiplayerUser[] multiplayerUsers= new MultiplayerUser[100];	// Lists all users, both online "friends" and NPCs
 	public static void main(String[] args) {
-		Walrii = Player.createPlayer(0, 10, 10);		// Define Player ONLY FOR LOCAL MULTIPLAYER <-- At least so far ;)
+		Walrii = Player.createPlayer(0, 10, 10, "initial");		// Define Player ONLY FOR LOCAL MULTIPLAYER <-- At least so far ;)
 		width = checkWidth(width);						// Prevent full failure at first run with settings out of bounds
 		height = checkHeight(height);
 		LaunchTimestamp = System.currentTimeMillis();
@@ -28,6 +28,7 @@ public class window {
 		//Menu.RunMenu();		// Del to skip intro	// Call Start Menu
 		Menu.oldWidth = width;							// Backup those values to fall back to after intro
 		Menu.oldHeight = height;
+		multiplayerUsers[0] = MultiplayerUser.createDemoMonkey();
 		Intro.loadMainGame();
 	}
 	public static void prepare() {
